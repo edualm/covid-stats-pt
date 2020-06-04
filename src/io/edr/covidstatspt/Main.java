@@ -52,8 +52,8 @@ public class Main {
 
         ArrayList<String> urls = MinSaude.getPortugueseCovidReportURLs();
 
-//        if (urls.get(0).equals(database.getLastReportURL()))
-//            return false;
+        if (urls.get(0).equals(database.getLastReportURL()))
+            return false;
 
         PDDocument todayDocument = PDDocument
                 .load(new URL(urls.get(0)).openStream());
@@ -100,13 +100,13 @@ public class Main {
 
             int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
 
-//            if (hourOfDay < 12 || hourOfDay > 13) {
-//                System.out.println("Sleeping for 5 minutes...");
-//
-//                TimeUnit.MINUTES.sleep(5);
-//
-//                continue;
-//            }
+            if (hourOfDay < 12 || hourOfDay > 13) {
+                System.out.println("Sleeping for 5 minutes...");
+
+                TimeUnit.MINUTES.sleep(5);
+
+                continue;
+            }
 
             while (!mainLoop()) {
                 System.out.println("Sleeping for 1 minute...");
