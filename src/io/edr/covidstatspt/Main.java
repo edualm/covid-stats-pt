@@ -52,8 +52,8 @@ public class Main {
 
         ArrayList<String> urls = MinSaude.getPortugueseCovidReportURLs();
 
-        if (urls.get(0).equals(database.getLastReportURL()))
-            return false;
+//        if (urls.get(0).equals(database.getLastReportURL()))
+//            return false;
 
         PDDocument todayDocument = PDDocument
                 .load(new URL(urls.get(0)).openStream());
@@ -74,7 +74,7 @@ public class Main {
 
         String todayStr = "" + (day < 10 ? "0" + day : day) + "/" + (month < 10 ? "0" + month : month);
 
-        String message = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Deltas to Previous Day (as of " + todayStr + ")</b>\n" +
+        String message = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução Diária (referente a " + todayStr + ")</b>\n" +
                 "\n" + buildRegionString("Norte", Parser.continentalRegions[0], todayParser, yesterdayParser) +
                 "\n" + buildRegionString("Centro", Parser.continentalRegions[1], todayParser, yesterdayParser) +
                 "\n" + buildRegionString("Lisboa e Vale do Tejo", Parser.continentalRegions[2], todayParser, yesterdayParser) +
@@ -83,7 +83,7 @@ public class Main {
                 "\n" + buildRegionString("Madeira", Parser.madeiraRegion, todayParser, yesterdayParser) +
                 "\n" + buildRegionString("Açores", Parser.azoresRegion, todayParser, yesterdayParser) +
                 "\n\n" + buildCountryString(todayParser, yesterdayParser) +
-                "\n\n<i>Regions: + Cases / - Deaths\nCountry: + Cases / ~ Recoveries / - Deaths\nTotal stats shown in parenthesis.</i>";
+                "\n\n<i>Regiões: + Casos / - Mortes\nPaís: + Casos / ~ Recuperados / - Mortes\nEstatísticas globais entre parênteses.</i>";
 
         telegram.send(message);
         database.updateLastReportURL(urls.get(0));
@@ -100,13 +100,13 @@ public class Main {
 
             int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
 
-            if (hourOfDay < 12 || hourOfDay > 13) {
-                System.out.println("Sleeping for 5 minutes...");
-
-                TimeUnit.MINUTES.sleep(5);
-
-                continue;
-            }
+//            if (hourOfDay < 12 || hourOfDay > 13) {
+//                System.out.println("Sleeping for 5 minutes...");
+//
+//                TimeUnit.MINUTES.sleep(5);
+//
+//                continue;
+//            }
 
             while (!mainLoop()) {
                 System.out.println("Sleeping for 1 minute...");
