@@ -8,6 +8,9 @@
 
 package io.edr.covidstatspt;
 
+import io.edr.covidstatspt.database.Database;
+import io.edr.covidstatspt.database.ThisDBConnection;
+import io.edr.covidstatspt.exceptions.MisconfigurationException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import technology.tabula.Rectangle;
 
@@ -46,8 +49,18 @@ public class Main {
                 ")</code>";
     }
 
-    public static boolean mainLoop() throws IOException {
-        Database database = new Database(Secrets.DatabaseURL);
+    private static void checkConfiguration() throws MisconfigurationException {
+        if (Secrets.KVdbURL != null && (Secrets.ThisDBAPIKey != null || Secrets.ThisDBBucketID != null)) {
+            throw new MisconfigurationException("The database configuration isn't correct!");
+        }
+
+        if (Secrets.TelegramBotKey == null) {
+            throw new MisconfigurationException("The telegram bot configuration isn't correct!");
+        }
+    }
+
+    private static boolean mainLoop() throws IOException {
+        Database database = new ThisDBConnection(Secrets.ThisDBAPIKey, Secrets.ThisDBBucketID);
         Telegram telegram = new Telegram(database, Secrets.TelegramBotKey);
 
         ArrayList<String> urls = MinSaude.getPortugueseCovidReportURLs();
@@ -91,32 +104,88 @@ public class Main {
         return true;
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    private static int calculateSleepTime() {
+        Date date = new Date();
+
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.setTime(date);
+
+        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+
+        if (hourOfDay < 12) {
+            int minutes = calendar.get(Calendar.MINUTE);
+
+            return (12 - hourOfDay - 1) * 60 + (60 - minutes);
+        }
+
+        if (hourOfDay > 13) {
+            int minutes = calendar.get(Calendar.MINUTE);
+
+            return (12 + (24 - hourOfDay) - 1) * 60 + (60 - minutes);
+        }
+
+        return 0;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Initializing Covid Stats PT...");
+
+        try {
+            System.out.println("Checking for configuration sanity...");
+
+            checkConfiguration();
+        } catch (MisconfigurationException e) {
+            System.out.println(e.getMessage());
+
+            System.exit(1);
+        }
+
+        System.out.println("\nEntering main loop...\n");
+
         while (true) {
-            Date date = new Date();
+            int minutesToSleep = calculateSleepTime();
 
-            Calendar calendar = GregorianCalendar.getInstance();
-            calendar.setTime(date);
+            if (minutesToSleep > 0) {
+                System.out.println("Sleeping for " + minutesToSleep + " minutes...");
 
-            int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
-
-            if (hourOfDay < 12 || hourOfDay > 13) {
-                System.out.println("Sleeping for 5 minutes...");
-
-                TimeUnit.MINUTES.sleep(5);
+                try {
+                    TimeUnit.MINUTES.sleep(minutesToSleep);
+                } catch (InterruptedException ignored) {
+                    //  Do nothing.
+                }
 
                 continue;
             }
 
-            while (!mainLoop()) {
-                System.out.println("Sleeping for 1 minute...");
+            try {
+                while (!mainLoop()) {
+                    System.out.println("Sleeping for 1 minute...");
 
-                TimeUnit.MINUTES.sleep(1);
+                    try {
+                        TimeUnit.MINUTES.sleep(1);
+                    } catch (InterruptedException ignored) {
+                        //  Do nothing.
+                    }
+                }
+            } catch (IOException e) {
+                System.out.println("An IOException has occurred. We'll try again in a minute.");
+
+                try {
+                    TimeUnit.MINUTES.sleep(1);
+                } catch (InterruptedException ignored) {
+                    //  Do nothing.
+                }
+
+                continue;
             }
 
             System.out.println("Sleeping for 2 hours...");
 
-            TimeUnit.HOURS.sleep(2);
+            try {
+                TimeUnit.HOURS.sleep(2);
+            } catch (InterruptedException ignored) {
+                //  Do nothing.
+            }
         }
     }
 }

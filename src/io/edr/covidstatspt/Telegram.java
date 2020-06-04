@@ -8,6 +8,8 @@
 
 package io.edr.covidstatspt;
 
+import io.edr.covidstatspt.database.Database;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

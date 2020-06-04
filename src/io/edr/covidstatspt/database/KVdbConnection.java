@@ -8,10 +8,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class KVdb implements Database {
+public class KVdbConnection implements Database {
+
     private String baseURL = null;
 
-    KVdb(String baseURL) {
+    public KVdbConnection(String baseURL) {
         this.baseURL = baseURL;
     }
 

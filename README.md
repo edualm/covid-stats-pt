@@ -14,14 +14,17 @@ These are included as `JAR`s in this repository, under the `libs` directory.
 ## Prerequisites
 
  - Working JDK
- - KVdb account (https://kvdb.io/)
+ - ThisDB account (https://thisdb.com) or KVdb account (https://kvdb.io)
  - Telegram bot (https://core.telegram.org/bots)
 
 ## Preparation
 
 Rename `src/io/edr/covidstatspt/Secrets.java.sample` to `src/io/edr/covidstatspt/Secrets.java` and fill in the blanks.
 
-The bot requires a list of `chat_id`s. They should be stored in the `recipients` key of the database, comma-separated.
+The bot requires a list of `chat_id`s. They should be stored in the `recipients` key of the database bucket, comma-separated.
+
+Make sure to fill the database bucket with the `latest_report_url` and `recipients` keys, even if just with dummy data. 
+The current implemenation of the database is a bit fragile with regards to that!
 
 ## ⚠️ Disclaimer
 

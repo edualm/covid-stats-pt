@@ -1,4 +1,4 @@
-package io.edr.covidstatspt;
+package io.edr.covidstatspt.database;
 
 import java.io.IOException;
 

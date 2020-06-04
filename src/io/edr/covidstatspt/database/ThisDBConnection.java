@@ -16,14 +16,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class ThisDB implements Database {
+public class ThisDBConnection implements Database {
 
     private static String ThisDBEndpoint = "https://api.thisdb.com/v1/";
 
     private String apiKey = null;
     private String bucketId = null;
 
-    ThisDB(String apiKey, String bucketID) {
+    public ThisDBConnection(String apiKey, String bucketID) {
         this.apiKey = apiKey;
         this.bucketId = bucketID;
     }
