@@ -1,12 +1,12 @@
 /*
- *  Database.java
+ *  ThisDBDatabase.java
  *  covid-stats-pt
  *
  *  Created by Eduardo Almeida <hello at edr dot io>
  *  Published under the public domain
  */
 
-package io.edr.covidstatspt;
+package io.edr.covidstatspt.database;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,21 +16,30 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class Database {
+public class ThisDB implements Database {
 
-    private String baseURL = null;
+    private static String ThisDBEndpoint = "https://api.thisdb.com/v1/";
 
-    Database(String baseURL) {
-        this.baseURL = baseURL;
+    private String apiKey = null;
+    private String bucketId = null;
+
+    ThisDB(String apiKey, String bucketID) {
+        this.apiKey = apiKey;
+        this.bucketId = bucketID;
+    }
+
+    private String getURLForKey(String key) {
+        return ThisDBEndpoint + bucketId + "/" + key;
     }
 
     private String getValueForKey(String key) throws IOException {
         StringBuilder result = new StringBuilder();
 
-        URL url = new URL(this.baseURL + key);
+        URL url = new URL(getURLForKey(key));
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
+        conn.setRequestProperty("X-Api-Key", apiKey);
 
         BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
@@ -53,7 +62,7 @@ public class Database {
     }
 
     public void updateLastReportURL(String newReportURL) throws IOException {
-        URL url = new URL(this.baseURL + "latest_report_url");
+        URL url = new URL(getURLForKey("latest_report_url"));
 
         byte[] out = newReportURL.getBytes();
 
@@ -61,6 +70,7 @@ public class Database {
 
         HttpURLConnection http = (HttpURLConnection)con;
         http.setRequestMethod("POST");
+        http.setRequestProperty("X-Api-Key", apiKey);
         http.setDoOutput(true);
         http.setFixedLengthStreamingMode(out.length);
         http.connect();
