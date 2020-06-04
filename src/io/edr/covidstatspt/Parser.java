@@ -1,4 +1,4 @@
-package io.edr;
+package io.edr.covidstatspt;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import technology.tabula.*;

@@ -1,4 +1,4 @@
-package io.edr;
+package io.edr.covidstatspt;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

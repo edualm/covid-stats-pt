@@ -1,4 +1,4 @@
-package io.edr;
+package io.edr.covidstatspt;
 
 import java.io.BufferedReader;
 import java.io.IOException;
