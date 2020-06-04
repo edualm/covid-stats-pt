@@ -1,3 +1,11 @@
+/*
+ *  Main.java
+ *  covid-stats-pt
+ *
+ *  Created by Eduardo Almeida <hello at edr dot io>
+ *  Published under the public domain
+ */
+
 package io.edr.covidstatspt;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -13,7 +21,7 @@ public class Main {
     private static String buildRegionString(String regionName, Rectangle regionRectangle, Parser todayParser, Parser yesterdayParser) throws IOException {
         return "<b>" + regionName + "</b>: <code>+" +
                 (todayParser.getCasesAndDeaths(regionRectangle)[0] - yesterdayParser.getCasesAndDeaths(regionRectangle)[0]) +
-                " / -" + +
+                " / -" +
                 (todayParser.getCasesAndDeaths(regionRectangle)[1] - yesterdayParser.getCasesAndDeaths(regionRectangle)[1]) +
                 " (+" +
                 todayParser.getCasesAndDeaths(regionRectangle)[0] +
