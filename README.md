@@ -14,7 +14,7 @@ These are included as `JAR`s in this repository, under the `libs` directory.
 ## Prerequisites
 
  - Working JDK
- - KVDb account (https://kvdb.io/)
+ - KVdb account (https://kvdb.io/)
  - Telegram bot (https://core.telegram.org/bots)
 
 ## Preparation
