@@ -23,6 +23,6 @@ Rename `src/io/edr/covidstatspt/Secrets.java.sample` to `src/io/edr/covidstatspt
 
 The bot requires a list of `chat_id`s. They should be stored in the `recipients` key of the database, comma-separated.
 
-### ⚠️ Disclaimer
+## ⚠️ Disclaimer
 
 I am not a Java developer - use this project (or read the code, even) at your own risk!
