@@ -21,7 +21,7 @@ IntelliJ IDEA handled that for me. Maybe it will do the same for you if you ask 
 
 ## Preparation
 
-Rename `src/main/resources/config.properties.sample` to `src/main/resources/config.properties` and fill in the blanks.
+Rename `config.properties.sample` to `config.properties` and fill in the blanks.
 
 Only one database type should be configured.
 
@@ -72,6 +72,8 @@ Estatísticas globais entre parênteses.
 ## But I just want to use the bot...
 
 Sure, just click [here](https://t.me/Covid19PortugalStatsBot)!
+
+If you want to run your own instance, you can also just download the latest build from GitHub Actions.
 
 ## ⚠️ Disclaimer
 
