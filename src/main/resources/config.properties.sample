@@ -1,0 +1,22 @@
+#   Database to use. One of `kvdb`, `redis` or `thisdb`.
+database=
+
+#   Configuration parameters for `kvdb`.
+database.kvdb.url=
+
+#   Configuration parameters for `redis`. `db` is optional.
+database.redis.server=
+database.redis.db=
+
+#   Configuration parameters for `thisdb`.
+database.thisdb.apikey=
+database.thisdb.bucketid=
+
+#   Telegram bot key.
+telegram.botkey=
+
+#   Port that the web server will listen at.
+web.port=4567
+
+#   Path that the web server will receive webhook requests at.
+web.webhookpath=

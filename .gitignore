@@ -142,5 +142,5 @@ Temporary Items
 
 # Custom Additions
 
-src/main/java/io/edr/covidstatspt/Secrets.java
+src/main/resources/config.properties
 target/

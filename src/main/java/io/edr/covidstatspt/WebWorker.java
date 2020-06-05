@@ -24,8 +24,10 @@ public class WebWorker {
 
     private Database database = null;
     private Telegram telegram = null;
+    private String webHookPath = null;
 
-    public WebWorker(int webServerPort, Database database, Telegram telegram) {
+    public WebWorker(int webServerPort, String webHookPath, Database database, Telegram telegram) {
+        this.webHookPath = webHookPath;
         this.database = database;
         this.telegram = telegram;
 
@@ -33,7 +35,7 @@ public class WebWorker {
     }
 
     public void start() {
-        post("/" + Secrets.TelegramWebhookSecret, (req, res) -> {
+        post("/" + webHookPath, (req, res) -> {
             try {
                 JSONObject obj = (JSONObject) (new JSONParser().parse(req.body()));
 
@@ -62,7 +64,7 @@ public class WebWorker {
                     telegram.send(chatId, response, true);
 
                     return "Done!";
-                } else if (textMessage.equals("/subscribe")) {
+                } else if (textMessage.equals("/start") || textMessage.equals("/subscribe")) {
                     String[] recipients = database.getTelegramRecipients();
 
                     if (Arrays.stream(recipients).anyMatch(chatId::equals)) {

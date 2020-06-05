@@ -19,7 +19,7 @@ IntelliJ IDEA handled that for me. Maybe it will do the same for you if you ask 
 
 ## Preparation
 
-Rename `src/io/edr/covidstatspt/Secrets.java.sample` to `src/io/edr/covidstatspt/Secrets.java` and fill in the blanks.
+Rename `src/main/resources/config.properties.sample` to `src/main/resources/config.properties` and fill in the blanks.
 
 Only one database type should be configured.
 

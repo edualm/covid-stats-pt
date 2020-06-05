@@ -95,11 +95,16 @@ public class Main {
             Configuration.checkConfiguration();
 
             Database dbConnection = Configuration.getDatabaseConnection();
-            Telegram tgConnection = new Telegram(dbConnection, Secrets.TelegramBotKey);
+            Telegram tgConnection = new Telegram(dbConnection, Configuration.getTelegramBotKey());
 
             System.out.println("Initializing web routes...");
 
-            WebWorker webWorker = new WebWorker(Secrets.WebServerPort, dbConnection, tgConnection);
+            WebWorker webWorker = new WebWorker(
+                    Configuration.getWebPort(),
+                    Configuration.getWebhookPath(),
+                    dbConnection,
+                    tgConnection
+            );
 
             webWorker.start();
 
