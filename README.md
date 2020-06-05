@@ -1,5 +1,7 @@
 # COVID Stats 🇵🇹
 
+![Snapshot](https://github.com/edualm/covid-stats-pt/workflows/Snapshot/badge.svg)
+
 Telegram bot that parses the official COVID-19 data for Portugal and sends them daily to you by Telegram.
 
 Published under the public domain.
