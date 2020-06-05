@@ -142,4 +142,5 @@ Temporary Items
 
 # Custom Additions
 
-src/io/edr/covidstatspt/Secrets.java
+src/main/java/io/edr/covidstatspt/Secrets.java
+target/
