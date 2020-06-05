@@ -23,12 +23,12 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Create Archive
-      steps:
-        - run: |
-            mkdir -p ${{ github.workspace }}/artifact
-            cp ${{ github.workspace }}/target/*-jar-with-dependencies.jar ${{ github.workspace }}/artifact/covid-stats-pt.jar
-            cp ${{ github.workspace }}/config.properties.sample ${{ github.workspace }}/artifact/config.properties
-        - uses: actions/upload-artifact@v2
-          with:
-            name: covid-stats-pt.zip
-            path: ${{ github.workspace }}/artifact/*
+      run: |
+        mkdir -p ${{ github.workspace }}/artifact
+        cp ${{ github.workspace }}/target/*-jar-with-dependencies.jar ${{ github.workspace }}/artifact/covid-stats-pt.jar
+        cp ${{ github.workspace }}/config.properties.sample ${{ github.workspace }}/artifact/config.properties
+    - name: Upload Archive
+      uses: actions/upload-artifact@v2
+      with:
+        name: covid-stats-pt.zip
+        path: ${{ github.workspace }}/artifact/*
