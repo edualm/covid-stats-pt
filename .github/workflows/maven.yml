@@ -22,8 +22,13 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    - name: Archive production artifacts
-      uses: actions/upload-artifact@v1
-      with:
-        name: covid-stats-pt-1.0-SNAPSHOT-jar-with-dependencies.jar
-        path: target
+    - name: Create Archive
+      steps:
+        - run: |
+            mkdir -p ${{ github.workspace }}/artifact
+            cp ${{ github.workspace }}/target/*-jar-with-dependencies.jar ${{ github.workspace }}/artifact/covid-stats-pt.jar
+            cp ${{ github.workspace }}/config.properties.sample ${{ github.workspace }}/artifact/config.properties
+        - uses: actions/upload-artifact@v2
+          with:
+            name: covid-stats-pt.zip
+            path: ${{ github.workspace }}/artifact/*

@@ -142,5 +142,5 @@ Temporary Items
 
 # Custom Additions
 
-src/main/resources/config.properties
+config.properties
 target/

@@ -14,6 +14,8 @@ import io.edr.covidstatspt.database.RedisConnection;
 import io.edr.covidstatspt.database.ThisDBConnection;
 import io.edr.covidstatspt.exceptions.MisconfigurationException;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -22,18 +24,23 @@ public class Configuration {
 
     private static String getPropertyValue(String property) throws MisconfigurationException {
         Properties prop = new Properties();
-        String propFileName = "config.properties";
+        String propPath = "./config.properties";
 
-        InputStream inputStream = Configuration.class.getClassLoader().getResourceAsStream(propFileName);
+        FileInputStream file;
 
-        if (inputStream != null) {
-            try {
-                prop.load(inputStream);
-            } catch (IOException e) {
-                throw new MisconfigurationException("Unable to open '" + propFileName + "'.");
-            }
-        } else
-            throw new MisconfigurationException("Property file '" + propFileName + "' not found in the classpath.");
+        try {
+            file = new FileInputStream(propPath);
+        } catch (FileNotFoundException e) {
+            throw new MisconfigurationException("File '" + propPath + "' not found.");
+        }
+
+        try {
+            prop.load(file);
+
+            file.close();
+        } catch (IOException e) {
+            throw new MisconfigurationException("Unable to perform actions on '" + propPath + "'.");
+        }
 
         String value = prop.getProperty(property);
 
