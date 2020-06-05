@@ -21,7 +21,7 @@ IntelliJ IDEA handled that for me. Maybe it will do the same for you if you ask 
 
 ## Preparation
 
-Rename `config.properties.sample` to `config.properties` and fill in the blanks.
+Rename `config.properties.sample` to `config.properties` and fill in the blanks. This file should be in the same folder as the `jar` in order for it to be correctly picked up.
 
 Only one database type should be configured.
 
@@ -52,7 +52,7 @@ The message is in Portuguese.
 ![Deal with it.](https://i.pinimg.com/564x/a1/96/16/a1961629de94ef8fe2cee1c50015ee5e.jpg)
 
 ```
-🇵🇹 [COVID-19] Evolução Diária (referente a 05/06)
+🇵🇹 [COVID-19] Evolução Diária (referente a 04/06)
 
 Norte: +15 / -5 (+16819 / -801)
 Centro: +5 / -0 (+3770 / -240)
