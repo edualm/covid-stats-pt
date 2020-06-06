@@ -47,7 +47,9 @@ public class MinSaude {
         Elements links = doc.select(".single_content > ul:nth-child(1) > li > a");
 
         for (Element link: links) {
-            String name = link.val();
+            String[] split = link.html().split(" | ");
+
+            String name = split[split.length - 1];
             URL url = new URL(link.absUrl("href"));
 
             list.add(new Covid19Report(name, url));

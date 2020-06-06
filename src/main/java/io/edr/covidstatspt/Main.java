@@ -18,6 +18,10 @@ import java.util.concurrent.TimeUnit;
 public class Main {
 
     private static int calculateSleepTime() {
+        return calculateSleepTime(false);
+    }
+
+    private static int calculateSleepTime(Boolean ignoringCurrentHour) {
         Date date = new Date();
 
         Calendar calendar = GregorianCalendar.getInstance();
@@ -31,7 +35,7 @@ public class Main {
             return (12 - hourOfDay - 1) * 60 + (60 - minutes);
         }
 
-        if (hourOfDay > 13) {
+        if (hourOfDay > 14 || ignoringCurrentHour) {
             int minutes = calendar.get(Calendar.MINUTE);
 
             return (12 + (24 - hourOfDay) - 1) * 60 + (60 - minutes);
@@ -77,10 +81,12 @@ public class Main {
             return;
         }
 
-        System.out.println("Sleeping for 2 hours...");
+        minutesToSleep = calculateSleepTime(true);
+
+        System.out.println("Sleeping for " + minutesToSleep + " minutes...");
 
         try {
-            TimeUnit.HOURS.sleep(2);
+            TimeUnit.HOURS.sleep(minutesToSleep);
         } catch (InterruptedException ignored) {
             //  Do nothing.
         }
