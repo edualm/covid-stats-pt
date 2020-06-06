@@ -118,6 +118,12 @@ public class Main {
 
             System.out.println("\nEntering main loop...\n");
 
+            try {
+                engine.run();
+            } catch (IOException e) {
+                System.out.println("An exception has occurred on the first run, continuing anyway...");
+            }
+
             while (true)
                 waitLoop(engine);
         } catch (MisconfigurationException e) {
