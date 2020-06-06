@@ -48,8 +48,8 @@ public class MinSaude {
 
         for (Element link: links) {
             String[] split = link.html().split(" | ");
-
             String name = split[split.length - 1];
+
             URL url = new URL(link.absUrl("href"));
 
             list.add(new Covid19Report(name, url));
