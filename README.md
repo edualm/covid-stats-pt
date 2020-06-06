@@ -6,6 +6,11 @@ Telegram bot that parses the official COVID-19 data for Portugal and sends them 
 
 Published under the public domain.
 
+An instance of the bot is live, and you can use it by clicking [here](https://t.me/Covid19PortugalStatsBot)!
+
+If you want to run your own instance, you can compile it or download the latest build from GitHub Actions.
+Make sure to read on though, so you know how to set it up.
+
 ## Dependencies
 
 Dependencies are managed by Maven.
@@ -19,13 +24,29 @@ IntelliJ IDEA handled that for me. Maybe it will do the same for you if you ask 
  - Telegram bot (https://core.telegram.org/bots)
  - Server exposed to the internet, so you can receive Telegram's webhook messages.
 
+To build, use your favorite IDE or run `mvn -B package --file pom.xml`.
+
 ## Preparation
 
-Rename `config.properties.sample` to `config.properties` and fill in the blanks. This file should be in the same folder as the `jar` in order for it to be correctly picked up.
+ - Prepare `config.properties` by renaming the sample file.
+ 
+```
+$ mv config.properties.sample config.properties
+```
 
-Only one database type should be configured.
+This file should be in the same folder as the `jar` in order for it to be correctly picked up. 
+If you are running the project from an IDE, the default path should be fine.
 
-Telegram webhooks will be listened to at `http://<your server>:<port>/<telegram webhook secret>`. You should probably use a reverse proxy like `caddy` or `nginx`. Additionally, you should set up a Telegram bot that receives webhooks at that URL and is prepared to receive the following commands:
+- Fill in the blanks on the `config.properties` file with your configurations.
+
+Only one database type should be set up.
+
+Telegram webhooks will be listened to at `http://<your server>:<port>/<telegram webhook secret>`. 
+You should probably use a reverse proxy like `caddy` or `nginx`. 
+The secret key can be just a random string, but be sure to set it.
+
+Additionally, you should set up a Telegram bot that receives webhooks at that URL and is prepared 
+to receive the following commands:
 
  - `/subscribe`
  - `/today`
@@ -86,12 +107,6 @@ Cumulativo: 🦠 140 casos, 💀 15 mortes
 Novos: 🦠 377 casos, 🟢 203 recuperados, 💀 10 mortes
 Cumulativo: 🦠 33969 casos, 🟢 20526 recuperados, 💀 1465 mortes
 ```
-
-## But I just want to use the bot...
-
-Sure, just click [here](https://t.me/Covid19PortugalStatsBot)!
-
-If you want to run your own instance, you can also just download the latest build from GitHub Actions.
 
 ## ⚠️ Disclaimer
 
