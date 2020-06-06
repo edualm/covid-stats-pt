@@ -52,21 +52,39 @@ The message is in Portuguese.
 ![Deal with it.](https://i.pinimg.com/564x/a1/96/16/a1961629de94ef8fe2cee1c50015ee5e.jpg)
 
 ```
-🇵🇹 [COVID-19] Evolução Diária (referente a 04/06)
+🇵🇹 [COVID-19] Evolução a 05/06
 
-Norte: +15 / -5 (+16819 / -801)
-Centro: +5 / -0 (+3770 / -240)
-Lisboa e Vale do Tejo: +309 / -3 (+12137 / -383)
-Alentejo: +2 / -0 (+262 / -1)
-Algarve: +0 / -0 (+376 / -15)
-Madeira: +0 / -0 (+90 / -0)
-Açores: +0 / -0 (+138 / -15)
+ 🏙️ Norte
+Novos: 🦠 15 casos, 💀 2 mortes
+Cumulativo: 🦠 16834 casos, 💀 803 mortes
 
-Portugal: +331 / ~244 / -8 (+33592 / ~20323 / -1455)
+ 🏙️ Centro
+Novos: 🦠 19 casos, 💀 4 mortes
+Cumulativo: 🦠 3789 casos, 💀 244 mortes
 
-Regiões: + Casos / - Mortes
-País: + Casos / ~ Recuperados / - Mortes
-Estatísticas globais entre parênteses.
+ 🏙️ Lisboa e Vale do Tejo
+Novos: 🦠 336 casos, 💀 4 mortes
+Cumulativo: 🦠 12473 casos, 💀 387 mortes
+
+ 🏙️ Alentejo
+Novos: 🦠 1 casos, 💀 0 mortes
+Cumulativo: 🦠 263 casos, 💀 1 mortes
+
+ 🏙️ Algarve
+Novos: 🦠 4 casos, 💀 0 mortes
+Cumulativo: 🦠 380 casos, 💀 15 mortes
+
+ 🏙️ Madeira
+Novos: 🦠 0 casos, 💀 0 mortes
+Cumulativo: 🦠 90 casos, 💀 0 mortes
+
+ 🏙️ Açores
+Novos: 🦠 2 casos, 💀 0 mortes
+Cumulativo: 🦠 140 casos, 💀 15 mortes
+
+ 🇵🇹 Portugal:
+Novos: 🦠 377 casos, 🟢 203 recuperados, 💀 10 mortes
+Cumulativo: 🦠 33969 casos, 🟢 20526 recuperados, 💀 1465 mortes
 ```
 
 ## But I just want to use the bot...

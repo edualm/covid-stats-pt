@@ -73,9 +73,9 @@ public abstract class WebKVConnection implements Database {
     }
 
     @Override
-    public String getLastReportURL() {
+    public String getLastReportName() {
         try {
-            return getValueForKey("latest_report_url");
+            return getValueForKey("latest_report_name");
         } catch (Exception e) {
             return null;
         }
@@ -103,9 +103,9 @@ public abstract class WebKVConnection implements Database {
     }
 
     @Override
-    public boolean setLastReportURL(String newReportURL) {
+    public boolean setLastReportName(String newReportName) {
         try {
-            setValueForKey("latest_report_url", newReportURL);
+            setValueForKey("latest_report_name", newReportName);
 
             return true;
         } catch (Exception e) {

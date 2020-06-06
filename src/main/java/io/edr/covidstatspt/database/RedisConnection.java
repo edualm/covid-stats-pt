@@ -31,9 +31,9 @@ public class RedisConnection implements Database {
     }
 
     @Override
-    public String getLastReportURL() {
+    public String getLastReportName() {
         try {
-            return jedis.get("covid-stats-pt:last_report_url");
+            return jedis.get("covid-stats-pt:last_report_name");
         } catch (Exception e) {
             return null;
         }
@@ -61,9 +61,9 @@ public class RedisConnection implements Database {
     }
 
     @Override
-    public boolean setLastReportURL(String newReportURL) {
+    public boolean setLastReportName(String newReportURL) {
         try {
-            jedis.set("covid-stats-pt:last_report_url", newReportURL);
+            jedis.set("covid-stats-pt:last_report_name", newReportURL);
 
             return true;
         } catch (Exception e) {

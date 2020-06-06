@@ -11,10 +11,10 @@ package io.edr.covidstatspt.database;
 public interface Database {
 
     String getCachedResponse();
-    String getLastReportURL();
+    String getLastReportName();
     String[] getTelegramRecipients();
 
     boolean setCachedResponse(String cachedResponse);
-    boolean setLastReportURL(String newReportURL);
+    boolean setLastReportName(String newReportName);
     boolean setTelegramRecipients(String[] recipients);
 }
