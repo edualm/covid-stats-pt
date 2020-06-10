@@ -18,10 +18,6 @@ import java.util.concurrent.TimeUnit;
 public class Main {
 
     private static int calculateSleepTime() {
-        return calculateSleepTime(false);
-    }
-
-    private static int calculateSleepTime(Boolean ignoringCurrentHour) {
         Date date = new Date();
 
         Calendar calendar = GregorianCalendar.getInstance();
@@ -35,30 +31,12 @@ public class Main {
             return (12 - hourOfDay - 1) * 60 + (60 - minutes);
         }
 
-        if (hourOfDay > 14 || ignoringCurrentHour) {
-            int minutes = calendar.get(Calendar.MINUTE);
+        int minutes = calendar.get(Calendar.MINUTE);
 
-            return (12 + (24 - hourOfDay) - 1) * 60 + (60 - minutes);
-        }
-
-        return 0;
+        return (12 + (24 - hourOfDay) - 1) * 60 + (60 - minutes);
     }
 
     private static void waitLoop(Engine engine) throws MisconfigurationException {
-        int minutesToSleep = calculateSleepTime();
-
-        if (minutesToSleep > 0) {
-            System.out.println("Sleeping for " + minutesToSleep + " minutes...");
-
-            try {
-                TimeUnit.MINUTES.sleep(minutesToSleep);
-            } catch (InterruptedException ignored) {
-                //  Do nothing.
-            }
-
-            return;
-        }
-
         try {
             while (!engine.run()) {
                 System.out.println("Sleeping for 1 minute...");
@@ -81,7 +59,7 @@ public class Main {
             return;
         }
 
-        minutesToSleep = calculateSleepTime(true);
+        int minutesToSleep = calculateSleepTime();
 
         System.out.println("Sleeping for " + minutesToSleep + " minutes...");
 
@@ -117,12 +95,6 @@ public class Main {
             Engine engine = new Engine(dbConnection, tgConnection);
 
             System.out.println("\nEntering main loop...\n");
-
-            try {
-                engine.run();
-            } catch (IOException e) {
-                System.out.println("An exception has occurred on the first run, continuing anyway...");
-            }
 
             while (true)
                 waitLoop(engine);
