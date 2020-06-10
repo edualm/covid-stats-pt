@@ -14,8 +14,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MinSaude {
 
@@ -39,21 +42,22 @@ public class MinSaude {
 
     private static String MinSaudeCovid19ReportsURL = "https://covid19.min-saude.pt/relatorio-de-situacao/";
 
+    private static Covid19Report reportForElement(Element element) throws MalformedURLException {
+        String[] split = element.text().split(" | ");
+        String name = split[split.length - 1];
+
+        URL url = new URL(element.selectFirst("> a:nth-child(1)").absUrl("href"));
+
+        return new Covid19Report(name, url);
+    }
+
     public static ArrayList<Covid19Report> getPortugueseCovidReports() throws IOException {
         ArrayList<Covid19Report> list = new ArrayList<>();
 
         Document doc = Jsoup.connect(MinSaudeCovid19ReportsURL).get();
 
-        Elements links = doc.select(".single_content > ul:nth-child(1) > li > a");
-
-        for (Element link: links) {
-            String[] split = link.html().split(" | ");
-            String name = split[split.length - 1];
-
-            URL url = new URL(link.absUrl("href"));
-
-            list.add(new Covid19Report(name, url));
-        }
+        list.add(reportForElement(doc.selectFirst(".single_content > ul:nth-child(1) > li:nth-child(1)")));
+        list.add(reportForElement(doc.selectFirst(".single_content > ul:nth-child(1) > li:nth-child(2)")));
 
         return list;
     }
