@@ -18,6 +18,10 @@ public class SleepTimeTest {
 
     @Test
     public void calculateBefore12() {
+        //  Current time: 08:12(:30, but seconds are ignored)
+        //  Time until 12PM: 03:48
+        //  Difference in minutes: (3 * 60) + 48 = 228
+
         //  Given
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, 8);
@@ -28,11 +32,15 @@ public class SleepTimeTest {
         SleepTime st = new SleepTime(cal.getTime());
 
         //  Then
-        assertEquals(((12 - 9) * 60) + (60 - 12), st.calculate());
+        assertEquals(228, st.calculate());
     }
 
     @Test
     public void calculateAfter12() {
+        //  Current time: 15:15(:15, but seconds are ignored)
+        //  Time until 12PM: 20:45
+        //  Difference in minutes: (20 * 60) + 45
+
         //  Given
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, 15);
@@ -43,6 +51,6 @@ public class SleepTimeTest {
         SleepTime st = new SleepTime(cal.getTime());
 
         //  Then
-        assertEquals(((24 - (15 - 12) - 1) * 60) + (60 - 15), st.calculate());
+        assertEquals(1245, st.calculate());
     }
 }
