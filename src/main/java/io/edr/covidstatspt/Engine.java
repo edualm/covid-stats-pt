@@ -59,12 +59,12 @@ public class Engine {
     }
 
     public boolean run() throws IOException, MisconfigurationException {
-        ArrayList<MinSaude.Covid19Report> reports = MinSaude.getPortugueseCovidReports();
-
         //  Check if we already have a report for today. If so, return `true`.
 
-        if (reports.get(0).getName().equals(new SimpleDateFormat("dd/MM/yyyy").format(new Date())))
+        if (database.getLastReportName().equals(new SimpleDateFormat("dd/MM/yyyy").format(new Date())))
             return true;
+
+        ArrayList<MinSaude.Covid19Report> reports = MinSaude.getPortugueseCovidReports();
 
         if (reports.get(0).getName().equals(database.getLastReportName()))
             return false;
