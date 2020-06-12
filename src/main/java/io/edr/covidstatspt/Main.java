@@ -47,7 +47,7 @@ public class Main {
         System.out.println("Sleeping for " + minutesToSleep + " minutes...");
 
         try {
-            TimeUnit.HOURS.sleep(minutesToSleep);
+            TimeUnit.MINUTES.sleep(minutesToSleep);
         } catch (InterruptedException ignored) {
             //  Do nothing.
         }
