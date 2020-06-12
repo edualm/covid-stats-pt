@@ -59,12 +59,26 @@ public class Engine {
     }
 
     public boolean run() throws IOException, MisconfigurationException {
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.setTime(new Date());
+
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+
+        //  Check if it's before 12:00. If so, return `true`.
+
+        if (calendar.get(Calendar.HOUR_OF_DAY) < 12)
+            return true;
+
         //  Check if we already have a report for today. If so, return `true`.
 
         if (database.getLastReportName().equals(new SimpleDateFormat("dd/MM/yyyy").format(new Date())))
             return true;
 
         ArrayList<MinSaude.Covid19Report> reports = MinSaude.getPortugueseCovidReports();
+
+        //  Check if a report was published. If not, return `false`.
 
         if (reports.get(0).getName().equals(database.getLastReportName()))
             return false;
@@ -77,14 +91,6 @@ public class Engine {
 
         Parser todayParser = new Parser(todayDocument);
         Parser yesterdayParser = new Parser(yesterdayDocument);
-
-        Date date = new Date();
-
-        Calendar calendar = GregorianCalendar.getInstance();
-        calendar.setTime(date);
-
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH) + 1;
 
         String todayStr = "" + (day < 10 ? "0" + day : day) + "/" + (month < 10 ? "0" + month : month);
 
