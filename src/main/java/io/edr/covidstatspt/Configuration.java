@@ -8,7 +8,7 @@
 
 package io.edr.covidstatspt;
 
-import io.edr.covidstatspt.database.Database;
+import io.edr.covidstatspt.database.DatabaseConnection;
 import io.edr.covidstatspt.database.KVdbConnection;
 import io.edr.covidstatspt.database.RedisConnection;
 import io.edr.covidstatspt.database.ThisDBConnection;
@@ -17,7 +17,6 @@ import io.edr.covidstatspt.exceptions.MisconfigurationException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 public class Configuration {
@@ -50,7 +49,7 @@ public class Configuration {
         return prop.getProperty(property);
     }
 
-    public static Database getDatabaseConnection() throws MisconfigurationException {
+    public static DatabaseConnection getDatabaseConnection() throws MisconfigurationException {
         switch (getPropertyValue("database")) {
             case "kvdb":
                 return new KVdbConnection(getPropertyValue("database.kvdb.url"));

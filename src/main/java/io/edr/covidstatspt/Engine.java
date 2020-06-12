@@ -8,7 +8,7 @@
 
 package io.edr.covidstatspt;
 
-import io.edr.covidstatspt.database.Database;
+import io.edr.covidstatspt.database.DatabaseConnection;
 import io.edr.covidstatspt.exceptions.MisconfigurationException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import technology.tabula.Rectangle;
@@ -22,15 +22,17 @@ import java.util.GregorianCalendar;
 
 public class Engine {
 
-    Database database = null;
-    Telegram telegram = null;
+    private final DatabaseConnection databaseConnection;
+    private final ReportLocator reportLocator;
+    private final TelegramConnection telegramConnection;
 
-    public Engine(Database database, Telegram telegram) {
-        this.database = database;
-        this.telegram = telegram;
+    public Engine(DatabaseConnection databaseConnection, ReportLocator reportLocator, TelegramConnection telegramConnection) {
+        this.databaseConnection = databaseConnection;
+        this.reportLocator = reportLocator;
+        this.telegramConnection = telegramConnection;
     }
 
-    private static String buildRegionString(String regionName, Rectangle regionRectangle, Parser todayParser, Parser yesterdayParser) throws IOException {
+    private static String buildRegionString(String regionName, Rectangle regionRectangle, PortugueseReportParser todayParser, PortugueseReportParser yesterdayParser) {
         return "<b> \uD83C\uDFD9️ " + regionName + "</b>\nNovos: <code>\uD83E\uDDA0 " +
                 (todayParser.getCasesAndDeaths(regionRectangle)[0] - yesterdayParser.getCasesAndDeaths(regionRectangle)[0]) +
                 " casos, \uD83D\uDC80 " +
@@ -42,7 +44,7 @@ public class Engine {
                 " mortes</code>\n";
     }
 
-    private static String buildCountryString(Parser todayParser, Parser yesterdayParser) throws IOException {
+    private static String buildCountryString(PortugueseReportParser todayParser, PortugueseReportParser yesterdayParser) {
         return "<b> \uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\nNovos: <code>\uD83E\uDDA0 " +
                 (todayParser.getTableData()[1] - yesterdayParser.getTableData()[1]) +
                 " casos, \uD83D\uDFE2 " +
@@ -58,7 +60,7 @@ public class Engine {
                 " mortes</code>";
     }
 
-    public boolean run() throws IOException, MisconfigurationException {
+    public boolean run() throws IOException {
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.setTime(new Date());
 
@@ -73,14 +75,14 @@ public class Engine {
 
         //  Check if we already have a report for today. If so, return `true`.
 
-        if (database.getLastReportName().equals(new SimpleDateFormat("dd/MM/yyyy").format(new Date())))
+        if (databaseConnection.getLastReportName().equals(new SimpleDateFormat("dd/MM/yyyy").format(new Date())))
             return true;
 
-        ArrayList<MinSaude.Covid19Report> reports = MinSaude.getPortugueseCovidReports();
+        ArrayList<ReportMetadata> reports = reportLocator.getReports();
 
         //  Check if a report was published. If not, return `false`.
 
-        if (reports.get(0).getName().equals(database.getLastReportName()))
+        if (reports.get(0).getName().equals(databaseConnection.getLastReportName()))
             return false;
 
         PDDocument todayDocument = PDDocument
@@ -89,25 +91,25 @@ public class Engine {
         PDDocument yesterdayDocument = PDDocument
                 .load(reports.get(1).getURL().openStream());
 
-        Parser todayParser = new Parser(todayDocument);
-        Parser yesterdayParser = new Parser(yesterdayDocument);
+        PortugueseReportParser todayParser = new PortugueseReportParser(todayDocument);
+        PortugueseReportParser yesterdayParser = new PortugueseReportParser(yesterdayDocument);
 
         String todayStr = "" + (day < 10 ? "0" + day : day) + "/" + (month < 10 ? "0" + month : month);
 
         String message = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>\n" +
-                "\n" + buildRegionString("Norte", Parser.continentalRegions[0], todayParser, yesterdayParser) +
-                "\n" + buildRegionString("Centro", Parser.continentalRegions[1], todayParser, yesterdayParser) +
-                "\n" + buildRegionString("Lisboa e Vale do Tejo", Parser.continentalRegions[2], todayParser, yesterdayParser) +
-                "\n" + buildRegionString("Alentejo", Parser.continentalRegions[3], todayParser, yesterdayParser) +
-                "\n" + buildRegionString("Algarve", Parser.continentalRegions[4], todayParser, yesterdayParser) +
-                "\n" + buildRegionString("Madeira", Parser.madeiraRegion, todayParser, yesterdayParser) +
-                "\n" + buildRegionString("Açores", Parser.azoresRegion, todayParser, yesterdayParser) +
+                "\n" + buildRegionString("Norte", PortugueseReportParser.continentalRegions[0], todayParser, yesterdayParser) +
+                "\n" + buildRegionString("Centro", PortugueseReportParser.continentalRegions[1], todayParser, yesterdayParser) +
+                "\n" + buildRegionString("Lisboa e Vale do Tejo", PortugueseReportParser.continentalRegions[2], todayParser, yesterdayParser) +
+                "\n" + buildRegionString("Alentejo", PortugueseReportParser.continentalRegions[3], todayParser, yesterdayParser) +
+                "\n" + buildRegionString("Algarve", PortugueseReportParser.continentalRegions[4], todayParser, yesterdayParser) +
+                "\n" + buildRegionString("Madeira", PortugueseReportParser.madeiraRegion, todayParser, yesterdayParser) +
+                "\n" + buildRegionString("Açores", PortugueseReportParser.azoresRegion, todayParser, yesterdayParser) +
                 "\n" + buildCountryString(todayParser, yesterdayParser);
 
-        telegram.broadcast(message);
+        telegramConnection.broadcast(message);
 
-        database.setCachedResponse(message);
-        database.setLastReportName(reports.get(0).getName());
+        databaseConnection.setCachedResponse(message);
+        databaseConnection.setLastReportName(reports.get(0).getName());
 
         return true;
     }

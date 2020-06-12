@@ -14,7 +14,7 @@ import java.util.Calendar;
 
 import static org.junit.Assert.*;
 
-public class SleepTimeTest {
+public class SleepTimeCalculatorTest {
 
     @Test
     public void calculateBefore12() {
@@ -29,7 +29,7 @@ public class SleepTimeTest {
         cal.set(Calendar.SECOND, 30);
 
         //  When
-        SleepTime st = new SleepTime(cal.getTime());
+        SleepTimeCalculator st = new SleepTimeCalculator(cal.getTime());
 
         //  Then
         assertEquals(228, st.calculate());
@@ -48,7 +48,7 @@ public class SleepTimeTest {
         cal.set(Calendar.SECOND, 15);
 
         //  When
-        SleepTime st = new SleepTime(cal.getTime());
+        SleepTimeCalculator st = new SleepTimeCalculator(cal.getTime());
 
         //  Then
         assertEquals(1245, st.calculate());

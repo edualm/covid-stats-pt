@@ -12,15 +12,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class SleepTime {
+public class SleepTimeCalculator {
 
-    Date date = null;
+    private final Date date;
 
-    SleepTime() {
+    SleepTimeCalculator() {
         this.date = new Date();
     }
 
-    SleepTime(Date date) {
+    SleepTimeCalculator(Date date) {
         this.date = date;
     }
 

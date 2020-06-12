@@ -12,10 +12,10 @@ import java.net.HttpURLConnection;
 
 public class ThisDBConnection extends WebKVConnection {
 
-    private static String ThisDBEndpoint = "https://api.thisdb.com/v1/";
+    private static final String ThisDBEndpoint = "https://api.thisdb.com/v1/";
 
-    private String apiKey = null;
-    private String bucketId = null;
+    private final String apiKey;
+    private final String bucketId;
 
     public ThisDBConnection(String apiKey, String bucketID) {
         this.apiKey = apiKey;

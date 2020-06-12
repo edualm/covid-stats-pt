@@ -1,5 +1,5 @@
 /*
- *  Database.java
+ *  DatabaseConnection.java
  *  covid-stats-pt
  *
  *  Created by Eduardo Almeida <hello at edr dot io>
@@ -8,7 +8,7 @@
 
 package io.edr.covidstatspt.database;
 
-public interface Database {
+public interface DatabaseConnection {
 
     String getCachedResponse();
     String getLastReportName();

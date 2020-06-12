@@ -1,5 +1,5 @@
 /*
- *  Parser.java
+ *  PortugueseReportParser.java
  *  covid-stats-pt
  *
  *  Created by Eduardo Almeida <hello at edr dot io>
@@ -15,9 +15,10 @@ import technology.tabula.extractors.BasicExtractionAlgorithm;
 import java.io.IOException;
 import java.util.List;
 
-public class Parser {
+@SuppressWarnings("rawtypes")
+public class PortugueseReportParser implements ReportParser {
 
-    public static Rectangle[] continentalRegions = {
+    public static final Rectangle[] continentalRegions = {
             new Rectangle((float)266.616,(float)437.667,(float)294.877,(float)513.525),
             new Rectangle((float)357.348,(float)426.512,(float)385.608,(float)500.882),
             new Rectangle((float)453.285,(float)365.529,(float)477.827,(float)438.411),
@@ -25,14 +26,14 @@ public class Parser {
             new Rectangle((float)600.538,(float)412.382,(float)630.286,(float)482.289)
     };
 
-    public static Rectangle azoresRegion = new Rectangle((float)301.57,(float)285.209,(float)327.6,(float)356.604);
-    public static Rectangle madeiraRegion = new Rectangle((float)381.146,(float)288.184,(float)411.638,(float)355.86);
+    public static final Rectangle azoresRegion = new Rectangle((float)301.57,(float)285.209,(float)327.6,(float)356.604);
+    public static final Rectangle madeiraRegion = new Rectangle((float)381.146,(float)288.184,(float)411.638,(float)355.86);
 
-    public static Rectangle tableRegion = new Rectangle((float)412.382,(float)215.301,(float)800,(float)309.751);
+    public static final Rectangle tableRegion = new Rectangle((float)412.382,(float)215.301,(float)800,(float)309.751);
 
-    private PDDocument document = null;
+    private final PDDocument document;
 
-    Parser(PDDocument document) {
+    PortugueseReportParser(PDDocument document) {
         this.document = document;
     }
 
@@ -41,9 +42,7 @@ public class Parser {
 
         int maxColCount = 0;
 
-        for (int i = 0; i < tableRows.size(); i++) {
-            List<RectangularTextContainer> row = tableRows.get(i);
-
+        for (List<RectangularTextContainer> row : tableRows) {
             if (maxColCount < row.size())
                 maxColCount = row.size();
         }
@@ -60,7 +59,7 @@ public class Parser {
         return rv;
     }
 
-    public int[] getCasesAndDeaths(Rectangle regionRect) throws IOException {
+    public int[] getCasesAndDeaths(Rectangle regionRect) {
         ObjectExtractor oe = new ObjectExtractor(document);
 
         Page page = oe.extract(1);
@@ -97,7 +96,7 @@ public class Parser {
         return result;
     }
 
-    public int[] getTableData() throws IOException {
+    public int[] getTableData() {
         ObjectExtractor oe = new ObjectExtractor(this.document);
 
         Page page = oe.extract(1);
@@ -110,7 +109,7 @@ public class Parser {
 
         String[][] arrayRows = tableToArrayOfRows(table);
 
-        int[] result = new int[]{
+        return new int[]{
                 Integer.parseInt(arrayRows[0][0]),
                 Integer.parseInt(arrayRows[2][0]),
                 Integer.parseInt(arrayRows[3][0]),
@@ -118,7 +117,5 @@ public class Parser {
                 Integer.parseInt(arrayRows[6][0]),
                 Integer.parseInt(arrayRows[9][0])
         };
-
-        return result;
     }
 }

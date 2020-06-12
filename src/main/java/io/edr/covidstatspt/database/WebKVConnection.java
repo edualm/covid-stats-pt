@@ -16,7 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-public abstract class WebKVConnection implements Database {
+public abstract class WebKVConnection implements DatabaseConnection {
 
     abstract String getURLForKey(String key);
     abstract void setHeaders(HttpURLConnection connection);
@@ -86,8 +86,7 @@ public abstract class WebKVConnection implements Database {
         try {
             return getValueForKey("recipients").split(",");
         } catch (Exception e) {
-            String[] empty = {};
-            return empty;
+            return new String[]{};
         }
     }
 

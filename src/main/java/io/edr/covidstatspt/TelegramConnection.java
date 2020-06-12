@@ -8,7 +8,7 @@
 
 package io.edr.covidstatspt;
 
-import io.edr.covidstatspt.database.Database;
+import io.edr.covidstatspt.database.DatabaseConnection;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,18 +18,18 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-public class Telegram {
+public class TelegramConnection {
 
-    private Database database = null;
-    private String token = null;
+    private final DatabaseConnection databaseConnection;
+    private final String token;
 
-    Telegram(Database database, String token) {
-        this.database = database;
+    TelegramConnection(DatabaseConnection databaseConnection, String token) {
+        this.databaseConnection = databaseConnection;
         this.token = token;
     }
 
     public void broadcast(String message) throws IOException {
-        for (String recipient: database.getTelegramRecipients()) {
+        for (String recipient: databaseConnection.getTelegramRecipients()) {
             URL url = new URL("https://api.telegram.org/bot" +
                     this.token +
                     "/sendMessage?parse_mode=HTML&chat_id=" +

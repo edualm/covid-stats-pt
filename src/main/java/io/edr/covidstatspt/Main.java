@@ -8,7 +8,7 @@
 
 package io.edr.covidstatspt;
 
-import io.edr.covidstatspt.database.Database;
+import io.edr.covidstatspt.database.DatabaseConnection;
 import io.edr.covidstatspt.exceptions.MisconfigurationException;
 
 import java.io.IOException;
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    private static void waitLoop(Engine engine) throws MisconfigurationException {
+    private static void waitLoop(Engine engine) {
         try {
             while (!engine.run()) {
                 System.out.println("Sleeping for 1 minute...");
@@ -40,7 +40,7 @@ public class Main {
             return;
         }
 
-        SleepTime st = new SleepTime();
+        SleepTimeCalculator st = new SleepTimeCalculator();
 
         int minutesToSleep = st.calculate();
 
@@ -61,8 +61,8 @@ public class Main {
 
             Configuration.checkConfiguration();
 
-            Database dbConnection = Configuration.getDatabaseConnection();
-            Telegram tgConnection = new Telegram(dbConnection, Configuration.getTelegramBotKey());
+            DatabaseConnection dbConnection = Configuration.getDatabaseConnection();
+            TelegramConnection tgConnection = new TelegramConnection(dbConnection, Configuration.getTelegramBotKey());
 
             System.out.println("Initializing web routes...");
 
@@ -75,7 +75,9 @@ public class Main {
 
             webWorker.start();
 
-            Engine engine = new Engine(dbConnection, tgConnection);
+            ReportLocator reportLocator = new PortugueseReportLocator();
+
+            Engine engine = new Engine(dbConnection, reportLocator, tgConnection);
 
             System.out.println("\nEntering main loop...\n");
 

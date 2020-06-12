@@ -12,7 +12,7 @@ import java.net.HttpURLConnection;
 
 public class KVdbConnection extends WebKVConnection {
 
-    private String baseURL = null;
+    private final String baseURL;
 
     public KVdbConnection(String baseURL) {
         this.baseURL = baseURL;

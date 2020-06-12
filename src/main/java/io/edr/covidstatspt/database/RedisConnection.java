@@ -10,9 +10,9 @@ package io.edr.covidstatspt.database;
 
 import redis.clients.jedis.Jedis;
 
-public class RedisConnection implements Database {
+public class RedisConnection implements DatabaseConnection {
 
-    private Jedis jedis = null;
+    private final Jedis jedis;
 
     public RedisConnection(String connectionString, Integer db) {
         this.jedis = new Jedis(connectionString);
@@ -44,8 +44,7 @@ public class RedisConnection implements Database {
         try {
             return jedis.get("covid-stats-pt:recipients").split(",");
         } catch (Exception e) {
-            String[] empty = {};
-            return empty;
+            return new String[]{};
         }
     }
 

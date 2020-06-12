@@ -8,7 +8,7 @@
 
 package io.edr.covidstatspt;
 
-import io.edr.covidstatspt.database.Database;
+import io.edr.covidstatspt.database.DatabaseConnection;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -20,16 +20,17 @@ import java.util.stream.Collectors;
 import static spark.Spark.post;
 import static spark.Spark.port;
 
+@SuppressWarnings("rawtypes")
 public class WebWorker {
 
-    private Database database = null;
-    private Telegram telegram = null;
-    private String webHookPath = null;
+    private final DatabaseConnection databaseConnection;
+    private final TelegramConnection telegramConnection;
+    private final String webHookPath;
 
-    public WebWorker(int webServerPort, String webHookPath, Database database, Telegram telegram) {
+    public WebWorker(int webServerPort, String webHookPath, DatabaseConnection databaseConnection, TelegramConnection telegramConnection) {
         this.webHookPath = webHookPath;
-        this.database = database;
-        this.telegram = telegram;
+        this.databaseConnection = databaseConnection;
+        this.telegramConnection = telegramConnection;
 
         port(webServerPort);
     }
@@ -52,62 +53,68 @@ public class WebWorker {
                 String chatId = ((Long) chatProperties.get("id")).toString();
                 String textMessage = (String) message.get("text");
 
-                if (chatId == null || textMessage == null)
+                if (chatId.equals("") || textMessage == null)
                     return "Invalid chat id / text message!";
 
-                if (textMessage.equals("/today")) {
-                    String response = database.getCachedResponse();
+                switch (textMessage) {
+                    case "/today":
+                        String response = databaseConnection.getCachedResponse();
 
-                    if (response == null)
-                        response = "No cached response available!";
+                        if (response == null)
+                            response = "No cached response available!";
 
-                    telegram.send(chatId, response, true);
+                        telegramConnection.send(chatId, response, true);
 
-                    return "Done!";
-                } else if (textMessage.equals("/start") || textMessage.equals("/subscribe")) {
-                    String[] recipients = database.getTelegramRecipients();
+                        return "Done!";
 
-                    if (Arrays.stream(recipients).anyMatch(chatId::equals)) {
-                        telegram.send(chatId, "You are already subscribed!", false);
+                    case "/start":
+                    case "/subscribe": {
+                        String[] recipients = databaseConnection.getTelegramRecipients();
 
-                        return "User is already subscribed!";
+                        if (Arrays.asList(recipients).contains(chatId)) {
+                            telegramConnection.send(chatId, "You are already subscribed!", false);
+
+                            return "User is already subscribed!";
+                        }
+
+                        recipients = Arrays.copyOf(recipients, recipients.length + 1);
+                        recipients[recipients.length - 1] = chatId;
+
+                        List<String> newRecipientsAsList = Arrays.stream(recipients).filter(value -> !value.equals("")).collect(Collectors.toList());
+
+                        String[] newRecipients = new String[newRecipientsAsList.size()];
+                        newRecipients = newRecipientsAsList.toArray(newRecipients);
+
+                        databaseConnection.setTelegramRecipients(newRecipients);
+
+                        telegramConnection.send(chatId, "You have been successfully subscribed.", false);
+
+                        return "Done!";
                     }
 
-                    recipients = Arrays.copyOf(recipients, recipients.length + 1);
-                    recipients[recipients.length - 1] = chatId;
+                    case "/unsubscribe": {
+                        String[] recipients = databaseConnection.getTelegramRecipients();
 
-                    List<String> newRecipientsAsList = Arrays.stream(recipients).filter(value -> !value.equals("")).collect(Collectors.toList());
+                        if (Arrays.stream(recipients).noneMatch(chatId::equals)) {
+                            telegramConnection.send(chatId, "You are not subscribed!", false);
 
-                    String[] newRecipients = new String[newRecipientsAsList.size()];
-                    newRecipients = newRecipientsAsList.toArray(newRecipients);
+                            return "User is not subscribed!";
+                        }
 
-                    database.setTelegramRecipients(newRecipients);
+                        List<String> newRecipientsAsList = Arrays.stream(recipients).filter(value -> !value.equals(chatId)).collect(Collectors.toList());
 
-                    telegram.send(chatId, "You have been successfully subscribed.", false);
+                        String[] newRecipients = new String[newRecipientsAsList.size()];
+                        newRecipients = newRecipientsAsList.toArray(newRecipients);
 
-                    return "Done!";
-                } else if (textMessage.equals("/unsubscribe")) {
-                    String[] recipients = database.getTelegramRecipients();
+                        databaseConnection.setTelegramRecipients(newRecipients);
 
-                    if (!Arrays.stream(recipients).anyMatch(chatId::equals)) {
-                        telegram.send(chatId, "You are not subscribed!", false);
+                        telegramConnection.send(chatId, "You have been successfully unsubscribed.", false);
 
-                        return "User is not subscribed!";
+                        return "Done!";
                     }
-
-                    List<String> newRecipientsAsList = Arrays.stream(recipients).filter(value -> !value.equals(chatId)).collect(Collectors.toList());
-
-                    String[] newRecipients = new String[newRecipientsAsList.size()];
-                    newRecipients = newRecipientsAsList.toArray(newRecipients);
-
-                    database.setTelegramRecipients(newRecipients);
-
-                    telegram.send(chatId, "You have been successfully unsubscribed.", false);
-
-                    return "Done!";
                 }
 
-                telegram.send(chatId, "I have no idea what to do with what you've just sent me.", false);
+                telegramConnection.send(chatId, "I have no idea what to do with what you've just sent me.", false);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
