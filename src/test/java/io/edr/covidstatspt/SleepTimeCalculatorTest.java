@@ -28,11 +28,13 @@ public class SleepTimeCalculatorTest {
         cal.set(Calendar.MINUTE, 12);
         cal.set(Calendar.SECOND, 30);
 
-        //  When
         SleepTimeCalculator st = new SleepTimeCalculator(cal.getTime());
 
+        //  When
+        int calculatedSleepTime = st.calculate();
+
         //  Then
-        assertEquals(228, st.calculate());
+        assertEquals(228, calculatedSleepTime);
     }
 
     @Test
@@ -47,10 +49,12 @@ public class SleepTimeCalculatorTest {
         cal.set(Calendar.MINUTE, 15);
         cal.set(Calendar.SECOND, 15);
 
-        //  When
         SleepTimeCalculator st = new SleepTimeCalculator(cal.getTime());
 
+        //  When
+        int calculatedSleepTime = st.calculate();
+
         //  Then
-        assertEquals(1245, st.calculate());
+        assertEquals(1245, calculatedSleepTime);
     }
 }
