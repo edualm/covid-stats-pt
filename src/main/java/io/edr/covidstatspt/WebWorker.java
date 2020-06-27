@@ -59,9 +59,9 @@ public class WebWorker {
                 switch (textMessage) {
                     case "/about": {
                         String response = "<b>COVID Stats \uD83C\uDDF5\uD83C\uDDF9</b> is a telegram bot that parses the official COVID-19 data for Portugal and sends it daily to you via Telegram." +
-                                "<br /><br />" +
+                                "\n\n" +
                                 "Source code for this project is available at https://github.com/edualm/covid-stats-pt under a public domain license." +
-                                "<br /></br />" +
+                                "\n\n" +
                                 "Created and hosted by Eduardo Almeida (https://eduardo.engineer).";
 
                         telegramConnection.send(chatId, response, true);
