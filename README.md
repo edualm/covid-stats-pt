@@ -2,7 +2,7 @@
 
 ![Snapshot](https://github.com/edualm/covid-stats-pt/workflows/Snapshot/badge.svg)
 
-Telegram bot that parses the official COVID-19 data for Portugal and sends them daily to you by Telegram.
+Telegram bot that parses the official COVID-19 data for Portugal and sends it daily to you via Telegram.
 
 Published under the public domain.
 
@@ -45,12 +45,15 @@ Telegram webhooks will be listened to at `http://<your server>:<port>/<telegram 
 You should probably use a reverse proxy like `caddy` or `nginx`. 
 The secret key can be just a random string, but be sure to set it.
 
-Additionally, you should set up a Telegram bot that receives webhooks at that URL and is prepared 
-to receive the following commands:
+Additionally, you should set up a Telegram bot that receives webhooks at that URL and that has the commands configuration
+as such:
 
- - `/subscribe`
- - `/today`
- - `/unsubscribe`
+```
+today - Get the latest information.
+subscribe - Start receiving daily updates.
+unsubscribe - Stop receiving daily updates.
+about - About this bot.
+```
 
 ## Bot Commands
 

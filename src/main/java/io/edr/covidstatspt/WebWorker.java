@@ -57,7 +57,19 @@ public class WebWorker {
                     return "Invalid chat id / text message!";
 
                 switch (textMessage) {
-                    case "/today":
+                    case "/about": {
+                        String response = "<b>COVID Stats \uD83C\uDDF5\uD83C\uDDF9</b> is a telegram bot that parses the official COVID-19 data for Portugal and sends it daily to you via Telegram." +
+                                "<br /><br />" +
+                                "Source code for this project is available at https://github.com/edualm/covid-stats-pt under a public domain license." +
+                                "<br /></br />" +
+                                "Created and hosted by Eduardo Almeida (https://eduardo.engineer).";
+
+                        telegramConnection.send(chatId, response, true);
+
+                        return "Done!";
+                    }
+
+                    case "/today": {
                         String response = databaseConnection.getCachedResponse();
 
                         if (response == null)
@@ -66,6 +78,7 @@ public class WebWorker {
                         telegramConnection.send(chatId, response, true);
 
                         return "Done!";
+                    }
 
                     case "/start":
                     case "/subscribe": {
