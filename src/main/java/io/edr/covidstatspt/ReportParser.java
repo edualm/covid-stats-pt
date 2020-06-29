@@ -14,6 +14,6 @@ import java.io.IOException;
 
 public interface ReportParser {
 
-    int[] getCasesAndDeaths(Rectangle regionRect) throws IOException;
-    int[] getTableData() throws IOException;
+    int[] getCasesAndDeaths(Rectangle regionRect) throws IOException, PortugueseReportParser.ParseFailureException;
+    int[] getTableData() throws IOException, PortugueseReportParser.ParseFailureException;
 }

@@ -9,7 +9,6 @@
 package io.edr.covidstatspt;
 
 import io.edr.covidstatspt.database.DatabaseConnection;
-import io.edr.covidstatspt.exceptions.MisconfigurationException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import technology.tabula.Rectangle;
 
@@ -33,31 +32,58 @@ public class Engine {
     }
 
     private static String buildRegionString(String regionName, Rectangle regionRectangle, PortugueseReportParser todayParser, PortugueseReportParser yesterdayParser) {
-        return "<b> \uD83C\uDFD9️ " + regionName + "</b>\nNovos: <code>\uD83E\uDDA0 " +
-                (todayParser.getCasesAndDeaths(regionRectangle)[0] - yesterdayParser.getCasesAndDeaths(regionRectangle)[0]) +
-                " casos, \uD83D\uDC80 " +
-                (todayParser.getCasesAndDeaths(regionRectangle)[1] - yesterdayParser.getCasesAndDeaths(regionRectangle)[1]) +
-                " mortes</code>\nCumulativo: <code>\uD83E\uDDA0 " +
-                todayParser.getCasesAndDeaths(regionRectangle)[0] +
-                " casos, \uD83D\uDC80 " +
-                todayParser.getCasesAndDeaths(regionRectangle)[1] +
-                " mortes</code>\n";
+        try {
+            int[] today = todayParser.getCasesAndDeaths(regionRectangle);
+            int[] yesterday = yesterdayParser.getCasesAndDeaths(regionRectangle);
+
+            String newCases = String.valueOf(today[0] - yesterday[0]);
+            String newDeaths = String.valueOf(today[1] - yesterday[1]);
+            String totalCases = String.valueOf(today[0]);
+            String totalDeaths = String.valueOf(today[1]);
+
+            return "<b> \uD83C\uDFD9️ " + regionName + "</b>\nNovos: <code>\uD83E\uDDA0 " +
+                    newCases +
+                    " casos, \uD83D\uDC80 " +
+                    newDeaths +
+                    " mortes</code>\nCumulativo: <code>\uD83E\uDDA0 " +
+                    totalCases +
+                    " casos, \uD83D\uDC80 " +
+                    totalDeaths +
+                    " mortes</code>\n";
+
+        } catch (PortugueseReportParser.ParseFailureException e) {
+            return "<b> \uD83C\uDFD9️ " + regionName + "</b>\n<code>Erro na leitura dos dados.</code>\n";
+        }
     }
 
     private static String buildCountryString(PortugueseReportParser todayParser, PortugueseReportParser yesterdayParser) {
-        return "<b> \uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\nNovos: <code>\uD83E\uDDA0 " +
-                (todayParser.getTableData()[1] - yesterdayParser.getTableData()[1]) +
-                " casos, \uD83D\uDFE2 " +
-                (todayParser.getTableData()[4] - yesterdayParser.getTableData()[4]) +
-                " recuperados, \uD83D\uDC80 " +
-                (todayParser.getTableData()[5] - yesterdayParser.getTableData()[5]) +
-                " mortes</code>\nCumulativo: <code>\uD83E\uDDA0 " +
-                todayParser.getTableData()[1] +
-                " casos, \uD83D\uDFE2 " +
-                todayParser.getTableData()[4] +
-                " recuperados, \uD83D\uDC80 " +
-                todayParser.getTableData()[5] +
-                " mortes</code>";
+        try {
+            int[] today = todayParser.getTableData();
+            int[] yesterday = yesterdayParser.getTableData();
+
+            String newCases = String.valueOf(today[1] - yesterday[1]);
+            String newRecovered = String.valueOf(today[4] - yesterday[4]);
+            String newDeaths = String.valueOf(today[5] - yesterday[5]);
+            String totalCases = String.valueOf(today[1]);
+            String totalDeaths = String.valueOf(today[4]);
+            String totalRecovered = String.valueOf(today[5]);
+
+            return "<b> \uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\nNovos: <code>\uD83E\uDDA0 " +
+                    newCases +
+                    " casos, \uD83D\uDFE2 " +
+                    newRecovered +
+                    " recuperados, \uD83D\uDC80 " +
+                    newDeaths +
+                    " mortes</code>\nCumulativo: <code>\uD83E\uDDA0 " +
+                    totalCases +
+                    " casos, \uD83D\uDFE2 " +
+                    totalDeaths +
+                    " recuperados, \uD83D\uDC80 " +
+                    totalRecovered +
+                    " mortes</code>";
+        } catch (PortugueseReportParser.ParseFailureException e) {
+            return "<b> \uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\n<code>Erro na leitura dos dados.</code>";
+        }
     }
 
     public boolean run() throws IOException {

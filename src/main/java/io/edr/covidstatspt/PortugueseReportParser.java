@@ -18,6 +18,16 @@ import java.util.List;
 @SuppressWarnings("rawtypes")
 public class PortugueseReportParser implements ReportParser {
 
+    public class ParseFailureException extends Exception {
+        public ParseFailureException() {
+            super();
+        }
+
+        public ParseFailureException(String errorMessage) {
+            super(errorMessage);
+        }
+    }
+
     public static final Rectangle[] continentalRegions = {
             new Rectangle((float)266.616,(float)437.667,(float)294.877,(float)513.525),
             new Rectangle((float)357.348,(float)426.512,(float)385.608,(float)500.882),
@@ -29,7 +39,7 @@ public class PortugueseReportParser implements ReportParser {
     public static final Rectangle azoresRegion = new Rectangle((float)301.57,(float)285.209,(float)327.6,(float)356.604);
     public static final Rectangle madeiraRegion = new Rectangle((float)381.146,(float)288.184,(float)411.638,(float)355.86);
 
-    public static final Rectangle tableRegion = new Rectangle((float)412.382,(float)215.301,(float)800,(float)309.751);
+    public static final Rectangle tableRegion = new Rectangle((float)414,(float)225,(float)750,(float)330);
 
     private final PDDocument document;
 
@@ -59,7 +69,7 @@ public class PortugueseReportParser implements ReportParser {
         return rv;
     }
 
-    public int[] getCasesAndDeaths(Rectangle regionRect) {
+    public int[] getCasesAndDeaths(Rectangle regionRect) throws ParseFailureException {
         ObjectExtractor oe = new ObjectExtractor(document);
 
         Page page = oe.extract(1);
@@ -84,19 +94,27 @@ public class PortugueseReportParser implements ReportParser {
                 if (values.length != 2)
                     continue;
 
-                return new int[]{ Integer.parseInt(values[0]), Integer.parseInt(values[1]) };
+                try {
+                    return new int[]{ Integer.parseInt(values[0]), Integer.parseInt(values[1]) };
+                } catch (Exception e) {
+                    throw new ParseFailureException();
+                }
             }
 
-            if (result[0] == 0)
-                result[0] = Integer.parseInt(row);
-            else
-                result[1] = Integer.parseInt(row);
+            try {
+                if (result[0] == 0)
+                    result[0] = Integer.parseInt(row);
+                else
+                    result[1] = Integer.parseInt(row);
+            } catch (Exception e) {
+                throw new ParseFailureException();
+            }
         }
 
         return result;
     }
 
-    public int[] getTableData() {
+    public int[] getTableData() throws ParseFailureException {
         ObjectExtractor oe = new ObjectExtractor(this.document);
 
         Page page = oe.extract(1);
@@ -109,13 +127,17 @@ public class PortugueseReportParser implements ReportParser {
 
         String[][] arrayRows = tableToArrayOfRows(table);
 
-        return new int[]{
-                Integer.parseInt(arrayRows[0][0]),
-                Integer.parseInt(arrayRows[2][0]),
-                Integer.parseInt(arrayRows[3][0]),
-                Integer.parseInt(arrayRows[4][0]),
-                Integer.parseInt(arrayRows[6][0]),
-                Integer.parseInt(arrayRows[9][0])
-        };
+        try {
+            return new int[]{
+                    Integer.parseInt(arrayRows[0][0]),
+                    Integer.parseInt(arrayRows[2][0]),
+                    Integer.parseInt(arrayRows[3][0]),
+                    Integer.parseInt(arrayRows[4][0]),
+                    Integer.parseInt(arrayRows[6][0]),
+                    Integer.parseInt(arrayRows[9][0])
+            };
+        } catch (Exception e) {
+            throw new ParseFailureException();
+        }
     }
 }
