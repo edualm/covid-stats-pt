@@ -47,6 +47,10 @@ public class PortugueseReportParser implements ReportParser {
         this.document = document;
     }
 
+    private static int parseIntWithoutExtraCharacters(String input) {
+        return Integer.parseInt(input.replaceAll("[\\D]", ""));
+    }
+
     private static String[][] tableToArrayOfRows(Table table) {
         List<List<RectangularTextContainer>> tableRows = table.getRows();
 
@@ -95,7 +99,7 @@ public class PortugueseReportParser implements ReportParser {
                     continue;
 
                 try {
-                    return new int[]{ Integer.parseInt(values[0]), Integer.parseInt(values[1]) };
+                    return new int[]{ parseIntWithoutExtraCharacters(values[0]), parseIntWithoutExtraCharacters(values[1]) };
                 } catch (Exception e) {
                     throw new ParseFailureException();
                 }
@@ -103,9 +107,9 @@ public class PortugueseReportParser implements ReportParser {
 
             try {
                 if (result[0] == 0)
-                    result[0] = Integer.parseInt(row);
+                    result[0] = parseIntWithoutExtraCharacters(row);
                 else
-                    result[1] = Integer.parseInt(row);
+                    result[1] = parseIntWithoutExtraCharacters(row);
             } catch (Exception e) {
                 throw new ParseFailureException();
             }
@@ -129,12 +133,12 @@ public class PortugueseReportParser implements ReportParser {
 
         try {
             return new int[]{
-                    Integer.parseInt(arrayRows[0][0]),
-                    Integer.parseInt(arrayRows[2][0]),
-                    Integer.parseInt(arrayRows[3][0]),
-                    Integer.parseInt(arrayRows[4][0]),
-                    Integer.parseInt(arrayRows[6][0]),
-                    Integer.parseInt(arrayRows[9][0])
+                    parseIntWithoutExtraCharacters(arrayRows[0][0]),
+                    parseIntWithoutExtraCharacters(arrayRows[2][0]),
+                    parseIntWithoutExtraCharacters(arrayRows[3][0]),
+                    parseIntWithoutExtraCharacters(arrayRows[4][0]),
+                    parseIntWithoutExtraCharacters(arrayRows[6][0]),
+                    parseIntWithoutExtraCharacters(arrayRows[9][0])
             };
         } catch (Exception e) {
             throw new ParseFailureException();

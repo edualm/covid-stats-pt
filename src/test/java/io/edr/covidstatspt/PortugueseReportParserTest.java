@@ -19,7 +19,7 @@ public class PortugueseReportParserTest {
     }
 
     @Test
-    public void getCasesAndDeaths() throws IOException, PortugueseReportParser.ParseFailureException {
+    public void testGetCasesAndDeaths() throws IOException, PortugueseReportParser.ParseFailureException {
         //  We are just asserting that an exception isn't thrown, so this is enough.
 
         for (int i = 0; i < 10; i++) {
@@ -35,7 +35,7 @@ public class PortugueseReportParserTest {
     }
 
     @Test
-    public void getTableData() throws IOException, PortugueseReportParser.ParseFailureException {
+    public void testGetTableData() throws IOException, PortugueseReportParser.ParseFailureException {
         //  We are just asserting that an exception isn't thrown, so this is enough.
 
         for (int i = 0; i < 10; i++) {
