@@ -41,7 +41,7 @@ public class SleepTimeCalculatorTest {
     public void testCalculateAfter12() {
         //  Current time: 15:15(:15, but seconds are ignored)
         //  Time until 12PM: 20:45
-        //  Difference in minutes: (20 * 60) + 45
+        //  Difference in minutes: (20 * 60) + 45 = 1245
 
         //  Given
         Calendar cal = Calendar.getInstance();
