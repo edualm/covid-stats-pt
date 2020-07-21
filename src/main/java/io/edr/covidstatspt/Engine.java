@@ -63,23 +63,29 @@ public class Engine {
 
             String newCases = String.valueOf(today[1] - yesterday[1]);
             String newRecovered = String.valueOf(today[4] - yesterday[4]);
+            String newActive = String.valueOf((yesterday[4] - yesterday[1]) - (today[4] - today[1]));
             String newDeaths = String.valueOf(today[5] - yesterday[5]);
             String totalCases = String.valueOf(today[1]);
-            String totalDeaths = String.valueOf(today[4]);
-            String totalRecovered = String.valueOf(today[5]);
+            String totalRecovered = String.valueOf(today[4]);
+            String totalActive = String.valueOf(today[1] - today[4]);
+            String totalDeaths = String.valueOf(today[5]);
 
             return "<b> \uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\nNovos: <code>\uD83E\uDDA0 " +
                     newCases +
                     " casos, \uD83D\uDFE2 " +
                     newRecovered +
-                    " recuperados, \uD83D\uDC80 " +
+                    " recuperados, \uD83D\uDD34 " +
+                    newActive +
+                    " ativos, \uD83D\uDC80 " +
                     newDeaths +
                     " mortes</code>\nCumulativo: <code>\uD83E\uDDA0 " +
                     totalCases +
                     " casos, \uD83D\uDFE2 " +
-                    totalDeaths +
-                    " recuperados, \uD83D\uDC80 " +
                     totalRecovered +
+                    " recuperados, \uD83D\uDD34 " +
+                    totalActive +
+                    " ativos, \uD83D\uDC80 " +
+                    totalDeaths +
                     " mortes</code>";
         } catch (PortugueseReportParser.ParseFailureException e) {
             return "<b> \uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\n<code>Erro na leitura dos dados.</code>";
