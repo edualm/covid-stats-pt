@@ -69,6 +69,10 @@ Sends you a copy of the last report sent by the bot.
 
 Unsubscribes you from the daily messages.
 
+### `/about`
+
+Returns a friendly message about the bot and its programmer(s).
+
 ## Example Message
 
 The message is in Portuguese.
