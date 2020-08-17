@@ -8,38 +8,76 @@
 
 package io.edr.covidstatspt;
 
+import io.edr.covidstatspt.exceptions.ParseFailureException;
+import io.edr.covidstatspt.model.CountryReport;
+import io.edr.covidstatspt.model.RegionReport;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import technology.tabula.*;
 import technology.tabula.extractors.BasicExtractionAlgorithm;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("rawtypes")
 public class PortugueseReportParser implements ReportParser {
 
-    public class ParseFailureException extends Exception {
-        public ParseFailureException() {
-            super();
-        }
+    public static final Map<String, Rectangle[]> regionsToRect = new HashMap<String, Rectangle[]>() {{
+        put("Norte", new Rectangle[]{
+                new Rectangle((float) 210.095, (float) 422.793, (float) 226.457, (float) 503.857),
+                new Rectangle((float) 229.431, (float) 422.793, (float) 248.024, (float) 503.113)
+        });
 
-        public ParseFailureException(String errorMessage) {
-            super(errorMessage);
-        }
-    }
+        put("Centro", new Rectangle[]{
+                new Rectangle((float) 292.646,(float)423.537,(float)310.495,(float)497.163),
+                new Rectangle((float) 318.675,(float)426.512,(float)332.062,(float)495.676)
+        });
 
-    public static final Rectangle[] continentalRegions = {
-            new Rectangle((float)266.616,(float)437.667,(float)294.877,(float)513.525),
-            new Rectangle((float)357.348,(float)426.512,(float)385.608,(float)500.882),
-            new Rectangle((float)453.285,(float)365.529,(float)477.827,(float)438.411),
-            new Rectangle((float)517.243,(float)415.356,(float)542.529,(float)486.008),
-            new Rectangle((float)600.538,(float)412.382,(float)630.286,(float)482.289)
+        put("Lisboa e Vale do Tejo", new Rectangle[]{
+                new Rectangle((float) 421.306,(float) 343.961,(float) 437.667,(float) 422.05),
+                new Rectangle((float) 440.642,(float) 342.474,(float) 459.978,(float) 422.793)
+        });
+
+        put("Alentejo", new Rectangle[]{
+                new Rectangle((float) 500.882,(float) 401.97,(float) 517.987,(float) 480.802),
+                new Rectangle((float) 520.962,(float) 401.226,(float) 539.554,(float) 481.546)
+        });
+
+        put("Algarve", new Rectangle[]{
+                new Rectangle((float) 592.357,(float) 399.739,(float) 609.462,(float) 480.802),
+                new Rectangle((float) 611.693,(float) 398.995,(float) 631.773,(float) 480.058)
+        });
+
+        put("Madeira", new Rectangle[]{
+                new Rectangle((float) 343.218, (float) 245.049, (float) 361.066, (float) 324.625),
+                new Rectangle((float) 364.785, (float) 245.793, (float) 384.121, (float) 324.625)
+        });
+
+        put("Açores", new Rectangle[]{
+                new Rectangle((float) 204.889, (float) 244.305, (float) 221.994, (float) 325.369),
+                new Rectangle((float) 225.713, (float) 247.28,  (float) 242.818, (float) 326.112)
+        });
+    }};
+
+    public static final String[] orderedRegions = {
+            "Norte", "Centro", "Lisboa e Vale do Tejo", "Alentejo", "Algarve", "Madeira", "Açores"
     };
 
-    public static final Rectangle azoresRegion = new Rectangle((float)301.57,(float)285.209,(float)327.6,(float)356.604);
-    public static final Rectangle madeiraRegion = new Rectangle((float)381.146,(float)288.184,(float)411.638,(float)355.86);
+    public static final Rectangle activeRect =
+            new Rectangle((float) 203.402, (float) 30.12,   (float) 240.587, (float) 172.167);
+    public static final Rectangle recoveriesRect =
+            new Rectangle((float) 274.053, (float) 30.12,   (float) 306.776, (float) 172.167);
+    public static final Rectangle deathsRect =
+            new Rectangle((float) 343.961, (float) 30.864,  (float) 375.94,  (float) 172.167);
 
-    public static final Rectangle tableRegion = new Rectangle((float)414,(float)225,(float)750,(float)330);
+    public static final Rectangle casesRect =
+            new Rectangle((float) 479.315, (float) 30.864,  (float) 515.012, (float) 172.91);
+
+    public static final Rectangle hospitalizedRect =
+            new Rectangle((float) 693.5,   (float) 27.145,  (float) 727.71,  (float) 123.082);
+    public static final Rectangle icuRect =
+            new Rectangle((float) 687.551,(float)132.007,(float)732.916,(float)239.1);
 
     private final PDDocument document;
 
@@ -48,10 +86,28 @@ public class PortugueseReportParser implements ReportParser {
     }
 
     private static int parseIntWithoutExtraCharacters(String input) {
-        return Integer.parseInt(input.replaceAll("[\\D]", ""));
+        try {
+            return Integer.parseInt(input.replaceAll("[\\D]", ""));
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
-    private static String[][] tableToArrayOfRows(Table table) {
+    private static int parsePossiblyNegativeIntWithoutExtraCharacters(String input) {
+        if (input.length() <= 1)
+            return 0;
+
+        boolean isNegative = input.contains("- ");
+
+        int value = parseIntWithoutExtraCharacters(input);
+
+        if (isNegative)
+            value *= -1;
+
+        return value;
+    }
+
+    private static String[][] tableToArrayOfColumns(Table table) {
         List<List<RectangularTextContainer>> tableRows = table.getRows();
 
         int maxColCount = 0;
@@ -73,75 +129,114 @@ public class PortugueseReportParser implements ReportParser {
         return rv;
     }
 
-    public int[] getCasesAndDeaths(Rectangle regionRect) throws ParseFailureException {
+    @Override
+    public String[] getOrderedRegions() {
+        return orderedRegions;
+    }
+
+    private String[] rectangleToColumns(Rectangle rectangle, Page page) {
+        Page area = page.getArea(rectangle);
+
+        BasicExtractionAlgorithm bea = new BasicExtractionAlgorithm();
+
+        Table table = bea.extract(area).get(0);
+
+        return tableToArrayOfColumns(table)[0];
+    }
+
+    @Override
+    public Map<String, RegionReport> getRegionReports() throws IOException, ParseFailureException {
+        HashMap<String, RegionReport> regionReports = new HashMap<>();
+
         ObjectExtractor oe = new ObjectExtractor(document);
 
         Page page = oe.extract(1);
 
-        Page area = page.getArea(regionRect);
+        for (String regionName: orderedRegions) {
+            RegionReport.Report dayReport = new RegionReport.Report();
+            RegionReport.Report cumulativeReport = new RegionReport.Report();
 
-        BasicExtractionAlgorithm bea = new BasicExtractionAlgorithm();
+            Rectangle[] rectangles = regionsToRect.get(regionName);
 
-        Table table = bea.extract(area).get(0);
+            for (int i = 0; i < rectangles.length; i++) {
+                String[] columns = rectangleToColumns(rectangles[i], page);
 
-        String[] rows = tableToArrayOfRows(table)[0];
-
-        int[] result = {0, 0};
-
-        for (String row: rows) {
-            if (row.length() == 0)
-                continue;
-
-            if (row.contains(" ")) {
-                String[] values = row.split(" ");
-
-                if (values.length != 2)
-                    continue;
-
-                try {
-                    return new int[]{ parseIntWithoutExtraCharacters(values[0]), parseIntWithoutExtraCharacters(values[1]) };
-                } catch (Exception e) {
-                    throw new ParseFailureException();
+                if (i == 0) {
+                    cumulativeReport.cases = parseIntWithoutExtraCharacters(columns[0]);
+                    dayReport.cases = parsePossiblyNegativeIntWithoutExtraCharacters(columns[1]);
+                } else {
+                    cumulativeReport.deaths = parseIntWithoutExtraCharacters(columns[0]);
+                    dayReport.deaths = parsePossiblyNegativeIntWithoutExtraCharacters(columns[1]);
                 }
             }
 
-            try {
-                if (result[0] == 0)
-                    result[0] = parseIntWithoutExtraCharacters(row);
-                else
-                    result[1] = parseIntWithoutExtraCharacters(row);
-            } catch (Exception e) {
-                throw new ParseFailureException();
+            //  Hacky solution for when values appear reversed, for some reason.
+
+            if (dayReport.cases > cumulativeReport.cases) {
+                int cumulative = cumulativeReport.cases;
+
+                cumulativeReport.cases = dayReport.cases;
+                dayReport.cases = cumulative;
             }
+
+            if (dayReport.deaths > cumulativeReport.deaths) {
+                int cumulative = cumulativeReport.deaths;
+
+                cumulativeReport.deaths = dayReport.deaths;
+                dayReport.deaths = cumulative;
+            }
+
+            regionReports.put(regionName, new RegionReport(dayReport, cumulativeReport));
         }
 
-        return result;
+        return regionReports;
     }
 
-    public int[] getTableData() throws ParseFailureException {
-        ObjectExtractor oe = new ObjectExtractor(this.document);
+    private static String[] splitCountryTableData(String input) {
+        if (input.split("-").length == 2) {
+            String[] spl = input.split("-");
+
+            return new String[]{spl[0], "-" + spl[1]};
+        } else if (input.split("\\+").length == 2) {
+            String[] spl = input.split("\\+");
+
+            return new String[]{spl[0], "+" + spl[1]};
+        } else {
+            return new String[]{input, "0"};
+        }
+    }
+
+    @Override
+    public CountryReport getCountryReport() throws IOException, ParseFailureException {
+        ObjectExtractor oe = new ObjectExtractor(document);
 
         Page page = oe.extract(1);
 
-        Page area = page.getArea(tableRegion);
+        String[] activeColumns = splitCountryTableData(rectangleToColumns(activeRect, page)[0]);
+        String[] recoveriesColumns = splitCountryTableData(rectangleToColumns(recoveriesRect, page)[0]);
+        String[] deathsColumns = splitCountryTableData(rectangleToColumns(deathsRect, page)[0]);
+        String[] casesColumns = splitCountryTableData(rectangleToColumns(casesRect, page)[0]);
+        String[] hospitalizedColumns = splitCountryTableData(rectangleToColumns(hospitalizedRect, page)[0]);
+        String[] icuColumns = splitCountryTableData(rectangleToColumns(icuRect, page)[0]);
 
-        BasicExtractionAlgorithm bea = new BasicExtractionAlgorithm();
+        CountryReport.Report dayReport = new CountryReport.Report(
+                parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[1]),
+                parsePossiblyNegativeIntWithoutExtraCharacters(deathsColumns[1]),
+                parsePossiblyNegativeIntWithoutExtraCharacters(activeColumns[1]),
+                parsePossiblyNegativeIntWithoutExtraCharacters(recoveriesColumns[1]),
+                parsePossiblyNegativeIntWithoutExtraCharacters(hospitalizedColumns[1]),
+                icuColumns.length > 1 ? parsePossiblyNegativeIntWithoutExtraCharacters(icuColumns[1]) : 0
+        );
 
-        Table table = bea.extract(area).get(0);
+        CountryReport.Report cumulativeReport = new CountryReport.Report(
+                parseIntWithoutExtraCharacters(casesColumns[0]),
+                parseIntWithoutExtraCharacters(deathsColumns[0]),
+                parseIntWithoutExtraCharacters(activeColumns[0]),
+                parseIntWithoutExtraCharacters(recoveriesColumns[0]),
+                parsePossiblyNegativeIntWithoutExtraCharacters(hospitalizedColumns[0]),
+                parsePossiblyNegativeIntWithoutExtraCharacters(icuColumns[0])
+        );
 
-        String[][] arrayRows = tableToArrayOfRows(table);
-
-        try {
-            return new int[]{
-                    parseIntWithoutExtraCharacters(arrayRows[0][0]),
-                    parseIntWithoutExtraCharacters(arrayRows[2][0]),
-                    parseIntWithoutExtraCharacters(arrayRows[3][0]),
-                    parseIntWithoutExtraCharacters(arrayRows[4][0]),
-                    parseIntWithoutExtraCharacters(arrayRows[6][0]),
-                    parseIntWithoutExtraCharacters(arrayRows[9][0])
-            };
-        } catch (Exception e) {
-            throw new ParseFailureException();
-        }
+        return new CountryReport(dayReport, cumulativeReport);
     }
 }

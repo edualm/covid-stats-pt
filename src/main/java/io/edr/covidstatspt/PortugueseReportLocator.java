@@ -38,15 +38,12 @@ public class PortugueseReportLocator implements ReportLocator {
         return new ReportMetadata(name, url);
     }
 
-    public ArrayList<ReportMetadata> getReports() throws IOException {
+    public ReportMetadata getReport() throws IOException {
         ArrayList<ReportMetadata> list = new ArrayList<>();
 
         Document doc = Jsoup.connect(reportsURL).get();
 
-        list.add(reportForElement(doc.selectFirst(".single_content > ul:nth-child(1) > li:nth-child(1)")));
-        list.add(reportForElement(doc.selectFirst(".single_content > ul:nth-child(1) > li:nth-child(2)")));
-
-        return list;
+        return reportForElement(doc.selectFirst(".single_content > ul:nth-child(1) > li:nth-child(1)"));
     }
 
     public ArrayList<ReportMetadata> getReports(int count) throws IOException {

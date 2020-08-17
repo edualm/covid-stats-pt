@@ -9,9 +9,8 @@
 package io.edr.covidstatspt;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public interface ReportLocator {
 
-    ArrayList<ReportMetadata> getReports() throws IOException;
+    public ReportMetadata getReport() throws IOException;
 }

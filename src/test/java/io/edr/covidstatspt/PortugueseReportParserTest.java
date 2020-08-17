@@ -1,5 +1,14 @@
+/*
+ *  PortugueseReportParserTest.java
+ *  covid-stats-pt
+ *
+ *  Created by Eduardo Almeida <hello at edr dot io>
+ *  Published under the public domain
+ */
+
 package io.edr.covidstatspt;
 
+import io.edr.covidstatspt.exceptions.ParseFailureException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,34 +24,35 @@ public class PortugueseReportParserTest {
     public static void setUp() throws IOException {
         PortugueseReportLocator locator = new PortugueseReportLocator();
 
-        reports = locator.getReports(10);
+        //  Currently set to `1` as the report format changed recently,
+        //  and it would break if this was >1 for now.
+
+        reports = locator.getReports(1);
     }
 
     @Test
-    public void testGetCasesAndDeaths() throws IOException, PortugueseReportParser.ParseFailureException {
+    public void testGetCasesAndDeaths() throws IOException, ParseFailureException {
         //  We are just asserting that an exception isn't thrown, so this is enough.
 
-        for (int i = 0; i < 10; i++) {
-            PDDocument doc = PDDocument.load(reports.get(i).getURL().openStream());
+        for (ReportMetadata report: reports) {
+            PDDocument doc = PDDocument.load(report.getURL().openStream());
             PortugueseReportParser parser = new PortugueseReportParser(doc);
 
-            for (int j = 0; j < 5; j++) {
-                parser.getCasesAndDeaths(PortugueseReportParser.continentalRegions[j]);
-            }
+            parser.getRegionReports();
 
             doc.close();
         }
     }
 
     @Test
-    public void testGetTableData() throws IOException, PortugueseReportParser.ParseFailureException {
+    public void testGetTableData() throws IOException, ParseFailureException {
         //  We are just asserting that an exception isn't thrown, so this is enough.
 
-        for (int i = 0; i < 10; i++) {
-            PDDocument doc = PDDocument.load(reports.get(i).getURL().openStream());
+        for (ReportMetadata report: reports) {
+            PDDocument doc = PDDocument.load(report.getURL().openStream());
             PortugueseReportParser parser = new PortugueseReportParser(doc);
 
-            parser.getTableData();
+            parser.getCountryReport();
             doc.close();
         }
     }

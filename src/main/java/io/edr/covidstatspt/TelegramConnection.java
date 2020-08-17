@@ -30,18 +30,7 @@ public class TelegramConnection {
 
     public void broadcast(String message) throws IOException {
         for (String recipient: databaseConnection.getTelegramRecipients()) {
-            URL url = new URL("https://api.telegram.org/bot" +
-                    this.token +
-                    "/sendMessage?parse_mode=HTML&chat_id=" +
-                    recipient +
-                    "&text=" +
-                    URLEncoder.encode(message, StandardCharsets.UTF_8.toString()));
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-
-            BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            rd.close();
+            send(recipient, message, true);
         }
     }
 

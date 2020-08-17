@@ -8,12 +8,17 @@
 
 package io.edr.covidstatspt;
 
-import technology.tabula.Rectangle;
+import io.edr.covidstatspt.exceptions.ParseFailureException;
+import io.edr.covidstatspt.model.CountryReport;
+import io.edr.covidstatspt.model.RegionReport;
 
 import java.io.IOException;
+import java.util.Map;
 
 public interface ReportParser {
 
-    int[] getCasesAndDeaths(Rectangle regionRect) throws IOException, PortugueseReportParser.ParseFailureException;
-    int[] getTableData() throws IOException, PortugueseReportParser.ParseFailureException;
+    String[] getOrderedRegions();
+
+    Map<String, RegionReport> getRegionReports() throws IOException, ParseFailureException;
+    CountryReport getCountryReport() throws IOException, ParseFailureException;
 }

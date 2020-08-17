@@ -1,5 +1,5 @@
 /*
- *  SleepTimeTest.java
+ *  SleepTimeCalculatorTest.java
  *  covid-stats-pt
  *
  *  Created by Eduardo Almeida <hello at edr dot io>
