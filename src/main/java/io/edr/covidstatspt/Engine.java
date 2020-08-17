@@ -9,6 +9,7 @@
 package io.edr.covidstatspt;
 
 import io.edr.covidstatspt.database.DatabaseConnection;
+import io.edr.covidstatspt.exceptions.MisconfigurationException;
 import io.edr.covidstatspt.exceptions.ParseFailureException;
 import io.edr.covidstatspt.model.CountryReport;
 import io.edr.covidstatspt.model.RegionReport;
@@ -62,7 +63,7 @@ public class Engine {
                 " mortes</code>";
     }
 
-    public boolean run() throws IOException {
+    public boolean run() throws MisconfigurationException, IOException {
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.setTime(new Date());
 
@@ -115,7 +116,13 @@ public class Engine {
 
             return true;
         } catch (ParseFailureException e) {
-            return false;
+            //  Warn the admin...
+            telegramConnection.sendToAdmin("An error has occurred while parsing the report for " + report.getName(), false);
+
+            //  Make sure we don't keep retrying!
+            databaseConnection.setLastReportName(report.getName());
+
+            return true;
         }
     }
 }

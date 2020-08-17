@@ -38,6 +38,8 @@ public class Main {
             }
 
             return;
+        } catch (MisconfigurationException e) {
+            //  Do nothing here, as this only means that an admin message couldn't be sent.
         }
 
         SleepTimeCalculator st = new SleepTimeCalculator();

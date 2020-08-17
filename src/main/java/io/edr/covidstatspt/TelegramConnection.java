@@ -9,6 +9,7 @@
 package io.edr.covidstatspt;
 
 import io.edr.covidstatspt.database.DatabaseConnection;
+import io.edr.covidstatspt.exceptions.MisconfigurationException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -48,6 +49,15 @@ public class TelegramConnection {
 
         BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         rd.close();
+    }
+
+    public void sendToAdmin(String message, boolean html) throws MisconfigurationException, IOException {
+        //  The Telegram ID of the admin is assumed to be the first ID on the recipients array.
+
+        if (databaseConnection.getTelegramRecipients().length == 0)
+            throw new MisconfigurationException("No telegram recipients set while the server tried to send a message to an admin!");
+
+        send(databaseConnection.getTelegramRecipients()[0], message, html);
     }
 
 }
