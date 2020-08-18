@@ -6,6 +6,10 @@
  *  Published under the public domain
  */
 
+/*
+ *  This file is sponsored by Mjölnir 🔨.
+ */
+
 package io.edr.covidstatspt;
 
 import io.edr.covidstatspt.exceptions.ParseFailureException;
@@ -16,6 +20,7 @@ import technology.tabula.*;
 import technology.tabula.extractors.BasicExtractionAlgorithm;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,7 +146,32 @@ public class PortugueseReportParser implements ReportParser {
 
         Table table = bea.extract(area).get(0);
 
-        return tableToArrayOfColumns(table)[0];
+        String[][] arrayOfArrayOfColumns = tableToArrayOfColumns(table);
+        
+        //  Sometimes, the column we get isn't exactly the one we're expecting.
+
+        int indexToParse = 0;
+
+        while (indexToParse < arrayOfArrayOfColumns.length) {
+            boolean isSaneColumn = false;
+
+            for (String s: arrayOfArrayOfColumns[indexToParse]) {
+                if (s.length() > 1) {
+                    isSaneColumn = true;
+
+                    break;
+                }
+            }
+
+            if (isSaneColumn)
+                break;
+
+            indexToParse++;
+        }
+
+        return Arrays.stream(tableToArrayOfColumns(table)[indexToParse])
+                .filter(s -> !s.isEmpty())
+                .toArray(String[]::new);
     }
 
     @Override
@@ -160,6 +190,10 @@ public class PortugueseReportParser implements ReportParser {
 
             for (int i = 0; i < rectangles.length; i++) {
                 String[] columns = rectangleToColumns(rectangles[i], page);
+
+                if (columns.length == 1) {
+                    columns = splitTableData(columns[0]);
+                }
 
                 if (i == 0) {
                     cumulativeReport.cases = parseIntWithoutExtraCharacters(columns[0]);
@@ -192,7 +226,7 @@ public class PortugueseReportParser implements ReportParser {
         return regionReports;
     }
 
-    private static String[] splitCountryTableData(String input) {
+    private static String[] splitTableData(String input) {
         if (input.split("-").length == 2) {
             String[] spl = input.split("-");
 
@@ -212,20 +246,20 @@ public class PortugueseReportParser implements ReportParser {
 
         Page page = oe.extract(1);
 
-        String[] activeColumns = splitCountryTableData(rectangleToColumns(activeRect, page)[0]);
-        String[] recoveriesColumns = splitCountryTableData(rectangleToColumns(recoveriesRect, page)[0]);
-        String[] deathsColumns = splitCountryTableData(rectangleToColumns(deathsRect, page)[0]);
-        String[] casesColumns = splitCountryTableData(rectangleToColumns(casesRect, page)[0]);
-        String[] hospitalizedColumns = splitCountryTableData(rectangleToColumns(hospitalizedRect, page)[0]);
-        String[] icuColumns = splitCountryTableData(rectangleToColumns(icuRect, page)[0]);
+        String[] activeColumns = splitTableData(rectangleToColumns(activeRect, page)[0]);
+        String[] recoveriesColumns = splitTableData(rectangleToColumns(recoveriesRect, page)[0]);
+        String[] deathsColumns = splitTableData(rectangleToColumns(deathsRect, page)[0]);
+        String[] casesColumns = splitTableData(rectangleToColumns(casesRect, page)[0]);
+        //  String[] hospitalizedColumns = splitTableData(rectangleToColumns(hospitalizedRect, page)[0]);
+        //  String[] icuColumns = splitTableData(rectangleToColumns(icuRect, page)[0]);
 
         CountryReport.Report dayReport = new CountryReport.Report(
                 parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[1]),
                 parsePossiblyNegativeIntWithoutExtraCharacters(deathsColumns[1]),
                 parsePossiblyNegativeIntWithoutExtraCharacters(activeColumns[1]),
                 parsePossiblyNegativeIntWithoutExtraCharacters(recoveriesColumns[1]),
-                parsePossiblyNegativeIntWithoutExtraCharacters(hospitalizedColumns[1]),
-                icuColumns.length > 1 ? parsePossiblyNegativeIntWithoutExtraCharacters(icuColumns[1]) : 0
+                /* parsePossiblyNegativeIntWithoutExtraCharacters(hospitalizedColumns[1]) */ -1,
+                /* icuColumns.length > 1 ? parsePossiblyNegativeIntWithoutExtraCharacters(icuColumns[1]) : 0 */ -1
         );
 
         CountryReport.Report cumulativeReport = new CountryReport.Report(
@@ -233,8 +267,8 @@ public class PortugueseReportParser implements ReportParser {
                 parseIntWithoutExtraCharacters(deathsColumns[0]),
                 parseIntWithoutExtraCharacters(activeColumns[0]),
                 parseIntWithoutExtraCharacters(recoveriesColumns[0]),
-                parsePossiblyNegativeIntWithoutExtraCharacters(hospitalizedColumns[0]),
-                parsePossiblyNegativeIntWithoutExtraCharacters(icuColumns[0])
+                /* parsePossiblyNegativeIntWithoutExtraCharacters(hospitalizedColumns[0]) */ -1,
+                /* parsePossiblyNegativeIntWithoutExtraCharacters(icuColumns[0]) */ -1
         );
 
         return new CountryReport(dayReport, cumulativeReport);
