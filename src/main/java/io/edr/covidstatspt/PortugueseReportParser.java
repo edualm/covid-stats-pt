@@ -6,10 +6,6 @@
  *  Published under the public domain
  */
 
-/*
- *  This file is sponsored by Mjölnir 🔨.
- */
-
 package io.edr.covidstatspt;
 
 import io.edr.covidstatspt.exceptions.ParseFailureException;
@@ -70,19 +66,14 @@ public class PortugueseReportParser implements ReportParser {
     };
 
     public static final Rectangle activeRect =
-            new Rectangle((float) 203.402, (float) 30.12,   (float) 240.587, (float) 172.167);
+            new Rectangle((float) 203.402, (float) 30.12,   (float) 150, (float) 172.167);
     public static final Rectangle recoveriesRect =
-            new Rectangle((float) 274.053, (float) 30.12,   (float) 306.776, (float) 172.167);
+            new Rectangle((float) 274.053, (float) 30.12,   (float) 150, (float) 172.167);
     public static final Rectangle deathsRect =
-            new Rectangle((float) 343.961, (float) 30.864,  (float) 375.94,  (float) 172.167);
+            new Rectangle((float) 343.961, (float) 30.864,  (float) 125,  (float) 172.167);
 
     public static final Rectangle casesRect =
-            new Rectangle((float) 479.315, (float) 30.864,  (float) 515.012, (float) 172.91);
-
-    public static final Rectangle hospitalizedRect =
-            new Rectangle((float) 693.5,   (float) 27.145,  (float) 727.71,  (float) 123.082);
-    public static final Rectangle icuRect =
-            new Rectangle((float) 687.551,(float)132.007,(float)732.916,(float)239.1);
+            new Rectangle((float) 479.315, (float) 30.864,  (float) 150, (float) 172.91);
 
     private final PDDocument document;
 
@@ -147,8 +138,6 @@ public class PortugueseReportParser implements ReportParser {
         Table table = bea.extract(area).get(0);
 
         String[][] arrayOfArrayOfColumns = tableToArrayOfColumns(table);
-        
-        //  Sometimes, the column we get isn't exactly the one we're expecting.
 
         int indexToParse = 0;
 
@@ -156,7 +145,7 @@ public class PortugueseReportParser implements ReportParser {
             boolean isSaneColumn = false;
 
             for (String s: arrayOfArrayOfColumns[indexToParse]) {
-                if (s.length() > 1) {
+                if (s.contains("-") || s.contains("+")) {
                     isSaneColumn = true;
 
                     break;
@@ -183,8 +172,8 @@ public class PortugueseReportParser implements ReportParser {
         Page page = oe.extract(1);
 
         for (String regionName: orderedRegions) {
-            RegionReport.Report dayReport = new RegionReport.Report();
-            RegionReport.Report cumulativeReport = new RegionReport.Report();
+            RegionReport.Report dayReport = new RegionReport.Report(0, 0);
+            RegionReport.Report cumulativeReport = new RegionReport.Report(0, 0);
 
             Rectangle[] rectangles = regionsToRect.get(regionName);
 
@@ -250,25 +239,19 @@ public class PortugueseReportParser implements ReportParser {
         String[] recoveriesColumns = splitTableData(rectangleToColumns(recoveriesRect, page)[0]);
         String[] deathsColumns = splitTableData(rectangleToColumns(deathsRect, page)[0]);
         String[] casesColumns = splitTableData(rectangleToColumns(casesRect, page)[0]);
-        //  String[] hospitalizedColumns = splitTableData(rectangleToColumns(hospitalizedRect, page)[0]);
-        //  String[] icuColumns = splitTableData(rectangleToColumns(icuRect, page)[0]);
 
         CountryReport.Report dayReport = new CountryReport.Report(
                 parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[1]),
                 parsePossiblyNegativeIntWithoutExtraCharacters(deathsColumns[1]),
                 parsePossiblyNegativeIntWithoutExtraCharacters(activeColumns[1]),
-                parsePossiblyNegativeIntWithoutExtraCharacters(recoveriesColumns[1]),
-                /* parsePossiblyNegativeIntWithoutExtraCharacters(hospitalizedColumns[1]) */ -1,
-                /* icuColumns.length > 1 ? parsePossiblyNegativeIntWithoutExtraCharacters(icuColumns[1]) : 0 */ -1
+                parsePossiblyNegativeIntWithoutExtraCharacters(recoveriesColumns[1])
         );
 
         CountryReport.Report cumulativeReport = new CountryReport.Report(
                 parseIntWithoutExtraCharacters(casesColumns[0]),
                 parseIntWithoutExtraCharacters(deathsColumns[0]),
                 parseIntWithoutExtraCharacters(activeColumns[0]),
-                parseIntWithoutExtraCharacters(recoveriesColumns[0]),
-                /* parsePossiblyNegativeIntWithoutExtraCharacters(hospitalizedColumns[0]) */ -1,
-                /* parsePossiblyNegativeIntWithoutExtraCharacters(icuColumns[0]) */ -1
+                parseIntWithoutExtraCharacters(recoveriesColumns[0])
         );
 
         return new CountryReport(dayReport, cumulativeReport);
