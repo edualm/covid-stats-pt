@@ -17,18 +17,12 @@ public class CountryReport {
         public int active;
         public int recoveries;
 
-        public int hospitalized;
-        public int icu;
-
-        public Report(int cases, int deaths, int active, int recoveries, int hospitalized, int icu) {
+        public Report(int cases, int deaths, int active, int recoveries) {
             this.cases = cases;
             this.deaths = deaths;
 
             this.active = active;
             this.recoveries = recoveries;
-
-            this.hospitalized = hospitalized;
-            this.icu = icu;
         }
     }
 

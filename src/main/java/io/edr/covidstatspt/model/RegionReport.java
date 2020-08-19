@@ -14,9 +14,9 @@ public class RegionReport {
         public int cases;
         public int deaths;
 
-        public Report() {
-            cases = 0;
-            deaths = 0;
+        public Report(int cases, int deaths) {
+            this.cases = cases;
+            this.deaths = deaths;
         }
     }
 
