@@ -70,7 +70,7 @@ public class PortugueseReportParser implements ReportParser {
     public static final Rectangle recoveriesRect =
             new Rectangle((float) 274.053, (float) 30.12,   (float) 150, (float) 172.167);
     public static final Rectangle deathsRect =
-            new Rectangle((float) 343.961, (float) 30.864,  (float) 125,  (float) 172.167);
+            new Rectangle((float) 343.961, (float) 30.864,  (float) 150,  (float) 172.167);
 
     public static final Rectangle casesRect =
             new Rectangle((float) 479.315, (float) 30.864,  (float) 150, (float) 172.91);

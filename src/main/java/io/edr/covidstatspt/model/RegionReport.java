@@ -18,6 +18,21 @@ public class RegionReport {
             this.cases = cases;
             this.deaths = deaths;
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof RegionReport.Report))
+                return false;
+
+            RegionReport.Report r = (RegionReport.Report) obj;
+
+            return (cases == r.cases && deaths == r.deaths);
+        }
+
+        @Override
+        public String toString() {
+            return "Cases: " + cases + ", Deaths: " + deaths;
+        }
     }
 
     public Report day;
@@ -26,5 +41,20 @@ public class RegionReport {
     public RegionReport(Report day, Report cumulative) {
         this.day = day;
         this.cumulative = cumulative;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof RegionReport))
+            return false;
+
+        RegionReport cr = (RegionReport) obj;
+
+        return (day.equals(cr.day) && cumulative.equals(cr.cumulative));
+    }
+
+    @Override
+    public String toString() {
+        return "Day: <" + day.toString() + ">, Cumulative: <" + cumulative.toString() + ">";
     }
 }

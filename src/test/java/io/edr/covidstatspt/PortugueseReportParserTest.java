@@ -9,12 +9,19 @@
 package io.edr.covidstatspt;
 
 import io.edr.covidstatspt.exceptions.ParseFailureException;
+import io.edr.covidstatspt.model.CountryReport;
+import io.edr.covidstatspt.model.RegionReport;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.Assert.*;
 
 public class PortugueseReportParserTest {
 
@@ -55,5 +62,69 @@ public class PortugueseReportParserTest {
             parser.getCountryReport();
             doc.close();
         }
+    }
+
+    @Test
+    public void testCountryDataIsCorrectlyAcquired() throws IOException, ParseFailureException {
+        PDDocument doc = PDDocument.load(new URL("https://covid19.min-saude.pt/wp-content/uploads/2020/09/202_DGS_boletim_20200920.pdf").openStream());
+        PortugueseReportParser parser = new PortugueseReportParser(doc);
+
+        CountryReport countryReport = parser.getCountryReport();
+
+        //  Hospitalized/ICU are set to "0" as we are currently not parsing these.
+
+        CountryReport expectedReport = new CountryReport(
+                new CountryReport.Report(552, 13, 347, 192),
+                new CountryReport.Report(68577, 1912, 21069, 45596)
+        );
+
+        assertEquals(expectedReport, countryReport);
+    }
+
+    @Test
+    public void testRegionDataIsCorrectlyAcquired() throws IOException, ParseFailureException {
+        PDDocument doc = PDDocument.load(new URL("https://covid19.min-saude.pt/wp-content/uploads/2020/09/202_DGS_boletim_20200920.pdf").openStream());
+        PortugueseReportParser parser = new PortugueseReportParser(doc);
+
+        Map<String, RegionReport> regionReports = parser.getRegionReports();
+
+        Map<String, RegionReport> expectedReports = new HashMap<String, RegionReport>();
+
+        expectedReports.put("Norte", new RegionReport(
+                new RegionReport.Report(273, 3),
+                new RegionReport.Report(24795, 871)
+        ));
+
+        expectedReports.put("Centro", new RegionReport(
+                new RegionReport.Report(29, 0),
+                new RegionReport.Report(5621, 256)
+        ));
+
+        expectedReports.put("Lisboa e Vale do Tejo", new RegionReport(
+                new RegionReport.Report(179, 10),
+                new RegionReport.Report(35004, 728)
+        ));
+
+        expectedReports.put("Alentejo", new RegionReport(
+                new RegionReport.Report(35, 0),
+                new RegionReport.Report(1318, 23)
+        ));
+
+        expectedReports.put("Algarve", new RegionReport(
+                new RegionReport.Report(33, 0),
+                new RegionReport.Report(1392, 19)
+        ));
+
+        expectedReports.put("Açores", new RegionReport(
+                new RegionReport.Report(2, 0),
+                new RegionReport.Report(243, 15)
+        ));
+
+        expectedReports.put("Madeira", new RegionReport(
+                new RegionReport.Report(1, 0),
+                new RegionReport.Report(204, 0)
+        ));
+
+        assertEquals(expectedReports, regionReports);
     }
 }

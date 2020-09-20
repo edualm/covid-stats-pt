@@ -107,6 +107,8 @@ public class Engine {
 
             messageBuilder.append("\n").append(buildCountryString(parser.getCountryReport()));
 
+            messageBuilder.append("\n\n").append("Report DGS: " + report.getURL().toString());
+
             String message = messageBuilder.toString();
 
             telegramConnection.broadcast(message);
@@ -116,10 +118,18 @@ public class Engine {
 
             return true;
         } catch (ParseFailureException e) {
-            //  Warn the admin...
             telegramConnection.sendToAdmin("An error has occurred while parsing the report for " + report.getName(), false);
 
-            //  Make sure we don't keep retrying!
+            StringBuilder messageBuilder = new StringBuilder("\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>\n");
+
+            messageBuilder.append("\nOcorreu um erro na obtenção dos dados do report da DGS. No entanto, o mesmo já está disponível para consulta no seguinte link: " + report.getURL().toString());
+
+            String message = messageBuilder.toString();
+
+            telegramConnection.broadcast(messageBuilder.toString());
+
+            databaseConnection.setCachedResponse(message);
+
             databaseConnection.setLastReportName(report.getName());
 
             return true;

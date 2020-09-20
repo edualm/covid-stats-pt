@@ -24,6 +24,24 @@ public class CountryReport {
             this.active = active;
             this.recoveries = recoveries;
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof Report))
+                return false;
+
+            Report r = (Report) obj;
+
+            return (cases == r.cases &&
+                    deaths == r.deaths &&
+                    active == r.active &&
+                    recoveries == r.recoveries);
+        }
+
+        @Override
+        public String toString() {
+            return "Cases: " + cases + ", Deaths: " + deaths + ", Active: " + active + ", Recoveries: " + recoveries;
+        }
     }
 
     public CountryReport.Report day;
@@ -32,5 +50,20 @@ public class CountryReport {
     public CountryReport(Report day, Report cumulative) {
         this.day = day;
         this.cumulative = cumulative;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof CountryReport))
+            return false;
+
+        CountryReport cr = (CountryReport) obj;
+
+        return (day.equals(cr.day) && cumulative.equals(cr.cumulative));
+    }
+
+    @Override
+    public String toString() {
+        return "Day: <" + day.toString() + ">, Cumulative: <" + cumulative.toString() + ">";
     }
 }
