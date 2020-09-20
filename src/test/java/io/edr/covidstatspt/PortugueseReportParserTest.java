@@ -71,8 +71,6 @@ public class PortugueseReportParserTest {
 
         CountryReport countryReport = parser.getCountryReport();
 
-        //  Hospitalized/ICU are set to "0" as we are currently not parsing these.
-
         CountryReport expectedReport = new CountryReport(
                 new CountryReport.Report(552, 13, 347, 192),
                 new CountryReport.Report(68577, 1912, 21069, 45596)
