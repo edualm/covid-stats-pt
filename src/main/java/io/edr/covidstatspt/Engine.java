@@ -107,7 +107,7 @@ public class Engine {
 
             messageBuilder.append("\n").append(buildCountryString(parser.getCountryReport()));
 
-            messageBuilder.append("\n\n").append("Report DGS: " + report.getURL().toString());
+            messageBuilder.append("\n\n").append("\uD83D\uDCDD <b>Report DGS</b>: " + report.getURL().toString());
 
             String message = messageBuilder.toString();
 
