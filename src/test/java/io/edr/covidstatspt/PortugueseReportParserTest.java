@@ -28,7 +28,7 @@ public class PortugueseReportParserTest {
     static ArrayList<ReportMetadata> reports;
 
     @BeforeClass
-    public static void setUp() throws IOException {
+    public static void setUp() throws IOException, ParseFailureException {
         PortugueseReportLocator locator = new PortugueseReportLocator();
 
         //  Currently set to `1` as the report format changed recently,

@@ -8,6 +8,7 @@
 
 package io.edr.covidstatspt;
 
+import io.edr.covidstatspt.exceptions.ParseFailureException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -29,8 +30,13 @@ public class PortugueseReportLocator implements ReportLocator {
         this.reportsURL = reportsURL;
     }
 
-    private ReportMetadata reportForElement(Element element) throws MalformedURLException {
-        String[] split = element.text().split(" | ");
+    private ReportMetadata reportForElement(Element element) throws MalformedURLException, ParseFailureException {
+        String[] split = element.text().split(" \\| ");
+
+        if (split.length != 2) {
+            throw new ParseFailureException();
+        }
+
         String name = split[split.length - 1];
 
         URL url = new URL(element.selectFirst("> a:nth-child(1)").absUrl("href"));
@@ -38,7 +44,7 @@ public class PortugueseReportLocator implements ReportLocator {
         return new ReportMetadata(name, url);
     }
 
-    public ReportMetadata getReport() throws IOException {
+    public ReportMetadata getReport() throws IOException, ParseFailureException {
         ArrayList<ReportMetadata> list = new ArrayList<>();
 
         Document doc = Jsoup.connect(reportsURL).get();
@@ -46,7 +52,7 @@ public class PortugueseReportLocator implements ReportLocator {
         return reportForElement(doc.selectFirst(".single_content > ul:nth-child(1) > li:nth-child(1)"));
     }
 
-    public ArrayList<ReportMetadata> getReports(int count) throws IOException {
+    public ArrayList<ReportMetadata> getReports(int count) throws IOException, ParseFailureException {
         ArrayList<ReportMetadata> list = new ArrayList<>();
 
         Document doc = Jsoup.connect(reportsURL).get();

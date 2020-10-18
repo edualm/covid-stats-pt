@@ -8,9 +8,11 @@
 
 package io.edr.covidstatspt;
 
+import io.edr.covidstatspt.exceptions.ParseFailureException;
+
 import java.io.IOException;
 
 public interface ReportLocator {
 
-    public ReportMetadata getReport() throws IOException;
+    public ReportMetadata getReport() throws IOException, ParseFailureException;
 }

@@ -81,7 +81,13 @@ public class Engine {
         if (databaseConnection.getLastReportName().equals(new SimpleDateFormat("dd/MM/yyyy").format(new Date())))
             return true;
 
-        ReportMetadata report = reportLocator.getReport();
+        ReportMetadata report = null;
+
+        try {
+            report = reportLocator.getReport();
+        } catch (ParseFailureException e) {
+            return false;
+        }
 
         //  Check if a report was published. If not, return `false`.
 
