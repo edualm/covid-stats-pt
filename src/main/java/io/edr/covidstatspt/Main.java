@@ -12,7 +12,6 @@ import io.edr.covidstatspt.database.DatabaseConnection;
 import io.edr.covidstatspt.exceptions.MisconfigurationException;
 
 import java.io.IOException;
-
 import java.util.concurrent.TimeUnit;
 
 public class Main {

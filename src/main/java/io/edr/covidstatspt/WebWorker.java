@@ -9,6 +9,7 @@
 package io.edr.covidstatspt;
 
 import io.edr.covidstatspt.database.DatabaseConnection;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 

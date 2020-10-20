@@ -11,7 +11,9 @@ package io.edr.covidstatspt;
 import io.edr.covidstatspt.exceptions.ParseFailureException;
 import io.edr.covidstatspt.model.CountryReport;
 import io.edr.covidstatspt.model.RegionReport;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
+
 import technology.tabula.*;
 import technology.tabula.extractors.BasicExtractionAlgorithm;
 

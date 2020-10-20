@@ -14,6 +14,7 @@ import io.edr.covidstatspt.exceptions.ParseFailureException;
 import io.edr.covidstatspt.model.CountryReport;
 import io.edr.covidstatspt.model.RegionReport;
 import io.edr.covidstatspt.model.ReportMetadata;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.IOException;

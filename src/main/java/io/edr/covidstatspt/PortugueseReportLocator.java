@@ -9,8 +9,8 @@
 package io.edr.covidstatspt;
 
 import io.edr.covidstatspt.exceptions.ParseFailureException;
-
 import io.edr.covidstatspt.model.ReportMetadata;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
