@@ -9,6 +9,7 @@
 package io.edr.covidstatspt;
 
 import io.edr.covidstatspt.exceptions.ParseFailureException;
+import io.edr.covidstatspt.model.ReportMetadata;
 
 import java.io.IOException;
 

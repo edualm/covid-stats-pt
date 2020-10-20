@@ -11,6 +11,7 @@ package io.edr.covidstatspt;
 import io.edr.covidstatspt.exceptions.ParseFailureException;
 import io.edr.covidstatspt.model.CountryReport;
 import io.edr.covidstatspt.model.RegionReport;
+import io.edr.covidstatspt.model.ReportMetadata;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -124,5 +125,15 @@ public class PortugueseReportParserTest {
         ));
 
         assertEquals(expectedReports, regionReports);
+    }
+
+    @Test
+    public void testBigNumbersOnCumulativeCases() throws IOException, ParseFailureException {
+        PDDocument doc = PDDocument.load(new URL("https://covid19.min-saude.pt/wp-content/uploads/2020/10/232_DGS_boletim_20201020.pdf").openStream());
+        PortugueseReportParser parser = new PortugueseReportParser(doc);
+
+        CountryReport countryReport = parser.getCountryReport();
+
+        assertEquals(countryReport.cumulative.cases, 103736);
     }
 }

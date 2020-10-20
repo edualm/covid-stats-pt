@@ -73,7 +73,7 @@ public class PortugueseReportParser implements ReportParser {
             new Rectangle((float) 343.961, (float) 30.864,  (float) 150,  (float) 172.167);
 
     public static final Rectangle casesRect =
-            new Rectangle((float) 479.315, (float) 30.864,  (float) 150, (float) 172.91);
+            new Rectangle((float) 479.315, (float) 25,  (float) 155, (float) 172.91);
 
     private final PDDocument document;
 

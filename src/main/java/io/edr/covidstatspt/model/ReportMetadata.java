@@ -6,7 +6,7 @@
  *  Published under the public domain
  */
 
-package io.edr.covidstatspt;
+package io.edr.covidstatspt.model;
 
 import java.net.URL;
 
@@ -15,7 +15,7 @@ public final class ReportMetadata {
     private final String name;
     private final URL url;
 
-    ReportMetadata(String name, URL url) {
+    public ReportMetadata(String name, URL url) {
         this.name = name;
         this.url = url;
     }
