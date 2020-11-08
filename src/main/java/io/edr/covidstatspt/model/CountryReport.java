@@ -12,11 +12,11 @@ public class CountryReport {
 
     public static class Report {
 
-        public int cases;
-        public int deaths;
+        public final int cases;
+        public final int deaths;
 
-        public int active;
-        public int recoveries;
+        public final int active;
+        public final int recoveries;
 
         public Report(int cases, int deaths, int active, int recoveries) {
             this.cases = cases;
@@ -45,8 +45,8 @@ public class CountryReport {
         }
     }
 
-    public CountryReport.Report day;
-    public CountryReport.Report cumulative;
+    public final CountryReport.Report day;
+    public final CountryReport.Report cumulative;
 
     public CountryReport(Report day, Report cumulative) {
         this.day = day;

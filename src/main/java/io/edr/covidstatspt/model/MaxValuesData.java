@@ -15,9 +15,10 @@ public class MaxValuesData {
 
     public static class DatedValue {
 
-        public String date;
-        public int value;
+        public final String date;
+        public final int value;
 
+        @SuppressWarnings("unused")
         public DatedValue() {
             this.date = "";
             this.value = 0;
@@ -48,6 +49,7 @@ public class MaxValuesData {
     public DatedValue cases;
     public DatedValue deaths;
 
+    @SuppressWarnings("unused")
     public MaxValuesData() {
         this.cases = null;
         this.deaths = null;

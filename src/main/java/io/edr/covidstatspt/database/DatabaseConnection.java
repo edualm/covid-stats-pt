@@ -10,6 +10,7 @@ package io.edr.covidstatspt.database;
 
 import io.edr.covidstatspt.model.MaxValuesData;
 
+@SuppressWarnings("UnusedReturnValue")
 public interface DatabaseConnection {
 
     String getCachedResponse();

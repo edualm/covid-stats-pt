@@ -14,7 +14,7 @@ import java.util.Calendar;
 
 import static org.junit.Assert.*;
 
-public class SleepTimeCalculatorTest {
+public class SleepTimeCalculatorTests {
 
     @Test
     public void testCalculateBefore12() {

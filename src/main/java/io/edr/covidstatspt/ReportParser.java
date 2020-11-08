@@ -8,17 +8,16 @@
 
 package io.edr.covidstatspt;
 
-import io.edr.covidstatspt.exceptions.ParseFailureException;
 import io.edr.covidstatspt.model.CountryReport;
 import io.edr.covidstatspt.model.RegionReport;
 
-import java.io.IOException;
 import java.util.Map;
 
 public interface ReportParser {
 
+    @SuppressWarnings("SameReturnValue")
     String[] getOrderedRegions();
 
-    Map<String, RegionReport> getRegionReports() throws IOException, ParseFailureException;
-    CountryReport getCountryReport() throws IOException, ParseFailureException;
+    Map<String, RegionReport> getRegionReports();
+    CountryReport getCountryReport();
 }

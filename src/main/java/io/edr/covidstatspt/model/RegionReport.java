@@ -36,8 +36,8 @@ public class RegionReport {
         }
     }
 
-    public Report day;
-    public Report cumulative;
+    public final Report day;
+    public final Report cumulative;
 
     public RegionReport(Report day, Report cumulative) {
         this.day = day;

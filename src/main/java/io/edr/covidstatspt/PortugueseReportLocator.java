@@ -28,10 +28,6 @@ public class PortugueseReportLocator implements ReportLocator {
         this.reportsURL = "https://covid19.min-saude.pt/relatorio-de-situacao/";
     }
 
-    PortugueseReportLocator(String reportsURL) {
-        this.reportsURL = reportsURL;
-    }
-
     private ReportMetadata reportForElement(Element element) throws MalformedURLException, ParseFailureException {
         String[] split = element.text().split(" \\| ");
 
@@ -47,8 +43,6 @@ public class PortugueseReportLocator implements ReportLocator {
     }
 
     public ReportMetadata getReport() throws IOException, ParseFailureException {
-        ArrayList<ReportMetadata> list = new ArrayList<>();
-
         Document doc = Jsoup.connect(reportsURL).get();
 
         return reportForElement(doc.selectFirst(".single_content > ul:nth-child(1) > li:nth-child(1)"));

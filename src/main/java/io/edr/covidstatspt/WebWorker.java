@@ -25,10 +25,10 @@ import static spark.Spark.port;
 public class WebWorker {
 
     private final DatabaseConnection databaseConnection;
-    private final TelegramConnection telegramConnection;
+    private final MessagingConnection telegramConnection;
     private final String webHookPath;
 
-    public WebWorker(int webServerPort, String webHookPath, DatabaseConnection databaseConnection, TelegramConnection telegramConnection) {
+    public WebWorker(int webServerPort, String webHookPath, DatabaseConnection databaseConnection, MessagingConnection telegramConnection) {
         this.webHookPath = webHookPath;
         this.databaseConnection = databaseConnection;
         this.telegramConnection = telegramConnection;

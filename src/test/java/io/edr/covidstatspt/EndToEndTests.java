@@ -1,8 +1,15 @@
+/*
+ *  EndToEndTests.java
+ *  covid-stats-pt
+ *
+ *  Created by Eduardo Almeida <hello at edr dot io>
+ *  Published under the public domain
+ */
+
 package io.edr.covidstatspt;
 
 import io.edr.covidstatspt.database.DatabaseConnection;
 import io.edr.covidstatspt.exceptions.MisconfigurationException;
-import io.edr.covidstatspt.exceptions.ParseFailureException;
 import io.edr.covidstatspt.model.MaxValuesData;
 import io.edr.covidstatspt.model.ReportMetadata;
 import org.junit.Before;
@@ -17,7 +24,7 @@ import java.util.GregorianCalendar;
 
 import static org.junit.Assert.assertEquals;
 
-public class EndToEndTest {
+public class EndToEndTests {
 
     private static class MockDatabaseConnection implements DatabaseConnection {
 
@@ -78,28 +85,28 @@ public class EndToEndTest {
 
     private static class SpyMessagingConnection implements MessagingConnection {
 
-        public ArrayList<String> messages;
+        public final ArrayList<String> messages;
 
         public SpyMessagingConnection() {
             messages = new ArrayList<>();
         }
 
         @Override
-        public void broadcast(String message) throws IOException {
+        public void broadcast(String message) {
             messages.add(message);
         }
 
         @Override
-        public void send(String recipient, String message, boolean html) throws IOException {}
+        public void send(String recipient, String message, boolean html) {}
 
         @Override
-        public void sendToAdmin(String message, boolean html) throws MisconfigurationException, IOException {}
+        public void sendToAdmin(String message, boolean html) {}
     }
 
     private static class MockReportLocator implements ReportLocator {
 
         @Override
-        public ReportMetadata getReport() throws IOException, ParseFailureException {
+        public ReportMetadata getReport() throws IOException {
             return new ReportMetadata(
                     "07/11/2020",
                     new URL("https://covid19.min-saude.pt/wp-content/uploads/2020/11/250_DGS_boletim_20201107.pdf")

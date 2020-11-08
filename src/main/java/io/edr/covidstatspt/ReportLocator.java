@@ -15,5 +15,5 @@ import java.io.IOException;
 
 public interface ReportLocator {
 
-    public ReportMetadata getReport() throws IOException, ParseFailureException;
+    ReportMetadata getReport() throws IOException, ParseFailureException;
 }

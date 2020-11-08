@@ -13,8 +13,4 @@ public class ParseFailureException extends Exception {
     public ParseFailureException() {
         super();
     }
-
-    public ParseFailureException(String errorMessage) {
-        super(errorMessage);
-    }
 }

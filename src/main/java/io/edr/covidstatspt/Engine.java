@@ -34,9 +34,7 @@ public class Engine {
         this.messagingConnection = messagingConnection;
     }
 
-    private boolean[] checkForDailyMaximums(String date, int cases, int deaths) {
-        boolean[] result = new boolean[]{false, false};
-
+    private void checkForDailyMaximums(String date, int cases, int deaths) {
         MaxValuesData maxValues = databaseConnection.getMaxValuesData();
 
         if (maxValues == null) {
@@ -47,24 +45,17 @@ public class Engine {
 
             databaseConnection.setMaxValuesData(maxValues);
 
-            return result;
+            return;
         }
 
-        if (cases > maxValues.cases.value) {
+        if (cases > maxValues.cases.value)
             maxValues.cases = new MaxValuesData.DatedValue(date, cases);
 
-            result[0] = true;
-        }
-
-        if (deaths > maxValues.deaths.value) {
+        if (deaths > maxValues.deaths.value)
             maxValues.deaths = new MaxValuesData.DatedValue(date, deaths);
-
-            result[1] = true;
-        }
 
         databaseConnection.setMaxValuesData(maxValues);
 
-        return result;
     }
 
     public boolean run() throws MisconfigurationException, IOException {
@@ -83,7 +74,7 @@ public class Engine {
         if (databaseConnection.getLastReportName().equals(new SimpleDateFormat("dd/MM/yyyy").format(new Date())))
             return true;
 
-        ReportMetadata report = null;
+        ReportMetadata report;
 
         try {
             report = reportLocator.getReport();
@@ -126,7 +117,7 @@ public class Engine {
                     .append("\n")
                     .append(StringFactory.buildMaxDeathsString(todayStr, countryReport.day.deaths, maxValues.deaths.value));
 
-            messageBuilder.append("\n\n").append("\uD83D\uDCDD <b>Report DGS</b>: " + report.getURL().toString());
+            messageBuilder.append("\n\n").append("\uD83D\uDCDD <b>Report DGS</b>: ").append(report.getURL().toString());
 
             String message = messageBuilder.toString();
 
@@ -136,12 +127,12 @@ public class Engine {
             databaseConnection.setLastReportName(report.getName());
 
             return true;
-        } catch (ParseFailureException e) {
+        } catch (Exception e) {
             messagingConnection.sendToAdmin("An error has occurred while parsing the report for " + report.getName(), false);
 
             StringBuilder messageBuilder = new StringBuilder("\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>\n");
 
-            messageBuilder.append("\nOcorreu um erro na obtenção dos dados do report da DGS. No entanto, o mesmo já está disponível para consulta no seguinte link: " + report.getURL().toString());
+            messageBuilder.append("\nOcorreu um erro na obtenção dos dados do report da DGS. No entanto, o mesmo já está disponível para consulta no seguinte link: ").append(report.getURL().toString());
 
             String message = messageBuilder.toString();
 

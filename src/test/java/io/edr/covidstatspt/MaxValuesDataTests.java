@@ -1,8 +1,15 @@
+/*
+ *  MaxValuesDataTests.java
+ *  covid-stats-pt
+ *
+ *  Created by Eduardo Almeida <hello at edr dot io>
+ *  Published under the public domain
+ */
+
 package io.edr.covidstatspt;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.edr.covidstatspt.model.MaxValuesData;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

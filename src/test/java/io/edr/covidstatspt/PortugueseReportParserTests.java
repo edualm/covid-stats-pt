@@ -25,7 +25,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class PortugueseReportParserTest {
+public class PortugueseReportParserTests {
 
     static ArrayList<ReportMetadata> reports;
 
@@ -40,7 +40,7 @@ public class PortugueseReportParserTest {
     }
 
     @Test
-    public void testGetCasesAndDeaths() throws IOException, ParseFailureException {
+    public void testGetCasesAndDeaths() throws IOException {
         //  We are just asserting that an exception isn't thrown, so this is enough.
 
         for (ReportMetadata report: reports) {
@@ -54,7 +54,7 @@ public class PortugueseReportParserTest {
     }
 
     @Test
-    public void testGetTableData() throws IOException, ParseFailureException {
+    public void testGetTableData() throws IOException {
         //  We are just asserting that an exception isn't thrown, so this is enough.
 
         for (ReportMetadata report: reports) {
@@ -67,7 +67,7 @@ public class PortugueseReportParserTest {
     }
 
     @Test
-    public void testCountryDataIsCorrectlyAcquired() throws IOException, ParseFailureException {
+    public void testCountryDataIsCorrectlyAcquired() throws IOException {
         PDDocument doc = PDDocument.load(new URL("https://covid19.min-saude.pt/wp-content/uploads/2020/09/202_DGS_boletim_20200920.pdf").openStream());
         PortugueseReportParser parser = new PortugueseReportParser(doc);
 
@@ -82,13 +82,13 @@ public class PortugueseReportParserTest {
     }
 
     @Test
-    public void testRegionDataIsCorrectlyAcquired() throws IOException, ParseFailureException {
+    public void testRegionDataIsCorrectlyAcquired() throws IOException {
         PDDocument doc = PDDocument.load(new URL("https://covid19.min-saude.pt/wp-content/uploads/2020/09/202_DGS_boletim_20200920.pdf").openStream());
         PortugueseReportParser parser = new PortugueseReportParser(doc);
 
         Map<String, RegionReport> regionReports = parser.getRegionReports();
 
-        Map<String, RegionReport> expectedReports = new HashMap<String, RegionReport>();
+        Map<String, RegionReport> expectedReports = new HashMap<>();
 
         expectedReports.put("Norte", new RegionReport(
                 new RegionReport.Report(273, 3),
@@ -129,7 +129,7 @@ public class PortugueseReportParserTest {
     }
 
     @Test
-    public void testBigNumbersOnCumulativeCases() throws IOException, ParseFailureException {
+    public void testBigNumbersOnCumulativeCases() throws IOException {
         PDDocument doc = PDDocument.load(new URL("https://covid19.min-saude.pt/wp-content/uploads/2020/10/232_DGS_boletim_20201020.pdf").openStream());
         PortugueseReportParser parser = new PortugueseReportParser(doc);
 

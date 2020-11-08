@@ -8,7 +8,6 @@
 
 package io.edr.covidstatspt;
 
-import io.edr.covidstatspt.exceptions.ParseFailureException;
 import io.edr.covidstatspt.model.CountryReport;
 import io.edr.covidstatspt.model.RegionReport;
 
@@ -17,7 +16,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import technology.tabula.*;
 import technology.tabula.extractors.BasicExtractionAlgorithm;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -166,7 +164,7 @@ public class PortugueseReportParser implements ReportParser {
     }
 
     @Override
-    public Map<String, RegionReport> getRegionReports() throws IOException, ParseFailureException {
+    public Map<String, RegionReport> getRegionReports() {
         HashMap<String, RegionReport> regionReports = new HashMap<>();
 
         ObjectExtractor oe = new ObjectExtractor(document);
@@ -232,7 +230,7 @@ public class PortugueseReportParser implements ReportParser {
     }
 
     @Override
-    public CountryReport getCountryReport() throws IOException, ParseFailureException {
+    public CountryReport getCountryReport() {
         ObjectExtractor oe = new ObjectExtractor(document);
 
         Page page = oe.extract(1);

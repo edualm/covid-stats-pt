@@ -45,7 +45,7 @@ Telegram webhooks will be listened to at `http://<your server>:<port>/<telegram 
 You should probably use a reverse proxy like `caddy` or `nginx`. 
 The secret key can be just a random string, but be sure to set it.
 
-Additionally, you should set up a Telegram bot that receives webhooks at that URL and that has the commands configuration
+Additionally, you should set up a Telegram bot that receives webhooks at that URL and that has the commands' configuration
 as such:
 
 ```
