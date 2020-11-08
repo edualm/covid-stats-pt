@@ -11,6 +11,7 @@ package io.edr.covidstatspt.model;
 public class RegionReport {
 
     public static class Report {
+
         public int cases;
         public int deaths;
 

@@ -8,6 +8,7 @@
 
 package io.edr.covidstatspt.database;
 
+import io.edr.covidstatspt.model.MaxValuesData;
 import redis.clients.jedis.Jedis;
 
 public class RedisConnection implements DatabaseConnection {
@@ -49,6 +50,15 @@ public class RedisConnection implements DatabaseConnection {
     }
 
     @Override
+    public MaxValuesData getMaxValuesData() {
+        try {
+            return MaxValuesData.deserialize(jedis.get("covid-stats-pt:max-values-data"));
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
     public boolean setCachedResponse(String cachedResponse) {
         try {
             jedis.set("covid-stats-pt:cached_response", cachedResponse);
@@ -74,6 +84,17 @@ public class RedisConnection implements DatabaseConnection {
     public boolean setTelegramRecipients(String[] recipients) {
         try {
             jedis.set("covid-stats-pt:recipients", String.join(",", recipients));
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean setMaxValuesData(MaxValuesData data) {
+        try {
+            jedis.set("covid-stats-pt:max-values-data", data.serialize());
 
             return true;
         } catch (Exception e) {

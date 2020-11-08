@@ -8,6 +8,8 @@
 
 package io.edr.covidstatspt.database;
 
+import io.edr.covidstatspt.model.MaxValuesData;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -91,6 +93,15 @@ public abstract class WebKVConnection implements DatabaseConnection {
     }
 
     @Override
+    public MaxValuesData getMaxValuesData() {
+        try {
+            return MaxValuesData.deserialize(getValueForKey("max-values-data"));
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
     public boolean setCachedResponse(String cachedResponse) {
         try {
             setValueForKey("cached_response", cachedResponse);
@@ -116,6 +127,17 @@ public abstract class WebKVConnection implements DatabaseConnection {
     public boolean setTelegramRecipients(String[] recipients) {
         try {
             setValueForKey("recipients", String.join(",", recipients));
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean setMaxValuesData(MaxValuesData data) {
+        try {
+            setValueForKey("max-values-data", data.serialize());
 
             return true;
         } catch (Exception e) {

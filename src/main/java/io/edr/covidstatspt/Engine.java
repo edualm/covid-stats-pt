@@ -12,6 +12,7 @@ import io.edr.covidstatspt.database.DatabaseConnection;
 import io.edr.covidstatspt.exceptions.MisconfigurationException;
 import io.edr.covidstatspt.exceptions.ParseFailureException;
 import io.edr.covidstatspt.model.CountryReport;
+import io.edr.covidstatspt.model.MaxValuesData;
 import io.edr.covidstatspt.model.RegionReport;
 import io.edr.covidstatspt.model.ReportMetadata;
 
@@ -33,36 +34,37 @@ public class Engine {
         this.telegramConnection = telegramConnection;
     }
 
-    private static String buildRegionString(String regionName, RegionReport report) {
-        return "<b> \uD83C\uDFD9️ " + regionName + "</b>\nNovos: <code>\uD83E\uDDA0 " +
-                report.day.cases +
-                " casos, \uD83D\uDC80 " +
-                report.day.deaths +
-                " mortes</code>\nCumulativo: <code>\uD83E\uDDA0 " +
-                report.cumulative.cases +
-                " casos, \uD83D\uDC80 " +
-                report.cumulative.deaths +
-                " mortes</code>\n";
-    }
+    private boolean[] checkForDailyMaximums(String date, int cases, int deaths) {
+        boolean[] result = new boolean[]{false, false};
 
-    private static String buildCountryString(CountryReport report) {
-        return "<b> \uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\nNovos: <code>\uD83E\uDDA0 " +
-                report.day.cases +
-                " casos, \uD83D\uDFE2 " +
-                report.day.recoveries +
-                " recuperados, \uD83D\uDD34 " +
-                report.day.active +
-                " ativos, \uD83D\uDC80 " +
-                report.day.deaths +
-                " mortes</code>\nCumulativo: <code>\uD83E\uDDA0 " +
-                report.cumulative.cases +
-                " casos, \uD83D\uDFE2 " +
-                report.cumulative.recoveries +
-                " recuperados, \uD83D\uDD34 " +
-                report.cumulative.active +
-                " ativos, \uD83D\uDC80 " +
-                report.cumulative.deaths +
-                " mortes</code>";
+        MaxValuesData maxValues = databaseConnection.getMaxValuesData();
+
+        if (maxValues == null) {
+            maxValues = new MaxValuesData(
+                    new MaxValuesData.DatedValue(date, cases),
+                    new MaxValuesData.DatedValue(date, deaths)
+            );
+
+            databaseConnection.setMaxValuesData(maxValues);
+
+            return result;
+        }
+
+        if (cases > maxValues.cases.value) {
+            maxValues.cases = new MaxValuesData.DatedValue(date, cases);
+
+            result[0] = true;
+        }
+
+        if (deaths > maxValues.deaths.value) {
+            maxValues.deaths = new MaxValuesData.DatedValue(date, deaths);
+
+            result[1] = true;
+        }
+
+        databaseConnection.setMaxValuesData(maxValues);
+
+        return result;
     }
 
     public boolean run() throws MisconfigurationException, IOException {
@@ -110,10 +112,28 @@ public class Engine {
             for (String regionName: parser.getOrderedRegions()) {
                 RegionReport r = regionReports.get(regionName);
 
-                messageBuilder.append("\n").append(buildRegionString(regionName, r));
+                messageBuilder.append("\n").append(StringFactory.buildRegionString(regionName, r));
             }
 
-            messageBuilder.append("\n").append(buildCountryString(parser.getCountryReport()));
+            CountryReport countryReport = parser.getCountryReport();
+
+            messageBuilder.append("\n").append(StringFactory.buildCountryString(countryReport));
+
+            boolean[] dailyMaximums = checkForDailyMaximums(todayStr, countryReport.day.cases, countryReport.day.deaths);
+
+            MaxValuesData maxValues = databaseConnection.getMaxValuesData();
+
+            if (dailyMaximums[0]) {
+                messageBuilder.append("\n").append(
+                        StringFactory.buildMaxCasesString(countryReport.day.cases, maxValues.cases.value)
+                );
+            }
+
+            if (dailyMaximums[1]) {
+                messageBuilder.append("\n").append(
+                        StringFactory.buildMaxCasesString(countryReport.day.deaths, maxValues.deaths.value)
+                );
+            }
 
             messageBuilder.append("\n\n").append("\uD83D\uDCDD <b>Report DGS</b>: " + report.getURL().toString());
 
