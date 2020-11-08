@@ -18,6 +18,11 @@ public class MaxValuesData {
         public String date;
         public int value;
 
+        public DatedValue() {
+            this.date = "";
+            this.value = 0;
+        }
+
         public DatedValue(String date, int value) {
             this.date = date;
             this.value = value;
@@ -42,6 +47,11 @@ public class MaxValuesData {
 
     public DatedValue cases;
     public DatedValue deaths;
+
+    public MaxValuesData() {
+        this.cases = null;
+        this.deaths = null;
+    }
 
     public MaxValuesData(DatedValue cases, DatedValue deaths) {
         this.cases = cases;
