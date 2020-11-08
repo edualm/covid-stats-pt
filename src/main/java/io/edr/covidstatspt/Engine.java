@@ -119,20 +119,12 @@ public class Engine {
 
             MaxValuesData maxValues = databaseConnection.getMaxValuesData();
 
-            boolean[] dailyMaximums = checkForDailyMaximums(todayStr, countryReport.day.cases, countryReport.day.deaths);
+            checkForDailyMaximums(todayStr, countryReport.day.cases, countryReport.day.deaths);
 
-            if (dailyMaximums[0] || dailyMaximums[1])
-                messageBuilder.append("\n");
-
-            if (dailyMaximums[0])
-                messageBuilder.append("\n").append(
-                        StringFactory.buildMaxCasesString(countryReport.day.cases, maxValues.cases.value)
-                );
-
-            if (dailyMaximums[1])
-                messageBuilder.append("\n").append(
-                        StringFactory.buildMaxDeathsString(countryReport.day.deaths, maxValues.deaths.value)
-                );
+            messageBuilder.append("\n\n")
+                    .append(StringFactory.buildMaxCasesString(todayStr, countryReport.day.cases, maxValues.cases.value))
+                    .append("\n")
+                    .append(StringFactory.buildMaxDeathsString(todayStr, countryReport.day.deaths, maxValues.deaths.value));
 
             messageBuilder.append("\n\n").append("\uD83D\uDCDD <b>Report DGS</b>: " + report.getURL().toString());
 

@@ -48,11 +48,17 @@ public class StringFactory {
                 " mortes</code>";
     }
 
-    static String buildMaxCasesString(int newCases, int pastCases) {
-        return "<b>\u26A0\uFE0F Novo máximo de \uD83E\uDDA0 casos: <code>" + newCases + " (+ " + (newCases - pastCases) + ")</code>";
+    static String buildMaxCasesString(String maxCasesDate, int newCases, int pastCases) {
+        if (newCases > pastCases)
+            return "<b>\u26A0\uFE0F Novo máximo de \uD83E\uDDA0 casos: <code>" + newCases + " (+ " + (newCases - pastCases) + ")</code>";
+        else
+            return "<b>Máximo de \uD83E\uDDA0 casos: <code>" + pastCases + " (" + maxCasesDate + ")</code>";
     }
 
-    static String buildMaxDeathsString(int newDeaths, int pastDeaths) {
-        return "<b>\u26A0\uFE0F Novo máximo de \uD83D\uDC80 mortes: <code>" + newDeaths + " (+ " + (newDeaths - pastDeaths) + ")</code>";
+    static String buildMaxDeathsString(String maxDeathsDate, int newDeaths, int pastDeaths) {
+        if (newDeaths > pastDeaths)
+            return "<b>\u26A0\uFE0F Novo máximo de \uD83D\uDC80 mortes: <code>" + newDeaths + " (+ " + (newDeaths - pastDeaths) + ")</code>";
+        else
+            return "<b>Máximo de \uD83D\uDC80 mortes: <code>" + pastDeaths + " (" + maxDeathsDate + ")</code>";
     }
 }

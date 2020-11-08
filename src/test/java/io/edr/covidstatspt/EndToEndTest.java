@@ -90,14 +90,10 @@ public class EndToEndTest {
         }
 
         @Override
-        public void send(String recipient, String message, boolean html) throws IOException {
-
-        }
+        public void send(String recipient, String message, boolean html) throws IOException {}
 
         @Override
-        public void sendToAdmin(String message, boolean html) throws MisconfigurationException, IOException {
-
-        }
+        public void sendToAdmin(String message, boolean html) throws MisconfigurationException, IOException {}
     }
 
     private static class MockReportLocator implements ReportLocator {
@@ -196,7 +192,7 @@ public class EndToEndTest {
                 new MaxValuesData.DatedValue("---", 10000))
         );
 
-        String expectedReport = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>\n" +
+        String expectedReport = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a 08/11</b>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Norte</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 3900 casos, \uD83D\uDC80 31 mortes</code>\n" +
@@ -229,6 +225,9 @@ public class EndToEndTest {
                 "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\n" +
                 "Novos: <code>\uD83E\uDDA0 6640 casos, \uD83D\uDFE2 3993 recuperados, \uD83D\uDD34 2591 ativos, \uD83D\uDC80 56 mortes</code>\n" +
                 "Cumulativo: <code>\uD83E\uDDA0 173540 casos, \uD83D\uDFE2 97747 recuperados, \uD83D\uDD34 72945 ativos, \uD83D\uDC80 2848 mortes</code>\n" +
+                "\n" +
+                "<b>Máximo de \uD83E\uDDA0 casos: <code>10000 (08/11)</code>\n" +
+                "<b>Máximo de \uD83D\uDC80 mortes: <code>10000 (08/11)</code>\n" +
                 "\n" +
                 "\uD83D\uDCDD <b>Report DGS</b>: https://covid19.min-saude.pt/wp-content/uploads/2020/11/250_DGS_boletim_20201107.pdf";
 
