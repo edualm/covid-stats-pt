@@ -19,7 +19,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-public class TelegramConnection {
+public class TelegramConnection implements MessagingConnection {
 
     private final DatabaseConnection databaseConnection;
     private final String token;

@@ -3,7 +3,18 @@ package io.edr.covidstatspt;
 import io.edr.covidstatspt.model.CountryReport;
 import io.edr.covidstatspt.model.RegionReport;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 public class StringFactory {
+
+    static String buildTodayDate(Calendar calendar) {
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+
+        return "" + (day < 10 ? "0" + day : day) + "/" + (month < 10 ? "0" + month : month);
+    }
 
     static String buildRegionString(String regionName, RegionReport report) {
         return "<b>\uD83C\uDFD9️ " + regionName + "</b>\nNovos: <code>\uD83E\uDDA0 " +

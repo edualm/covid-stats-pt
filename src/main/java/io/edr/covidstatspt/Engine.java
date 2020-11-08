@@ -26,12 +26,12 @@ public class Engine {
 
     private final DatabaseConnection databaseConnection;
     private final ReportLocator reportLocator;
-    private final TelegramConnection telegramConnection;
+    private final MessagingConnection messagingConnection;
 
-    public Engine(DatabaseConnection databaseConnection, ReportLocator reportLocator, TelegramConnection telegramConnection) {
+    public Engine(DatabaseConnection databaseConnection, ReportLocator reportLocator, MessagingConnection messagingConnection) {
         this.databaseConnection = databaseConnection;
         this.reportLocator = reportLocator;
-        this.telegramConnection = telegramConnection;
+        this.messagingConnection = messagingConnection;
     }
 
     private boolean[] checkForDailyMaximums(String date, int cases, int deaths) {
@@ -71,8 +71,6 @@ public class Engine {
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.setTime(new Date());
 
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH) + 1;
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
 
         //  Check if it's before 12:00. If so, return `true`.
@@ -102,7 +100,7 @@ public class Engine {
 
         ReportParser parser = new PortugueseReportParser(document);
 
-        String todayStr = "" + (day < 10 ? "0" + day : day) + "/" + (month < 10 ? "0" + month : month);
+        String todayStr = StringFactory.buildTodayDate(calendar);
 
         try {
             Map<String, RegionReport> regionReports = parser.getRegionReports();
@@ -119,34 +117,35 @@ public class Engine {
 
             messageBuilder.append("\n").append(StringFactory.buildCountryString(countryReport));
 
-            boolean[] dailyMaximums = checkForDailyMaximums(todayStr, countryReport.day.cases, countryReport.day.deaths);
-
             MaxValuesData maxValues = databaseConnection.getMaxValuesData();
 
-            if (dailyMaximums[0]) {
+            boolean[] dailyMaximums = checkForDailyMaximums(todayStr, countryReport.day.cases, countryReport.day.deaths);
+
+            if (dailyMaximums[0] || dailyMaximums[1])
+                messageBuilder.append("\n");
+
+            if (dailyMaximums[0])
                 messageBuilder.append("\n").append(
                         StringFactory.buildMaxCasesString(countryReport.day.cases, maxValues.cases.value)
                 );
-            }
 
-            if (dailyMaximums[1]) {
+            if (dailyMaximums[1])
                 messageBuilder.append("\n").append(
-                        StringFactory.buildMaxCasesString(countryReport.day.deaths, maxValues.deaths.value)
+                        StringFactory.buildMaxDeathsString(countryReport.day.deaths, maxValues.deaths.value)
                 );
-            }
 
             messageBuilder.append("\n\n").append("\uD83D\uDCDD <b>Report DGS</b>: " + report.getURL().toString());
 
             String message = messageBuilder.toString();
 
-            telegramConnection.broadcast(message);
+            messagingConnection.broadcast(message);
 
             databaseConnection.setCachedResponse(message);
             databaseConnection.setLastReportName(report.getName());
 
             return true;
         } catch (ParseFailureException e) {
-            telegramConnection.sendToAdmin("An error has occurred while parsing the report for " + report.getName(), false);
+            messagingConnection.sendToAdmin("An error has occurred while parsing the report for " + report.getName(), false);
 
             StringBuilder messageBuilder = new StringBuilder("\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>\n");
 
@@ -154,7 +153,7 @@ public class Engine {
 
             String message = messageBuilder.toString();
 
-            telegramConnection.broadcast(messageBuilder.toString());
+            messagingConnection.broadcast(messageBuilder.toString());
 
             databaseConnection.setCachedResponse(message);
 
