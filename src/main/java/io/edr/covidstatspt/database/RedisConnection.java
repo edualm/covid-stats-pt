@@ -52,7 +52,7 @@ public class RedisConnection implements DatabaseConnection {
     @Override
     public MaxValuesData getMaxValuesData() {
         try {
-            return MaxValuesData.deserialize(jedis.get("covid-stats-pt:max-values-data"));
+            return MaxValuesData.deserialize(jedis.get("covid-stats-pt:max_values_data"));
         } catch (Exception e) {
             return null;
         }
@@ -94,7 +94,7 @@ public class RedisConnection implements DatabaseConnection {
     @Override
     public boolean setMaxValuesData(MaxValuesData data) {
         try {
-            jedis.set("covid-stats-pt:max-values-data", data.serialize());
+            jedis.set("covid-stats-pt:max_values_data", data.serialize());
 
             return true;
         } catch (Exception e) {

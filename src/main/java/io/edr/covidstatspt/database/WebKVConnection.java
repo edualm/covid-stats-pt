@@ -95,7 +95,7 @@ public abstract class WebKVConnection implements DatabaseConnection {
     @Override
     public MaxValuesData getMaxValuesData() {
         try {
-            return MaxValuesData.deserialize(getValueForKey("max-values-data"));
+            return MaxValuesData.deserialize(getValueForKey("max_values_data"));
         } catch (Exception e) {
             return null;
         }
@@ -137,7 +137,7 @@ public abstract class WebKVConnection implements DatabaseConnection {
     @Override
     public boolean setMaxValuesData(MaxValuesData data) {
         try {
-            setValueForKey("max-values-data", data.serialize());
+            setValueForKey("max_values_data", data.serialize());
 
             return true;
         } catch (Exception e) {
