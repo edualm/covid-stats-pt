@@ -192,7 +192,7 @@ public class EndToEndTest {
                 new MaxValuesData.DatedValue("---", 10000))
         );
 
-        String expectedReport = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a 08/11</b>\n" +
+        String expectedReport = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Norte</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 3900 casos, \uD83D\uDC80 31 mortes</code>\n" +
