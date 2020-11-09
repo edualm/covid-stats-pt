@@ -8,6 +8,8 @@
 
 package io.edr.covidstatspt.database;
 
+import io.edr.covidstatspt.Serializer;
+import io.edr.covidstatspt.model.FullReport;
 import io.edr.covidstatspt.model.MaxValuesData;
 
 import java.io.BufferedReader;
@@ -66,18 +68,10 @@ public abstract class WebKVConnection implements DatabaseConnection {
     }
 
     @Override
-    public String getCachedResponse() {
+    public FullReport getLastReport() {
         try {
-            return getValueForKey("cached_response");
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    @Override
-    public String getLastReportName() {
-        try {
-            return getValueForKey("latest_report_name");
+            return (new Serializer<>(FullReport.class))
+                    .deserialize(getValueForKey("last_report"));
         } catch (Exception e) {
             return null;
         }
@@ -95,27 +89,17 @@ public abstract class WebKVConnection implements DatabaseConnection {
     @Override
     public MaxValuesData getMaxValuesData() {
         try {
-            return MaxValuesData.deserialize(getValueForKey("max_values_data"));
+            return new Serializer<>(MaxValuesData.class)
+                    .deserialize(getValueForKey("max_values_data"));
         } catch (Exception e) {
             return null;
         }
     }
 
     @Override
-    public boolean setCachedResponse(String cachedResponse) {
+    public boolean setLastReport(FullReport data) {
         try {
-            setValueForKey("cached_response", cachedResponse);
-
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean setLastReportName(String newReportName) {
-        try {
-            setValueForKey("latest_report_name", newReportName);
+            setValueForKey("last_report", new Serializer<>(FullReport.class).serialize(data));
 
             return true;
         } catch (Exception e) {
@@ -137,7 +121,7 @@ public abstract class WebKVConnection implements DatabaseConnection {
     @Override
     public boolean setMaxValuesData(MaxValuesData data) {
         try {
-            setValueForKey("max_values_data", data.serialize());
+            setValueForKey("max_values_data", new Serializer<>(MaxValuesData.class).serialize(data));
 
             return true;
         } catch (Exception e) {

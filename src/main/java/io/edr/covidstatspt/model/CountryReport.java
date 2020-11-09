@@ -18,6 +18,15 @@ public class CountryReport {
         public final int active;
         public final int recoveries;
 
+        @SuppressWarnings("unused")
+        public Report() {
+            this.cases = 0;
+            this.deaths = 0;
+
+            this.active = 0;
+            this.recoveries = 0;
+        }
+
         public Report(int cases, int deaths, int active, int recoveries) {
             this.cases = cases;
             this.deaths = deaths;
@@ -47,6 +56,12 @@ public class CountryReport {
 
     public final CountryReport.Report day;
     public final CountryReport.Report cumulative;
+
+    @SuppressWarnings("unused")
+    public CountryReport() {
+        this.day = new CountryReport.Report();
+        this.cumulative = new CountryReport.Report();
+    }
 
     public CountryReport(Report day, Report cumulative) {
         this.day = day;

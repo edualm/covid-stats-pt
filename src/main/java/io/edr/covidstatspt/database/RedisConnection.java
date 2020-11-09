@@ -8,6 +8,8 @@
 
 package io.edr.covidstatspt.database;
 
+import io.edr.covidstatspt.Serializer;
+import io.edr.covidstatspt.model.FullReport;
 import io.edr.covidstatspt.model.MaxValuesData;
 import redis.clients.jedis.Jedis;
 
@@ -23,18 +25,10 @@ public class RedisConnection implements DatabaseConnection {
     }
 
     @Override
-    public String getCachedResponse() {
+    public FullReport getLastReport() {
         try {
-            return jedis.get("covid-stats-pt:cached_response");
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    @Override
-    public String getLastReportName() {
-        try {
-            return jedis.get("covid-stats-pt:last_report_name");
+            return (new Serializer<>(FullReport.class))
+                    .deserialize(jedis.get("covid-stats-pt:last_report"));
         } catch (Exception e) {
             return null;
         }
@@ -52,27 +46,16 @@ public class RedisConnection implements DatabaseConnection {
     @Override
     public MaxValuesData getMaxValuesData() {
         try {
-            return MaxValuesData.deserialize(jedis.get("covid-stats-pt:max_values_data"));
+            return new Serializer<>(MaxValuesData.class).deserialize(jedis.get("covid-stats-pt:max_values_data"));
         } catch (Exception e) {
             return null;
         }
     }
 
     @Override
-    public boolean setCachedResponse(String cachedResponse) {
+    public boolean setLastReport(FullReport report) {
         try {
-            jedis.set("covid-stats-pt:cached_response", cachedResponse);
-
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean setLastReportName(String newReportURL) {
-        try {
-            jedis.set("covid-stats-pt:last_report_name", newReportURL);
+            jedis.set("covid-stats-pt:last_report", (new Serializer<>(FullReport.class)).serialize(report));
 
             return true;
         } catch (Exception e) {
@@ -94,7 +77,7 @@ public class RedisConnection implements DatabaseConnection {
     @Override
     public boolean setMaxValuesData(MaxValuesData data) {
         try {
-            jedis.set("covid-stats-pt:max_values_data", data.serialize());
+            jedis.set("covid-stats-pt:max_values_data", (new Serializer<>(MaxValuesData.class)).serialize(data));
 
             return true;
         } catch (Exception e) {

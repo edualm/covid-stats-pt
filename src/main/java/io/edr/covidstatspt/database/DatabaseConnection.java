@@ -8,18 +8,17 @@
 
 package io.edr.covidstatspt.database;
 
+import io.edr.covidstatspt.model.FullReport;
 import io.edr.covidstatspt.model.MaxValuesData;
 
 @SuppressWarnings("UnusedReturnValue")
 public interface DatabaseConnection {
 
-    String getCachedResponse();
-    String getLastReportName();
+    FullReport getLastReport();
     String[] getTelegramRecipients();
     MaxValuesData getMaxValuesData();
 
-    boolean setCachedResponse(String cachedResponse);
-    boolean setLastReportName(String newReportName);
+    boolean setLastReport(FullReport report);
     boolean setTelegramRecipients(String[] recipients);
     boolean setMaxValuesData(MaxValuesData data);
 }

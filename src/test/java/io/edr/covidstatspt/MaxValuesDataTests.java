@@ -25,7 +25,7 @@ public class MaxValuesDataTests {
         );
 
         //  When
-        String serialized = data.serialize();
+        String serialized = (new Serializer<>(MaxValuesData.class)).serialize(data);
 
         //  Then
         assertEquals(
@@ -40,7 +40,7 @@ public class MaxValuesDataTests {
         String serialized = "{\"cases\":{\"date\":\"11/11/11\",\"value\":111},\"deaths\":{\"date\":\"22/22/22\",\"value\":222}}";
 
         //  When
-        MaxValuesData data = MaxValuesData.deserialize(serialized);
+        MaxValuesData data = (new Serializer<>(MaxValuesData.class)).deserialize(serialized);
 
         //  Then
         assertEquals(

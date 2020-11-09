@@ -10,6 +10,9 @@ package io.edr.covidstatspt;
 
 import io.edr.covidstatspt.database.DatabaseConnection;
 
+import io.edr.covidstatspt.model.FullReport;
+import io.edr.covidstatspt.model.MaxValuesData;
+import io.edr.covidstatspt.model.ReportMetadata;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -18,8 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static spark.Spark.post;
-import static spark.Spark.port;
+import static spark.Spark.*;
 
 @SuppressWarnings("rawtypes")
 public class WebWorker {
@@ -37,6 +39,24 @@ public class WebWorker {
     }
 
     public void start() {
+        get("/api/mostRecent", (req, res) -> {
+            FullReport report = databaseConnection.getLastReport();
+
+            if (report == null)
+                return "{}";
+
+            return (new Serializer<>(FullReport.class).serialize(report));
+        });
+
+        get("/api/maxValues", (req, res) -> {
+            MaxValuesData maxValues = databaseConnection.getMaxValuesData();
+
+            if (maxValues == null)
+                return "{}";
+
+            return (new Serializer<>(MaxValuesData.class).serialize(maxValues));
+        });
+
         post("/" + webHookPath, (req, res) -> {
             try {
                 JSONObject obj = (JSONObject) (new JSONParser().parse(req.body()));
@@ -71,10 +91,23 @@ public class WebWorker {
                     }
 
                     case "/today": {
-                        String response = databaseConnection.getCachedResponse();
+                        String response = null;
 
-                        if (response == null)
+                        FullReport report = databaseConnection.getLastReport();
+                        MaxValuesData maxValues = databaseConnection.getMaxValuesData();
+
+                        if (report == null)
                             response = "No cached response available!";
+                        else {
+                            response = StringFactory.buildMessage(
+                                    report.name,
+                                    report.metadata,
+                                    report.countryReport,
+                                    report.regionReports,
+                                    maxValues,
+                                    PortugueseReportParser.orderedRegions
+                            );
+                        }
 
                         telegramConnection.send(chatId, response, true);
 

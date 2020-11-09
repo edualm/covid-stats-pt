@@ -11,10 +11,7 @@ package io.edr.covidstatspt;
 import io.edr.covidstatspt.database.DatabaseConnection;
 import io.edr.covidstatspt.exceptions.MisconfigurationException;
 import io.edr.covidstatspt.exceptions.ParseFailureException;
-import io.edr.covidstatspt.model.CountryReport;
-import io.edr.covidstatspt.model.MaxValuesData;
-import io.edr.covidstatspt.model.RegionReport;
-import io.edr.covidstatspt.model.ReportMetadata;
+import io.edr.covidstatspt.model.*;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 
@@ -55,12 +52,15 @@ public class Engine {
             maxValues.deaths = new MaxValuesData.DatedValue(date, deaths);
 
         databaseConnection.setMaxValuesData(maxValues);
-
     }
 
     public boolean run() throws MisconfigurationException, IOException {
+        return run(new Date());
+    }
+
+    public boolean run(Date currentDate) throws MisconfigurationException, IOException {
         Calendar calendar = GregorianCalendar.getInstance();
-        calendar.setTime(new Date());
+        calendar.setTime(currentDate);
 
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
 
@@ -71,7 +71,10 @@ public class Engine {
 
         //  Check if we already have a report for today. If so, return `true`.
 
-        if (databaseConnection.getLastReportName().equals(new SimpleDateFormat("dd/MM/yyyy").format(new Date())))
+        FullReport lastReport = databaseConnection.getLastReport();
+        String lastReportName = (lastReport != null ? lastReport.name : "");
+
+        if (lastReportName.equals(new SimpleDateFormat("dd/MM/yyyy").format(new Date())))
             return true;
 
         ReportMetadata report;
@@ -84,7 +87,7 @@ public class Engine {
 
         //  Check if a report was published. If not, return `false`.
 
-        if (report.getName().equals(databaseConnection.getLastReportName()))
+        if (report.getName().equals(lastReportName))
             return false;
 
         PDDocument document = PDDocument.load(report.getURL().openStream());
@@ -96,35 +99,24 @@ public class Engine {
         try {
             Map<String, RegionReport> regionReports = parser.getRegionReports();
 
-            StringBuilder messageBuilder = new StringBuilder("\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>\n");
-
-            for (String regionName: parser.getOrderedRegions()) {
-                RegionReport r = regionReports.get(regionName);
-
-                messageBuilder.append("\n").append(StringFactory.buildRegionString(regionName, r));
-            }
-
             CountryReport countryReport = parser.getCountryReport();
-
-            messageBuilder.append("\n").append(StringFactory.buildCountryString(countryReport));
 
             MaxValuesData maxValues = databaseConnection.getMaxValuesData();
 
             checkForDailyMaximums(todayStr, countryReport.day.cases, countryReport.day.deaths);
 
-            messageBuilder.append("\n\n")
-                    .append(StringFactory.buildMaxCasesString(todayStr, countryReport.day.cases, maxValues.cases.value))
-                    .append("\n")
-                    .append(StringFactory.buildMaxDeathsString(todayStr, countryReport.day.deaths, maxValues.deaths.value));
-
-            messageBuilder.append("\n\n").append("\uD83D\uDCDD <b>Report DGS</b>: ").append(report.getURL().toString());
-
-            String message = messageBuilder.toString();
+            String message = StringFactory.buildMessage(
+                    todayStr,
+                    report,
+                    countryReport,
+                    regionReports,
+                    maxValues,
+                    parser.getOrderedRegions()
+            );
 
             messagingConnection.broadcast(message);
 
-            databaseConnection.setCachedResponse(message);
-            databaseConnection.setLastReportName(report.getName());
+            databaseConnection.setLastReport(new FullReport(todayStr, report, countryReport, regionReports));
 
             return true;
         } catch (Exception e) {
@@ -137,10 +129,6 @@ public class Engine {
             String message = messageBuilder.toString();
 
             messagingConnection.broadcast(messageBuilder.toString());
-
-            databaseConnection.setCachedResponse(message);
-
-            databaseConnection.setLastReportName(report.getName());
 
             return true;
         }

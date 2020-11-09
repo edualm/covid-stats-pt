@@ -10,6 +10,7 @@ package io.edr.covidstatspt;
 
 import io.edr.covidstatspt.database.DatabaseConnection;
 import io.edr.covidstatspt.exceptions.MisconfigurationException;
+import io.edr.covidstatspt.model.FullReport;
 import io.edr.covidstatspt.model.MaxValuesData;
 import io.edr.covidstatspt.model.ReportMetadata;
 import org.junit.Before;
@@ -38,13 +39,8 @@ public class EndToEndTests {
         }
 
         @Override
-        public String getCachedResponse() {
-            return "";
-        }
-
-        @Override
-        public String getLastReportName() {
-            return "";
+        public FullReport getLastReport() {
+            return null;
         }
 
         @Override
@@ -54,6 +50,9 @@ public class EndToEndTests {
 
         @Override
         public MaxValuesData getMaxValuesData() {
+            if (maxValuesData == null)
+                return null;
+
             return new MaxValuesData(
                     new MaxValuesData.DatedValue(maxValuesData.cases.date, maxValuesData.cases.value),
                     new MaxValuesData.DatedValue(maxValuesData.deaths.date, maxValuesData.deaths.value)
@@ -61,12 +60,14 @@ public class EndToEndTests {
         }
 
         @Override
-        public boolean setCachedResponse(String cachedResponse) {
-            return false;
-        }
+        public boolean setLastReport(FullReport report) {
+            try {
+                System.out.println(new Serializer<>(FullReport.class).serialize(report));
+            } catch (Exception e) {
 
-        @Override
-        public boolean setLastReportName(String newReportName) {
+            }
+
+
             return false;
         }
 
@@ -77,6 +78,12 @@ public class EndToEndTests {
 
         @Override
         public boolean setMaxValuesData(MaxValuesData data) {
+            try {
+                System.out.println(new Serializer<>(MaxValuesData.class).serialize(data));
+            } catch (Exception e) {
+
+            }
+
             maxValuesData = data;
 
             return true;
@@ -132,10 +139,66 @@ public class EndToEndTests {
     }
 
     @Test
+    public void testWithoutStoredMaximums() throws MisconfigurationException, IOException {
+        //  Given
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, 13);
+
+        String todayStr = StringFactory.buildTodayDate(calendar);
+
+        databaseConnection.setMaxValuesData(null);
+
+        String expectedReport = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>\n" +
+                "\n" +
+                "<b>\uD83C\uDFD9️ Norte</b>\n" +
+                "Novos: <code>\uD83E\uDDA0 3900 casos, \uD83D\uDC80 31 mortes</code>\n" +
+                "Cumulativo: <code>\uD83E\uDDA0 82361 casos, \uD83D\uDC80 1279 mortes</code>\n" +
+                "\n" +
+                "<b>\uD83C\uDFD9️ Centro</b>\n" +
+                "Novos: <code>\uD83E\uDDA0 712 casos, \uD83D\uDC80 3 mortes</code>\n" +
+                "Cumulativo: <code>\uD83E\uDDA0 5757 casos, \uD83D\uDC80 352 mortes</code>\n" +
+                "\n" +
+                "<b>\uD83C\uDFD9️ Lisboa e Vale do Tejo</b>\n" +
+                "Novos: <code>\uD83E\uDDA0 1856 casos, \uD83D\uDC80 19 mortes</code>\n" +
+                "Cumulativo: <code>\uD83E\uDDA0 67725 casos, \uD83D\uDC80 1109 mortes</code>\n" +
+                "\n" +
+                "<b>\uD83C\uDFD9️ Alentejo</b>\n" +
+                "Novos: <code>\uD83E\uDDA0 49 casos, \uD83D\uDC80 3 mortes</code>\n" +
+                "Cumulativo: <code>\uD83E\uDDA0 3361 casos, \uD83D\uDC80 63 mortes</code>\n" +
+                "\n" +
+                "<b>\uD83C\uDFD9️ Algarve</b>\n" +
+                "Novos: <code>\uD83E\uDDA0 82 casos, \uD83D\uDC80 0 mortes</code>\n" +
+                "Cumulativo: <code>\uD83E\uDDA0 3367 casos, \uD83D\uDC80 29 mortes</code>\n" +
+                "\n" +
+                "<b>\uD83C\uDFD9️ Madeira</b>\n" +
+                "Novos: <code>\uD83E\uDDA0 19 casos, \uD83D\uDC80 0 mortes</code>\n" +
+                "Cumulativo: <code>\uD83E\uDDA0 534 casos, \uD83D\uDC80 1 mortes</code>\n" +
+                "\n" +
+                "<b>\uD83C\uDFD9️ Açores</b>\n" +
+                "Novos: <code>\uD83E\uDDA0 22 casos, \uD83D\uDC80 0 mortes</code>\n" +
+                "Cumulativo: <code>\uD83E\uDDA0 435 casos, \uD83D\uDC80 15 mortes</code>\n" +
+                "\n" +
+                "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\n" +
+                "Novos: <code>\uD83E\uDDA0 6640 casos, \uD83D\uDFE2 3993 recuperados, \uD83D\uDD34 2591 ativos, \uD83D\uDC80 56 mortes</code>\n" +
+                "Cumulativo: <code>\uD83E\uDDA0 173540 casos, \uD83D\uDFE2 97747 recuperados, \uD83D\uDD34 72945 ativos, \uD83D\uDC80 2848 mortes</code>\n" +
+                "\n" +
+                "\uD83D\uDCDD <b>Report DGS</b>: https://covid19.min-saude.pt/wp-content/uploads/2020/11/250_DGS_boletim_20201107.pdf";
+
+        //  When
+        sut.run(calendar.getTime());
+
+        //  Then
+        assertEquals(1, messagingConnection.messages.size());
+        assertEquals(expectedReport, messagingConnection.messages.get(0));
+    }
+
+    @Test
     public void testWithNewMaximums() throws MisconfigurationException, IOException {
         //  Given
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, 13);
 
         String todayStr = StringFactory.buildTodayDate(calendar);
 
@@ -179,7 +242,7 @@ public class EndToEndTests {
                 "\uD83D\uDCDD <b>Report DGS</b>: https://covid19.min-saude.pt/wp-content/uploads/2020/11/250_DGS_boletim_20201107.pdf";
 
         //  When
-        sut.run();
+        sut.run(calendar.getTime());
 
         //  Then
         assertEquals(1, messagingConnection.messages.size());
@@ -191,6 +254,7 @@ public class EndToEndTests {
         //  Given
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, 13);
 
         String todayStr = StringFactory.buildTodayDate(calendar);
 
@@ -233,13 +297,13 @@ public class EndToEndTests {
                 "Novos: <code>\uD83E\uDDA0 6640 casos, \uD83D\uDFE2 3993 recuperados, \uD83D\uDD34 2591 ativos, \uD83D\uDC80 56 mortes</code>\n" +
                 "Cumulativo: <code>\uD83E\uDDA0 173540 casos, \uD83D\uDFE2 97747 recuperados, \uD83D\uDD34 72945 ativos, \uD83D\uDC80 2848 mortes</code>\n" +
                 "\n" +
-                "<b>Máximo de \uD83E\uDDA0 casos: <code>10000 (08/11)</code>\n" +
-                "<b>Máximo de \uD83D\uDC80 mortes: <code>10000 (08/11)</code>\n" +
+                "<b>Máximo de \uD83E\uDDA0 casos: <code>10000 (---)</code>\n" +
+                "<b>Máximo de \uD83D\uDC80 mortes: <code>10000 (---)</code>\n" +
                 "\n" +
                 "\uD83D\uDCDD <b>Report DGS</b>: https://covid19.min-saude.pt/wp-content/uploads/2020/11/250_DGS_boletim_20201107.pdf";
 
         //  When
-        sut.run();
+        sut.run(calendar.getTime());
 
         //  Then
         assertEquals(1, messagingConnection.messages.size());

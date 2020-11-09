@@ -75,14 +75,4 @@ public class MaxValuesData {
     public String toString() {
         return "Cases: [" + cases.toString() + "], Deaths: [" + deaths.toString() + "]";
     }
-
-    public String serialize() throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(this);
-    }
-
-    public static MaxValuesData deserialize(String json) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(json, MaxValuesData.class);
-    }
 }
