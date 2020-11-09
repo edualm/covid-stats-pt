@@ -15,6 +15,12 @@ public final class ReportMetadata {
     private final String name;
     private final URL url;
 
+    @SuppressWarnings("unused")
+    public ReportMetadata() {
+        this.name = null;
+        this.url = null;
+    }
+
     public ReportMetadata(String name, URL url) {
         this.name = name;
         this.url = url;
