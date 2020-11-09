@@ -72,9 +72,10 @@ public class Engine {
         //  Check if we already have a report for today. If so, return `true`.
 
         FullReport lastReport = databaseConnection.getLastReport();
-        String lastReportName = (lastReport != null ? lastReport.name : "");
 
-        if (lastReportName.equals(new SimpleDateFormat("dd/MM").format(new Date())))
+        String todayFullDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+
+        if (lastReport != null && lastReport.metadata.getName().equals(todayFullDate))
             return true;
 
         ReportMetadata report;
@@ -87,7 +88,7 @@ public class Engine {
 
         //  Check if a report was published. If not, return `false`.
 
-        if (report.getName().substring(0, 5).equals(lastReportName))
+        if (lastReport != null && report.getName().equals(lastReport.metadata.getName()))
             return false;
 
         PDDocument document = PDDocument.load(report.getURL().openStream());

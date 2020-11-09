@@ -61,13 +61,6 @@ public class EndToEndTests {
 
         @Override
         public boolean setLastReport(FullReport report) {
-            try {
-                System.out.println(new Serializer<>(FullReport.class).serialize(report));
-            } catch (Exception e) {
-
-            }
-
-
             return false;
         }
 
@@ -78,15 +71,7 @@ public class EndToEndTests {
 
         @Override
         public boolean setMaxValuesData(MaxValuesData data) {
-            try {
-                System.out.println(new Serializer<>(MaxValuesData.class).serialize(data));
-            } catch (Exception e) {
-
-            }
-
-            maxValuesData = data;
-
-            return true;
+            return false;
         }
     }
 
