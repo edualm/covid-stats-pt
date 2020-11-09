@@ -74,7 +74,7 @@ public class Engine {
         FullReport lastReport = databaseConnection.getLastReport();
         String lastReportName = (lastReport != null ? lastReport.name : "");
 
-        if (lastReportName.equals(new SimpleDateFormat("dd/MM/yyyy").format(new Date())))
+        if (lastReportName.equals(new SimpleDateFormat("dd/MM").format(new Date())))
             return true;
 
         ReportMetadata report;
@@ -87,7 +87,7 @@ public class Engine {
 
         //  Check if a report was published. If not, return `false`.
 
-        if (report.getName().equals(lastReportName))
+        if (report.getName().substring(0, 5).equals(lastReportName))
             return false;
 
         PDDocument document = PDDocument.load(report.getURL().openStream());
@@ -120,7 +120,13 @@ public class Engine {
 
             return true;
         } catch (Exception e) {
-            messagingConnection.sendToAdmin("An error has occurred while parsing the report for " + report.getName(), false);
+            messagingConnection.sendToAdmin(
+                    "An error has occurred while parsing the report for " + report.getName() + "." +
+                            "\n\n" +
+                            e.getMessage() +
+                            "\n\n" +
+                            e.getStackTrace(),
+                    false);
 
             StringBuilder messageBuilder = new StringBuilder("\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>\n");
 
