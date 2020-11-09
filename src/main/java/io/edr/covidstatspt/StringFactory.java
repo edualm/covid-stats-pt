@@ -48,14 +48,14 @@ public class StringFactory {
 
     static String buildMaxCasesString(String maxCasesDate, int newCases, MaxValuesData.DatedValue pastCases) {
         if (newCases > pastCases.value)
-            return "<b>\u26A0\uFE0F Novo máximo de \uD83E\uDDA0 casos</b>: <code>" + newCases + " (+ " + (newCases - pastCases.value) + ")</code>";
+            return "<b>\u26A0\uFE0F Novo máximo de \uD83E\uDDA0 casos</b>: <code>" + newCases + " (+" + (newCases - pastCases.value) + ")</code>";
         else
             return "<b>Máximo de \uD83E\uDDA0 casos</b>: <code>" + pastCases.value + " (" + pastCases.date + ")</code>";
     }
 
     static String buildMaxDeathsString(String maxDeathsDate, int newDeaths, MaxValuesData.DatedValue pastDeaths) {
         if (newDeaths > pastDeaths.value)
-            return "<b>\u26A0\uFE0F Novo máximo de \uD83D\uDC80 mortes</b>: <code>" + newDeaths + " (+ " + (newDeaths - pastDeaths.value) + ")</code>";
+            return "<b>\u26A0\uFE0F Novo máximo de \uD83D\uDC80 mortes</b>: <code>" + newDeaths + " (+" + (newDeaths - pastDeaths.value) + ")</code>";
         else
             return "<b>Máximo de \uD83D\uDC80 mortes</b>: <code>" + pastDeaths.value + " (" + pastDeaths.date + ")</code>";
     }

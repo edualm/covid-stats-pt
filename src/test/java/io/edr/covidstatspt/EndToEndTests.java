@@ -71,7 +71,9 @@ public class EndToEndTests {
 
         @Override
         public boolean setMaxValuesData(MaxValuesData data) {
-            return false;
+            maxValuesData = data;
+
+            return true;
         }
     }
 
@@ -221,8 +223,8 @@ public class EndToEndTests {
                 "Novos: <code>\uD83E\uDDA0 6640 casos, \uD83D\uDFE2 3993 recuperados, \uD83D\uDD34 2591 ativos, \uD83D\uDC80 56 mortes</code>\n" +
                 "Cumulativo: <code>\uD83E\uDDA0 173540 casos, \uD83D\uDFE2 97747 recuperados, \uD83D\uDD34 72945 ativos, \uD83D\uDC80 2848 mortes</code>\n" +
                 "\n" +
-                "<b>⚠️ Novo máximo de \uD83E\uDDA0 casos: <code>6640 (+ 1640)</code>\n" +
-                "<b>⚠️ Novo máximo de \uD83D\uDC80 mortes: <code>56 (+ 6)</code>\n" +
+                "<b>⚠️ Novo máximo de \uD83E\uDDA0 casos</b>: <code>6640 (+1640)</code>\n" +
+                "<b>⚠️ Novo máximo de \uD83D\uDC80 mortes</b>: <code>56 (+6)</code>\n" +
                 "\n" +
                 "\uD83D\uDCDD <b>Report DGS</b>: https://covid19.min-saude.pt/wp-content/uploads/2020/11/250_DGS_boletim_20201107.pdf";
 
@@ -282,8 +284,8 @@ public class EndToEndTests {
                 "Novos: <code>\uD83E\uDDA0 6640 casos, \uD83D\uDFE2 3993 recuperados, \uD83D\uDD34 2591 ativos, \uD83D\uDC80 56 mortes</code>\n" +
                 "Cumulativo: <code>\uD83E\uDDA0 173540 casos, \uD83D\uDFE2 97747 recuperados, \uD83D\uDD34 72945 ativos, \uD83D\uDC80 2848 mortes</code>\n" +
                 "\n" +
-                "<b>Máximo de \uD83E\uDDA0 casos: <code>10000 (---)</code>\n" +
-                "<b>Máximo de \uD83D\uDC80 mortes: <code>10000 (---)</code>\n" +
+                "<b>Máximo de \uD83E\uDDA0 casos</b>: <code>10000 (---)</code>\n" +
+                "<b>Máximo de \uD83D\uDC80 mortes</b>: <code>10000 (---)</code>\n" +
                 "\n" +
                 "\uD83D\uDCDD <b>Report DGS</b>: https://covid19.min-saude.pt/wp-content/uploads/2020/11/250_DGS_boletim_20201107.pdf";
 
