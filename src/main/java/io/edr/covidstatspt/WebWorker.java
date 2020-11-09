@@ -12,7 +12,6 @@ import io.edr.covidstatspt.database.DatabaseConnection;
 
 import io.edr.covidstatspt.model.FullReport;
 import io.edr.covidstatspt.model.MaxValuesData;
-import io.edr.covidstatspt.model.ReportMetadata;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -40,6 +39,8 @@ public class WebWorker {
 
     public void start() {
         get("/api/mostRecent", (req, res) -> {
+            res.type("application/json");
+
             FullReport report = databaseConnection.getLastReport();
 
             if (report == null)
@@ -49,6 +50,8 @@ public class WebWorker {
         });
 
         get("/api/maxValues", (req, res) -> {
+            res.type("application/json");
+
             MaxValuesData maxValues = databaseConnection.getMaxValuesData();
 
             if (maxValues == null)
