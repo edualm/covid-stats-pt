@@ -19,7 +19,7 @@ public class StringFactory {
                 report.day.cases +
                 " casos, \uD83D\uDC80 " +
                 report.day.deaths +
-                " mortes</code>\nCumulativo: <code>\uD83E\uDDA0 " +
+                " mortes</code>\nTotal: <code>\uD83E\uDDA0 " +
                 report.cumulative.cases +
                 " casos, \uD83D\uDC80 " +
                 report.cumulative.deaths +
@@ -35,7 +35,7 @@ public class StringFactory {
                 report.day.active +
                 " ativos, \uD83D\uDC80 " +
                 report.day.deaths +
-                " mortes</code>\nCumulativo: <code>\uD83E\uDDA0 " +
+                " mortes</code>\nTotal: <code>\uD83E\uDDA0 " +
                 report.cumulative.cases +
                 " casos, \uD83D\uDFE2 " +
                 report.cumulative.recoveries +

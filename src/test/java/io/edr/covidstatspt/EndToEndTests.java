@@ -140,35 +140,35 @@ public class EndToEndTests {
                 "\n" +
                 "<b>\uD83C\uDFD9️ Norte</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 3900 casos, \uD83D\uDC80 31 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 82361 casos, \uD83D\uDC80 1279 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 82361 casos, \uD83D\uDC80 1279 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Centro</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 712 casos, \uD83D\uDC80 3 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 5757 casos, \uD83D\uDC80 352 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 5757 casos, \uD83D\uDC80 352 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Lisboa e Vale do Tejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 1856 casos, \uD83D\uDC80 19 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 67725 casos, \uD83D\uDC80 1109 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 67725 casos, \uD83D\uDC80 1109 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Alentejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 49 casos, \uD83D\uDC80 3 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 3361 casos, \uD83D\uDC80 63 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 3361 casos, \uD83D\uDC80 63 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Algarve</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 82 casos, \uD83D\uDC80 0 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 3367 casos, \uD83D\uDC80 29 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 3367 casos, \uD83D\uDC80 29 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Madeira</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 19 casos, \uD83D\uDC80 0 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 534 casos, \uD83D\uDC80 1 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 534 casos, \uD83D\uDC80 1 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Açores</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 22 casos, \uD83D\uDC80 0 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 435 casos, \uD83D\uDC80 15 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 435 casos, \uD83D\uDC80 15 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\n" +
                 "Novos: <code>\uD83E\uDDA0 6640 casos, \uD83D\uDFE2 3993 recuperados, \uD83D\uDD34 2591 ativos, \uD83D\uDC80 56 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 173540 casos, \uD83D\uDFE2 97747 recuperados, \uD83D\uDD34 72945 ativos, \uD83D\uDC80 2848 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 173540 casos, \uD83D\uDFE2 97747 recuperados, \uD83D\uDD34 72945 ativos, \uD83D\uDC80 2848 mortes</code>\n" +
                 "\n" +
                 "\uD83D\uDCDD <b>Report DGS</b>: https://covid19.min-saude.pt/wp-content/uploads/2020/11/250_DGS_boletim_20201107.pdf";
 
@@ -193,35 +193,35 @@ public class EndToEndTests {
                 "\n" +
                 "<b>\uD83C\uDFD9️ Norte</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 3900 casos, \uD83D\uDC80 31 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 82361 casos, \uD83D\uDC80 1279 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 82361 casos, \uD83D\uDC80 1279 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Centro</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 712 casos, \uD83D\uDC80 3 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 5757 casos, \uD83D\uDC80 352 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 5757 casos, \uD83D\uDC80 352 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Lisboa e Vale do Tejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 1856 casos, \uD83D\uDC80 19 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 67725 casos, \uD83D\uDC80 1109 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 67725 casos, \uD83D\uDC80 1109 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Alentejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 49 casos, \uD83D\uDC80 3 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 3361 casos, \uD83D\uDC80 63 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 3361 casos, \uD83D\uDC80 63 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Algarve</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 82 casos, \uD83D\uDC80 0 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 3367 casos, \uD83D\uDC80 29 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 3367 casos, \uD83D\uDC80 29 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Madeira</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 19 casos, \uD83D\uDC80 0 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 534 casos, \uD83D\uDC80 1 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 534 casos, \uD83D\uDC80 1 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Açores</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 22 casos, \uD83D\uDC80 0 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 435 casos, \uD83D\uDC80 15 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 435 casos, \uD83D\uDC80 15 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\n" +
                 "Novos: <code>\uD83E\uDDA0 6640 casos, \uD83D\uDFE2 3993 recuperados, \uD83D\uDD34 2591 ativos, \uD83D\uDC80 56 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 173540 casos, \uD83D\uDFE2 97747 recuperados, \uD83D\uDD34 72945 ativos, \uD83D\uDC80 2848 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 173540 casos, \uD83D\uDFE2 97747 recuperados, \uD83D\uDD34 72945 ativos, \uD83D\uDC80 2848 mortes</code>\n" +
                 "\n" +
                 "<b>⚠️ Novo máximo de \uD83E\uDDA0 casos</b>: <code>6640 (+1640)</code>\n" +
                 "<b>⚠️ Novo máximo de \uD83D\uDC80 mortes</b>: <code>56 (+6)</code>\n" +
@@ -254,35 +254,35 @@ public class EndToEndTests {
                 "\n" +
                 "<b>\uD83C\uDFD9️ Norte</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 3900 casos, \uD83D\uDC80 31 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 82361 casos, \uD83D\uDC80 1279 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 82361 casos, \uD83D\uDC80 1279 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Centro</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 712 casos, \uD83D\uDC80 3 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 5757 casos, \uD83D\uDC80 352 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 5757 casos, \uD83D\uDC80 352 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Lisboa e Vale do Tejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 1856 casos, \uD83D\uDC80 19 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 67725 casos, \uD83D\uDC80 1109 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 67725 casos, \uD83D\uDC80 1109 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Alentejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 49 casos, \uD83D\uDC80 3 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 3361 casos, \uD83D\uDC80 63 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 3361 casos, \uD83D\uDC80 63 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Algarve</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 82 casos, \uD83D\uDC80 0 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 3367 casos, \uD83D\uDC80 29 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 3367 casos, \uD83D\uDC80 29 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Madeira</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 19 casos, \uD83D\uDC80 0 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 534 casos, \uD83D\uDC80 1 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 534 casos, \uD83D\uDC80 1 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Açores</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 22 casos, \uD83D\uDC80 0 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 435 casos, \uD83D\uDC80 15 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 435 casos, \uD83D\uDC80 15 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\n" +
                 "Novos: <code>\uD83E\uDDA0 6640 casos, \uD83D\uDFE2 3993 recuperados, \uD83D\uDD34 2591 ativos, \uD83D\uDC80 56 mortes</code>\n" +
-                "Cumulativo: <code>\uD83E\uDDA0 173540 casos, \uD83D\uDFE2 97747 recuperados, \uD83D\uDD34 72945 ativos, \uD83D\uDC80 2848 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 173540 casos, \uD83D\uDFE2 97747 recuperados, \uD83D\uDD34 72945 ativos, \uD83D\uDC80 2848 mortes</code>\n" +
                 "\n" +
                 "<b>Máximo de \uD83E\uDDA0 casos</b>: <code>10000 (---)</code>\n" +
                 "<b>Máximo de \uD83D\uDC80 mortes</b>: <code>10000 (---)</code>\n" +
