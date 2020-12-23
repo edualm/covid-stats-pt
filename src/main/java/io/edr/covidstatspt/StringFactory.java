@@ -18,11 +18,11 @@ public class StringFactory {
         return "<b>\uD83C\uDFD9️ " + regionName + "</b>\nNovos: <code>\uD83E\uDDA0 " +
                 report.day.cases +
                 " casos, \uD83D\uDC80 " +
-                report.day.deaths +
+                (report.day.deaths < report.day.cases ? report.day.deaths : "<?>") +
                 " mortes</code>\nTotal: <code>\uD83E\uDDA0 " +
                 report.cumulative.cases +
                 " casos, \uD83D\uDC80 " +
-                report.cumulative.deaths +
+                (report.cumulative.deaths < report.cumulative.cases ? report.cumulative.deaths : "<?>") +
                 " mortes</code>\n";
     }
 

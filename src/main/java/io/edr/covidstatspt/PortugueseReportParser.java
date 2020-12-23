@@ -26,38 +26,38 @@ public class PortugueseReportParser implements ReportParser {
 
     public static final Map<String, Rectangle[]> regionsToRect = new HashMap<String, Rectangle[]>() {{
         put("Norte", new Rectangle[]{
-                new Rectangle((float) 210.095, (float) 422.793, (float) 226.457, (float) 503.857),
-                new Rectangle((float) 229.431, (float) 422.793, (float) 248.024, (float) 503.113)
+                new Rectangle((float) 194.595227394104, (float) 419.32853015899656, (float) 214.6872776412964, (float) 214.6872776412964),
+                new Rectangle((float) 217.66387767791747, (float) 420.07268016815186, (float) 234.77932788848875, (float) 234.77932788848875)
         });
 
         put("Centro", new Rectangle[]{
-                new Rectangle((float) 292.646,(float)423.537,(float)310.495,(float)497.163),
-                new Rectangle((float) 318.675,(float)426.512,(float)332.062,(float)495.676)
+                new Rectangle((float) 306.9618787765503, (float) 406.67798000335694, (float) 324.8214789962768, (float) 324.8214789962768),
+                new Rectangle((float) 328.54222904205324, (float) 406.67798000335694, (float) 344.9135292434692, (float) 344.9135292434692)
         });
 
         put("Lisboa e Vale do Tejo", new Rectangle[]{
-                new Rectangle((float) 421.306,(float) 343.961,(float) 437.667,(float) 422.05),
-                new Rectangle((float) 440.642,(float) 342.474,(float) 459.978,(float) 422.793)
+                new Rectangle((float) 416.35193012237545, (float) 343.42522922515866, (float) 433.46738033294673, (float) 433.46738033294673),
+                new Rectangle((float) 437.18813037872314, (float) 344.16937923431396, (float) 452.8152805709839, (float) 452.8152805709839)
         });
 
         put("Alentejo", new Rectangle[]{
-                new Rectangle((float) 500.882,(float) 401.97,(float) 517.987,(float) 480.802),
-                new Rectangle((float) 520.962,(float) 401.226,(float) 539.554,(float) 481.546)
+                new Rectangle((float) 503.41748119354247, (float) 393.283279838562, (float) 519.7887813949585, (float) 519.7887813949585),
+                new Rectangle((float) 523.5095314407348, (float) 394.77157985687256, (float) 540.6249816513061, (float) 540.6249816513061)
         });
 
         put("Algarve", new Rectangle[]{
-                new Rectangle((float) 592.357,(float) 399.739,(float) 609.462,(float) 480.802),
-                new Rectangle((float) 611.693,(float) 398.995,(float) 631.773,(float) 480.058)
+                new Rectangle((float) 588.9947322463989, (float) 382.1210297012329, (float) 605.3660324478149, (float) 605.3660324478149),
+                new Rectangle((float) 609.8309325027466, (float) 382.8651797103882, (float) 627.6905327224731, (float) 627.6905327224731)
         });
 
         put("Madeira", new Rectangle[]{
-                new Rectangle((float) 343.218, (float) 245.049, (float) 361.066, (float) 324.625),
-                new Rectangle((float) 364.785, (float) 245.793, (float) 384.121, (float) 324.625)
+                new Rectangle((float) 346.40182926177977, (float) 227.33782779693604, (float) 365.74972949981685, (float) 365.74972949981685),
+                new Rectangle((float) 368.72632953643796, (float) 228.0819778060913, (float) 385.84177974700924, (float) 385.84177974700924)
         });
 
         put("Açores", new Rectangle[]{
-                new Rectangle((float) 204.889, (float) 244.305, (float) 221.994, (float) 325.369),
-                new Rectangle((float) 225.713, (float) 247.28,  (float) 242.818, (float) 326.112)
+                new Rectangle((float) 199.06012744903563, (float) 228.82612781524656, (float) 216.9197276687622, (float) 216.9197276687622),
+                new Rectangle((float) 221.38462772369382, (float) 228.0819778060913, (float) 238.50007793426514, (float) 238.50007793426514)
         });
     }};
 
@@ -66,14 +66,14 @@ public class PortugueseReportParser implements ReportParser {
     };
 
     public static final Rectangle activeRect =
-            new Rectangle((float) 203.402, (float) 30.12,   (float) 150, (float) 172.167);
+            new Rectangle((float) 200.5484274673462, (float) 21.952425270080564, (float) 231.80272785186767, (float) 231.80272785186767);
     public static final Rectangle recoveriesRect =
-            new Rectangle((float) 274.053, (float) 30.12,   (float) 150, (float) 172.167);
+            new Rectangle((float) 268.26607830047607, (float) 21.20827526092529, (float) 301.0086787033081, (float) 301.0086787033081);
     public static final Rectangle deathsRect =
-            new Rectangle((float) 343.961, (float) 30.864,  (float) 150,  (float) 172.167);
+            new Rectangle((float) 338.96032917022706, (float) 24.184875297546387, (float) 370.2146295547485, (float) 370.2146295547485);
 
     public static final Rectangle casesRect =
-            new Rectangle((float) 479.315, (float) 25,  (float) 155, (float) 172.91);
+            new Rectangle((float) 463.97753070831294, (float) 19.719975242614744, (float) 494.4876810836792, (float) 494.4876810836792);
 
     private final PDDocument document;
 
