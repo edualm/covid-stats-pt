@@ -82,7 +82,15 @@ public class Engine {
 
         try {
             report = reportLocator.getReport();
-        } catch (ParseFailureException e) {
+        } catch (Exception e) {
+            messagingConnection.sendToAdmin(
+                    "An error has occurred while acquiring the report for today." +
+                            "\n\n" +
+                            e.getMessage() +
+                            "\n\n" +
+                            Arrays.toString(e.getStackTrace()),
+                    false);
+
             return false;
         }
 
@@ -126,16 +134,14 @@ public class Engine {
                             "\n\n" +
                             e.getMessage() +
                             "\n\n" +
-                            e.getStackTrace(),
+                            Arrays.toString(e.getStackTrace()),
                     false);
 
-            StringBuilder messageBuilder = new StringBuilder("\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>\n");
-
-            messageBuilder.append("\nOcorreu um erro na obtenção dos dados do report da DGS. No entanto, o mesmo já está disponível para consulta no seguinte link: ").append(report.getURL().toString());
-
-            String message = messageBuilder.toString();
-
-            messagingConnection.broadcast(messageBuilder.toString());
+            messagingConnection.broadcast(
+                    "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>\n" +
+                    "\nOcorreu um erro na obtenção dos dados do report da DGS. No entanto, o mesmo já está disponível para consulta no seguinte link: " +
+                    report.getURL().toString()
+            );
 
             return true;
         }
