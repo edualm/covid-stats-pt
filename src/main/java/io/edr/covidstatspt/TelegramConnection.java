@@ -55,7 +55,9 @@ public class TelegramConnection implements MessagingConnection {
         //  The Telegram ID of the admin is assumed to be the first ID on the recipients array.
 
         if (databaseConnection.getTelegramRecipients().length == 0)
-            throw new MisconfigurationException("No telegram recipients set while the server tried to send a message to an admin!");
+            throw new MisconfigurationException(
+                    "No telegram recipients set while the server tried to send a message to an admin!"
+            );
 
         send(databaseConnection.getTelegramRecipients()[0], message, html);
     }

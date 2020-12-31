@@ -24,40 +24,44 @@ import java.util.Map;
 @SuppressWarnings("rawtypes")
 public class PortugueseReportParser implements ReportParser {
 
+    private static Rectangle makeRect(double y1, double x1, double y2, double x2) {
+        return new Rectangle((float) y1, (float) x1, (float) y2, (float) y2);
+    }
+
     public static final Map<String, Rectangle[]> regionsToRect = new HashMap<String, Rectangle[]>() {{
         put("Norte", new Rectangle[]{
-                new Rectangle((float) 194.595227394104, (float) 419.32853015899656, (float) 214.6872776412964, (float) 214.6872776412964),
-                new Rectangle((float) 217.66387767791747, (float) 420.07268016815186, (float) 234.77932788848875, (float) 234.77932788848875)
+                makeRect(194.595227394104, 419.32853015899656,214.6872776412964, 214.6872776412964),
+                makeRect(217.66387767791747, 420.07268016815186, 234.77932788848875, 234.77932788848875)
         });
 
         put("Centro", new Rectangle[]{
-                new Rectangle((float) 306.9618787765503, (float) 406.67798000335694, (float) 324.8214789962768, (float) 324.8214789962768),
-                new Rectangle((float) 328.54222904205324, (float) 406.67798000335694, (float) 344.9135292434692, (float) 344.9135292434692)
+                makeRect(306.9618787765503, 406.67798000335694, 324.8214789962768, 324.8214789962768),
+                makeRect(328.54222904205324, 406.67798000335694, 344.9135292434692, 344.9135292434692)
         });
 
         put("Lisboa e Vale do Tejo", new Rectangle[]{
-                new Rectangle((float) 416.35193012237545, (float) 343.42522922515866, (float) 433.46738033294673, (float) 433.46738033294673),
-                new Rectangle((float) 437.18813037872314, (float) 344.16937923431396, (float) 452.8152805709839, (float) 452.8152805709839)
+                makeRect(416.35193012237545, 343.42522922515866, 433.46738033294673, 433.46738033294673),
+                makeRect(437.18813037872314, 344.16937923431396, 452.8152805709839, 452.8152805709839)
         });
 
         put("Alentejo", new Rectangle[]{
-                new Rectangle((float) 503.41748119354247, (float) 393.283279838562, (float) 519.7887813949585, (float) 519.7887813949585),
-                new Rectangle((float) 523.5095314407348, (float) 394.77157985687256, (float) 540.6249816513061, (float) 540.6249816513061)
+                makeRect(503.41748119354247, 393.283279838562, 519.7887813949585, 519.7887813949585),
+                makeRect(523.5095314407348, 394.77157985687256, 540.6249816513061, 540.6249816513061)
         });
 
         put("Algarve", new Rectangle[]{
-                new Rectangle((float) 588.9947322463989, (float) 382.1210297012329, (float) 605.3660324478149, (float) 605.3660324478149),
-                new Rectangle((float) 609.8309325027466, (float) 382.8651797103882, (float) 627.6905327224731, (float) 627.6905327224731)
+                makeRect(588.9947322463989, 382.1210297012329, 605.3660324478149, 605.3660324478149),
+                makeRect(609.8309325027466, 382.8651797103882, 627.6905327224731, 627.6905327224731)
         });
 
         put("Madeira", new Rectangle[]{
-                new Rectangle((float) 346.40182926177977, (float) 227.33782779693604, (float) 365.74972949981685, (float) 365.74972949981685),
-                new Rectangle((float) 368.72632953643796, (float) 228.0819778060913, (float) 385.84177974700924, (float) 385.84177974700924)
+                makeRect(346.40182926177977, 227.33782779693604, 365.74972949981685, 365.74972949981685),
+                makeRect(368.72632953643796, 228.0819778060913, 385.84177974700924, 385.84177974700924)
         });
 
         put("Açores", new Rectangle[]{
-                new Rectangle((float) 199.06012744903563, (float) 228.82612781524656, (float) 216.9197276687622, (float) 216.9197276687622),
-                new Rectangle((float) 221.38462772369382, (float) 228.0819778060913, (float) 238.50007793426514, (float) 238.50007793426514)
+                makeRect(199.06012744903563, 228.82612781524656, 216.9197276687622, 216.9197276687622),
+                makeRect(221.38462772369382, 228.0819778060913, 238.50007793426514, 238.50007793426514)
         });
     }};
 
@@ -66,13 +70,13 @@ public class PortugueseReportParser implements ReportParser {
     };
 
     public static final Rectangle activeRect =
-            new Rectangle((float) 200.5484274673462, (float) 21.952425270080564, (float) 231.80272785186767, (float) 161.85262699127196);
+            makeRect(200.5484274673462, 21.952425270080564, 231.80272785186767, 161.85262699127196);
     public static final Rectangle recoveriesRect =
-            new Rectangle((float) 268.26607830047607, (float) 21.20827526092529, (float) 301.0086787033081, (float) 161.10847698211668);
+            makeRect(268.26607830047607, 21.20827526092529, 301.0086787033081, 161.10847698211668);
     public static final Rectangle deathsRect =
-            new Rectangle((float) 338.96032917022706, (float) 24.184875297546387, (float) 370.2146295547485, (float) 163.34092700958251);
+            makeRect(338.96032917022706, 24.184875297546387, 370.2146295547485, 163.34092700958251);
     public static final Rectangle casesRect =
-            new Rectangle((float) 463.97753070831294, (float) 19.719975242614744, (float) 494.4876810836792, (float) 160.3643269729614);
+            makeRect(463.97753070831294, 19.719975242614744, 494.4876810836792, 160.3643269729614);
 
     private final PDDocument document;
 

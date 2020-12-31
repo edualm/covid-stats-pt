@@ -16,7 +16,10 @@ public class FullReport {
         this.regionReports = null;
     }
 
-    public FullReport(String date, ReportMetadata metadata, CountryReport countryReport, Map<String, RegionReport> regionReports) {
+    public FullReport(String date,
+                      ReportMetadata metadata,
+                      CountryReport countryReport,
+                      Map<String, RegionReport> regionReports) {
         this.name = date;
         this.metadata = metadata;
         this.countryReport = countryReport;

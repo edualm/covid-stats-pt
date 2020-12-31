@@ -10,7 +10,6 @@ package io.edr.covidstatspt;
 
 import io.edr.covidstatspt.database.DatabaseConnection;
 import io.edr.covidstatspt.exceptions.MisconfigurationException;
-import io.edr.covidstatspt.exceptions.ParseFailureException;
 import io.edr.covidstatspt.model.*;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -25,7 +24,9 @@ public class Engine {
     private final ReportLocator reportLocator;
     private final MessagingConnection messagingConnection;
 
-    public Engine(DatabaseConnection databaseConnection, ReportLocator reportLocator, MessagingConnection messagingConnection) {
+    public Engine(DatabaseConnection databaseConnection,
+                  ReportLocator reportLocator,
+                  MessagingConnection messagingConnection) {
         this.databaseConnection = databaseConnection;
         this.reportLocator = reportLocator;
         this.messagingConnection = messagingConnection;
@@ -138,8 +139,11 @@ public class Engine {
                     false);
 
             messagingConnection.broadcast(
-                    "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>\n" +
-                    "\nOcorreu um erro na obtenção dos dados do report da DGS. No entanto, o mesmo já está disponível para consulta no seguinte link: " +
+                    "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>" +
+                            "\n" +
+                            "\n" +
+                            "Ocorreu um erro na obtenção dos dados do report da DGS. No entanto, o mesmo já " +
+                            "está disponível para consulta no seguinte link: " +
                     report.getURL().toString()
             );
 

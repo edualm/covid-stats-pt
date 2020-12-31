@@ -48,16 +48,24 @@ public class StringFactory {
 
     static String buildMaxCasesString(String maxCasesDate, int newCases, MaxValuesData.DatedValue pastCases) {
         if (newCases > pastCases.value)
-            return "<b>\u26A0\uFE0F Novo máximo de \uD83E\uDDA0 casos</b>: <code>" + newCases + " (+" + (newCases - pastCases.value) + ")</code>";
+            return "<b>\u26A0\uFE0F Novo máximo de \uD83E\uDDA0 casos</b>: <code>" +
+                    newCases +
+                    " (+" + (newCases - pastCases.value) + ")</code>";
         else
-            return "<b>Máximo de \uD83E\uDDA0 casos</b>: <code>" + pastCases.value + " (" + pastCases.date + ")</code>";
+            return "<b>Máximo de \uD83E\uDDA0 casos</b>: <code>" +
+                    pastCases.value +
+                    " (" + pastCases.date + ")</code>";
     }
 
     static String buildMaxDeathsString(String maxDeathsDate, int newDeaths, MaxValuesData.DatedValue pastDeaths) {
         if (newDeaths > pastDeaths.value)
-            return "<b>\u26A0\uFE0F Novo máximo de \uD83D\uDC80 mortes</b>: <code>" + newDeaths + " (+" + (newDeaths - pastDeaths.value) + ")</code>";
+            return "<b>\u26A0\uFE0F Novo máximo de \uD83D\uDC80 mortes</b>: <code>" +
+                    newDeaths +
+                    " (+" + (newDeaths - pastDeaths.value) + ")</code>";
         else
-            return "<b>Máximo de \uD83D\uDC80 mortes</b>: <code>" + pastDeaths.value + " (" + pastDeaths.date + ")</code>";
+            return "<b>Máximo de \uD83D\uDC80 mortes</b>: <code>" +
+                    pastDeaths.value +
+                    " (" + pastDeaths.date + ")</code>";
     }
 
     static String buildMessage(String date,
@@ -67,7 +75,8 @@ public class StringFactory {
                                MaxValuesData maxValues,
                                String[] orderedRegions) {
 
-        StringBuilder messageBuilder = new StringBuilder("\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + date + "</b>\n");
+        StringBuilder messageBuilder =
+                new StringBuilder("\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + date + "</b>\n");
 
         for (String regionName: orderedRegions) {
             RegionReport r = regionReports.get(regionName);

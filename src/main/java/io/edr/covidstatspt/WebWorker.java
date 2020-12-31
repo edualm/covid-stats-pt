@@ -29,7 +29,10 @@ public class WebWorker {
     private final MessagingConnection telegramConnection;
     private final String webHookPath;
 
-    public WebWorker(int webServerPort, String webHookPath, DatabaseConnection databaseConnection, MessagingConnection telegramConnection) {
+    public WebWorker(int webServerPort,
+                     String webHookPath,
+                     DatabaseConnection databaseConnection,
+                     MessagingConnection telegramConnection) {
         this.webHookPath = webHookPath;
         this.databaseConnection = databaseConnection;
         this.telegramConnection = telegramConnection;
@@ -83,9 +86,11 @@ public class WebWorker {
                 switch (textMessage) {
                     case "/about": {
                         String response =
-                                "<b>COVID Stats \uD83C\uDDF5\uD83C\uDDF9</b> is a telegram bot that parses the official COVID-19 data for Portugal and sends it daily to you via Telegram." +
+                                "<b>COVID Stats \uD83C\uDDF5\uD83C\uDDF9</b> is a telegram bot that parses the " +
+                                        "official COVID-19 data for Portugal and sends it daily to you via Telegram." +
                                 "\n\n" +
-                                "Source code for this project is available at https://github.com/edualm/covid-stats-pt under a public domain license." +
+                                "Source code for this project is available at " +
+                                        "https://github.com/edualm/covid-stats-pt under a public domain license." +
                                 "\n\n" +
                                 "Created and hosted by Eduardo Almeida (https://eduardo.engineer).";
 
@@ -131,7 +136,10 @@ public class WebWorker {
                         recipients = Arrays.copyOf(recipients, recipients.length + 1);
                         recipients[recipients.length - 1] = chatId;
 
-                        List<String> newRecipientsAsList = Arrays.stream(recipients).filter(value -> !value.equals("")).collect(Collectors.toList());
+                        List<String> newRecipientsAsList = Arrays
+                                .stream(recipients)
+                                .filter(value -> !value.equals(""))
+                                .collect(Collectors.toList());
 
                         String[] newRecipients = new String[newRecipientsAsList.size()];
                         newRecipients = newRecipientsAsList.toArray(newRecipients);
@@ -152,7 +160,10 @@ public class WebWorker {
                             return "User is not subscribed!";
                         }
 
-                        List<String> newRecipientsAsList = Arrays.stream(recipients).filter(value -> !value.equals(chatId)).collect(Collectors.toList());
+                        List<String> newRecipientsAsList = Arrays
+                                .stream(recipients)
+                                .filter(value -> !value.equals(chatId))
+                                .collect(Collectors.toList());
 
                         String[] newRecipients = new String[newRecipientsAsList.size()];
                         newRecipients = newRecipientsAsList.toArray(newRecipients);
