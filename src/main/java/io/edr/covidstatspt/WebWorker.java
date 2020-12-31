@@ -82,7 +82,8 @@ public class WebWorker {
 
                 switch (textMessage) {
                     case "/about": {
-                        String response = "<b>COVID Stats \uD83C\uDDF5\uD83C\uDDF9</b> is a telegram bot that parses the official COVID-19 data for Portugal and sends it daily to you via Telegram." +
+                        String response =
+                                "<b>COVID Stats \uD83C\uDDF5\uD83C\uDDF9</b> is a telegram bot that parses the official COVID-19 data for Portugal and sends it daily to you via Telegram." +
                                 "\n\n" +
                                 "Source code for this project is available at https://github.com/edualm/covid-stats-pt under a public domain license." +
                                 "\n\n" +
@@ -94,7 +95,7 @@ public class WebWorker {
                     }
 
                     case "/today": {
-                        String response = null;
+                        String response;
 
                         FullReport report = databaseConnection.getLastReport();
                         MaxValuesData maxValues = databaseConnection.getMaxValuesData();
