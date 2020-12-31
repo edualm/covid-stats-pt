@@ -66,14 +66,13 @@ public class PortugueseReportParser implements ReportParser {
     };
 
     public static final Rectangle activeRect =
-            new Rectangle((float) 200.5484274673462, (float) 21.952425270080564, (float) 231.80272785186767, (float) 231.80272785186767);
+            new Rectangle((float) 200.5484274673462, (float) 21.952425270080564, (float) 231.80272785186767, (float) 161.85262699127196);
     public static final Rectangle recoveriesRect =
-            new Rectangle((float) 268.26607830047607, (float) 21.20827526092529, (float) 301.0086787033081, (float) 301.0086787033081);
+            new Rectangle((float) 268.26607830047607, (float) 21.20827526092529, (float) 301.0086787033081, (float) 161.10847698211668);
     public static final Rectangle deathsRect =
-            new Rectangle((float) 338.96032917022706, (float) 24.184875297546387, (float) 370.2146295547485, (float) 370.2146295547485);
-
+            new Rectangle((float) 338.96032917022706, (float) 24.184875297546387, (float) 370.2146295547485, (float) 163.34092700958251);
     public static final Rectangle casesRect =
-            new Rectangle((float) 463.97753070831294, (float) 19.719975242614744, (float) 494.4876810836792, (float) 494.4876810836792);
+            new Rectangle((float) 463.97753070831294, (float) 19.719975242614744, (float) 494.4876810836792, (float) 160.3643269729614);
 
     private final PDDocument document;
 
@@ -93,7 +92,7 @@ public class PortugueseReportParser implements ReportParser {
         if (input.length() <= 1)
             return 0;
 
-        boolean isNegative = input.contains("- ");
+        boolean isNegative = input.trim().charAt(0) == '-';
 
         int value = parseIntWithoutExtraCharacters(input);
 
@@ -240,10 +239,16 @@ public class PortugueseReportParser implements ReportParser {
         String[] deathsColumns = splitTableData(rectangleToColumns(deathsRect, page)[0]);
         String[] casesColumns = splitTableData(rectangleToColumns(casesRect, page)[0]);
 
+        int activeCases = parsePossiblyNegativeIntWithoutExtraCharacters(activeColumns[1]);
+
+        if (activeCases == 0) {
+            activeCases = parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[1]) - parsePossiblyNegativeIntWithoutExtraCharacters(recoveriesColumns[1]);
+        }
+
         CountryReport.Report dayReport = new CountryReport.Report(
                 parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[1]),
                 parsePossiblyNegativeIntWithoutExtraCharacters(deathsColumns[1]),
-                parsePossiblyNegativeIntWithoutExtraCharacters(activeColumns[1]),
+                activeCases,
                 parsePossiblyNegativeIntWithoutExtraCharacters(recoveriesColumns[1])
         );
 
