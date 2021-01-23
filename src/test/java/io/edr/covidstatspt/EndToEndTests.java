@@ -91,10 +91,13 @@ public class EndToEndTests {
         }
 
         @Override
+        public void send(String recipient, String message, boolean html, boolean silent) {}
+
+        @Override
         public void send(String recipient, String message, boolean html) {}
 
         @Override
-        public void sendToAdmin(String message, boolean html) {}
+        public void sendToAdmin(String message, boolean html, boolean silent) {}
     }
 
     private static class MockReportLocator implements ReportLocator {

@@ -8,5 +8,6 @@ public interface MessagingConnection {
 
     void broadcast(String message) throws IOException;
     void send(String recipient, String message, boolean html) throws IOException;
-    void sendToAdmin(String message, boolean html) throws MisconfigurationException, IOException;
+    void send(String recipient, String message, boolean html, boolean silent) throws IOException;
+    void sendToAdmin(String message, boolean html, boolean silent) throws MisconfigurationException, IOException;
 }

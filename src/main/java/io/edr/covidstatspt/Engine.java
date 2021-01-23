@@ -90,7 +90,8 @@ public class Engine {
                             e.getMessage() +
                             "\n\n" +
                             Arrays.toString(e.getStackTrace()),
-                    false);
+                    false,
+                    true);
 
             return false;
         }
@@ -136,7 +137,8 @@ public class Engine {
                             e.getMessage() +
                             "\n\n" +
                             Arrays.toString(e.getStackTrace()),
-                    false);
+                    false,
+                    true);
 
             messagingConnection.broadcast(
                     "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>" +

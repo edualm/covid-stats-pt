@@ -31,11 +31,15 @@ public class TelegramConnection implements MessagingConnection {
 
     public void broadcast(String message) throws IOException {
         for (String recipient: databaseConnection.getTelegramRecipients()) {
-            send(recipient, message, true);
+            send(recipient, message, true, false);
         }
     }
 
     public void send(String recipient, String message, boolean html) throws IOException {
+        send(recipient, message, html, false);
+    }
+
+    public void send(String recipient, String message, boolean html, boolean silent) throws IOException {
         URL url = new URL("https://api.telegram.org/bot" +
                 this.token +
                 "/sendMessage?chat_id=" +
@@ -51,7 +55,7 @@ public class TelegramConnection implements MessagingConnection {
         rd.close();
     }
 
-    public void sendToAdmin(String message, boolean html) throws MisconfigurationException, IOException {
+    public void sendToAdmin(String message, boolean html, boolean silent) throws MisconfigurationException, IOException {
         //  The Telegram ID of the admin is assumed to be the first ID on the recipients array.
 
         if (databaseConnection.getTelegramRecipients().length == 0)
@@ -59,7 +63,7 @@ public class TelegramConnection implements MessagingConnection {
                     "No telegram recipients set while the server tried to send a message to an admin!"
             );
 
-        send(databaseConnection.getTelegramRecipients()[0], message, html);
+        send(databaseConnection.getTelegramRecipients()[0], message, html, silent);
     }
 
 }
