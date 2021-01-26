@@ -45,6 +45,7 @@ public class TelegramConnection implements MessagingConnection {
                 "/sendMessage?chat_id=" +
                 recipient +
                 (html ? "&parse_mode=HTML" : "") +
+                (silent ? "&disable_notification=true" : "") +
                 "&text=" +
                 URLEncoder.encode(message, StandardCharsets.UTF_8.toString()));
 
