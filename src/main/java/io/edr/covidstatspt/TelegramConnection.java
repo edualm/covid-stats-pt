@@ -18,6 +18,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TelegramConnection implements MessagingConnection {
 
@@ -52,8 +55,10 @@ public class TelegramConnection implements MessagingConnection {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
 
-        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        rd.close();
+        int statusCode = conn.getResponseCode();
+
+        if (statusCode == 403)
+            (new DatabaseUtilities(databaseConnection)).removeTelegramRecipient(recipient);
     }
 
     public void sendToAdmin(String message, boolean html, boolean silent) throws MisconfigurationException, IOException {

@@ -65,6 +65,8 @@ public class WebWorker {
 
         post("/" + webHookPath, (req, res) -> {
             try {
+                DatabaseUtilities databaseUtilities = new DatabaseUtilities(databaseConnection);
+
                 JSONObject obj = (JSONObject) (new JSONParser().parse(req.body()));
 
                 Map message = (Map) obj.get("message");
@@ -133,18 +135,7 @@ public class WebWorker {
                             return "User is already subscribed!";
                         }
 
-                        recipients = Arrays.copyOf(recipients, recipients.length + 1);
-                        recipients[recipients.length - 1] = chatId;
-
-                        List<String> newRecipientsAsList = Arrays
-                                .stream(recipients)
-                                .filter(value -> !value.equals(""))
-                                .collect(Collectors.toList());
-
-                        String[] newRecipients = new String[newRecipientsAsList.size()];
-                        newRecipients = newRecipientsAsList.toArray(newRecipients);
-
-                        databaseConnection.setTelegramRecipients(newRecipients);
+                        databaseUtilities.addTelegramRecipient(chatId);
 
                         telegramConnection.send(chatId, "You have been successfully subscribed.", false);
 
@@ -160,15 +151,7 @@ public class WebWorker {
                             return "User is not subscribed!";
                         }
 
-                        List<String> newRecipientsAsList = Arrays
-                                .stream(recipients)
-                                .filter(value -> !value.equals(chatId))
-                                .collect(Collectors.toList());
-
-                        String[] newRecipients = new String[newRecipientsAsList.size()];
-                        newRecipients = newRecipientsAsList.toArray(newRecipients);
-
-                        databaseConnection.setTelegramRecipients(newRecipients);
+                        databaseUtilities.addTelegramRecipient(chatId);
 
                         telegramConnection.send(chatId, "You have been successfully unsubscribed.", false);
 
