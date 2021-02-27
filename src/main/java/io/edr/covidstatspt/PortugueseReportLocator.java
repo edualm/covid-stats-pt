@@ -45,7 +45,7 @@ public class PortugueseReportLocator implements ReportLocator {
     public ReportMetadata getReport() throws IOException, ParseFailureException {
         Document doc = Jsoup.connect(reportsURL).get();
 
-        return reportForElement(doc.selectFirst(".single_content > ul:nth-child(1) > li:nth-child(1)"));
+        return reportForElement(doc.selectFirst("#acordeaoc-0 > ul:nth-child(1) > li:nth-child(1)"));
     }
 
     public ArrayList<ReportMetadata> getReports(int count) throws IOException, ParseFailureException {
@@ -55,7 +55,7 @@ public class PortugueseReportLocator implements ReportLocator {
 
         for (int i = 0; i < count; i++) {
             list.add(reportForElement(
-                    doc.selectFirst(".single_content > ul:nth-child(1) > li:nth-child(" + (i + 1) + ")")
+                    doc.selectFirst("#acordeaoc-0 > ul:nth-child(1) > li:nth-child(" + (i + 1) + ")")
             ));
         }
 
