@@ -139,7 +139,7 @@ public class EndToEndTests {
 
         databaseConnection.setMaxValuesData(null);
 
-        String expectedReport = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a 23/12</b>\n" +
+        String expectedReport = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Norte</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 1811 casos, \uD83D\uDC80 32 mortes</code>\n" +
@@ -151,7 +151,7 @@ public class EndToEndTests {
                 "\n" +
                 "<b>\uD83C\uDFD9️ Lisboa e Vale do Tejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 1467 casos, \uD83D\uDC80 40 mortes</code>\n" +
-                "Total: <code>\uD83E\uDDA0 123541 casos, \uD83D\uDC80 <?> mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 123541 casos, \uD83D\uDC80 ... mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Alentejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 322 casos, \uD83D\uDC80 3 mortes</code>\n" +
@@ -192,7 +192,7 @@ public class EndToEndTests {
 
         String todayStr = StringFactory.buildTodayDate(calendar);
 
-        String expectedReport = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a 23/12</b>\n" +
+        String expectedReport = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Norte</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 1811 casos, \uD83D\uDC80 32 mortes</code>\n" +
@@ -204,7 +204,7 @@ public class EndToEndTests {
                 "\n" +
                 "<b>\uD83C\uDFD9️ Lisboa e Vale do Tejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 1467 casos, \uD83D\uDC80 40 mortes</code>\n" +
-                "Total: <code>\uD83E\uDDA0 123541 casos, \uD83D\uDC80 <?> mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 123541 casos, \uD83D\uDC80 ... mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Alentejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 322 casos, \uD83D\uDC80 3 mortes</code>\n" +
@@ -253,7 +253,7 @@ public class EndToEndTests {
                 new MaxValuesData.DatedValue("---", 10000))
         );
 
-        String expectedReport = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a 23/12</b>\n" +
+        String expectedReport = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Norte</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 1811 casos, \uD83D\uDC80 32 mortes</code>\n" +
@@ -265,7 +265,7 @@ public class EndToEndTests {
                 "\n" +
                 "<b>\uD83C\uDFD9️ Lisboa e Vale do Tejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 1467 casos, \uD83D\uDC80 40 mortes</code>\n" +
-                "Total: <code>\uD83E\uDDA0 123541 casos, \uD83D\uDC80 <?> mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 123541 casos, \uD83D\uDC80 ... mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Alentejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 322 casos, \uD83D\uDC80 3 mortes</code>\n" +
