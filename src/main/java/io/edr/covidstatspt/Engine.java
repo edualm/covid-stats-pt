@@ -112,6 +112,8 @@ public class Engine {
 
             CountryReport countryReport = parser.getCountryReport();
 
+            regionReports = (new LVTWorkaround(countryReport, regionReports)).generateFixedRegionReports();
+
             MaxValuesData maxValues = databaseConnection.getMaxValuesData();
 
             checkForDailyMaximums(todayStr, countryReport.day.cases, countryReport.day.deaths);
@@ -146,7 +148,7 @@ public class Engine {
                             "\n" +
                             "Ocorreu um erro na obtenção dos dados do report da DGS. No entanto, o mesmo já " +
                             "está disponível para consulta no seguinte link: " +
-                    report.getURL().toString()
+                    report.getURL()
             );
 
             return true;

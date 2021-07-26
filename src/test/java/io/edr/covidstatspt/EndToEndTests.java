@@ -151,7 +151,7 @@ public class EndToEndTests {
                 "\n" +
                 "<b>\uD83C\uDFD9️ Lisboa e Vale do Tejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 1467 casos, \uD83D\uDC80 40 mortes</code>\n" +
-                "Total: <code>\uD83E\uDDA0 123541 casos, \uD83D\uDC80 ... mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 123541 casos, \uD83D\uDC80 2196 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Alentejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 322 casos, \uD83D\uDC80 3 mortes</code>\n" +
@@ -204,7 +204,7 @@ public class EndToEndTests {
                 "\n" +
                 "<b>\uD83C\uDFD9️ Lisboa e Vale do Tejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 1467 casos, \uD83D\uDC80 40 mortes</code>\n" +
-                "Total: <code>\uD83E\uDDA0 123541 casos, \uD83D\uDC80 ... mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 123541 casos, \uD83D\uDC80 2196 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Alentejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 322 casos, \uD83D\uDC80 3 mortes</code>\n" +
@@ -265,7 +265,7 @@ public class EndToEndTests {
                 "\n" +
                 "<b>\uD83C\uDFD9️ Lisboa e Vale do Tejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 1467 casos, \uD83D\uDC80 40 mortes</code>\n" +
-                "Total: <code>\uD83E\uDDA0 123541 casos, \uD83D\uDC80 ... mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 123541 casos, \uD83D\uDC80 2196 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Alentejo</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 322 casos, \uD83D\uDC80 3 mortes</code>\n" +
