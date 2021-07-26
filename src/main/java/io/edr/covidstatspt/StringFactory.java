@@ -16,13 +16,13 @@ public class StringFactory {
 
     static String buildRegionString(String regionName, RegionReport report) {
         return "<b>\uD83C\uDFD9️ " + regionName + "</b>\nNovos: <code>\uD83E\uDDA0 " +
-                report.day.cases +
+                (report.day.cases >= 0 ? report.day.cases : "...") +
                 " casos, \uD83D\uDC80 " +
-                (report.day.deaths < report.day.cases ? report.day.deaths : "...") +
+                ((report.day.deaths < report.day.cases && report.day.deaths >= 0) ? report.day.deaths : "...") +
                 " mortes</code>\nTotal: <code>\uD83E\uDDA0 " +
-                report.cumulative.cases +
+                (report.cumulative.cases >= 0 ? report.cumulative.cases : "...") +
                 " casos, \uD83D\uDC80 " +
-                (report.cumulative.deaths < report.cumulative.cases ? report.cumulative.deaths : "...") +
+                ((report.cumulative.deaths < report.cumulative.cases && report.cumulative.deaths >= 0) ? report.cumulative.deaths : "...") +
                 " mortes</code>\n";
     }
 
@@ -91,6 +91,16 @@ public class StringFactory {
                     .append(StringFactory.buildMaxCasesString(date, countryReport.day.cases, maxValues.cases))
                     .append("\n")
                     .append(StringFactory.buildMaxDeathsString(date, countryReport.day.deaths, maxValues.deaths));
+        }
+
+        if (countryReport.day.cases == 0) {
+            messageBuilder.append("\n\n")
+                    .append("\uD83C\uDF89\uD83D\uDE45\uD83E\uDDA0 <b>Sem casos de COVID-19 hoje!</b> \uD83C\uDF89\uD83D\uDE45\uD83E\uDDA0");
+        }
+
+        if (countryReport.day.deaths == 0) {
+            messageBuilder.append("\n\n")
+                    .append("\uD83C\uDF89\uD83D\uDE45\uD83D\uDC80 <b>Sem mortes devido a COVID-19 hoje!</b> \uD83C\uDF89\uD83D\uDE45\uD83D\uDC80");
         }
 
         messageBuilder.append("\n\n").append("\uD83D\uDCDD <b>Report DGS</b>: ").append(report.getURL().toString());

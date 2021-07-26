@@ -8,17 +8,15 @@
 
 package io.edr.covidstatspt;
 
-import io.edr.covidstatspt.database.DatabaseConnection;
 import io.edr.covidstatspt.exceptions.MisconfigurationException;
-import io.edr.covidstatspt.model.FullReport;
+import io.edr.covidstatspt.mocks.MockDatabaseConnection;
+import io.edr.covidstatspt.mocks.MockReportLocator;
+import io.edr.covidstatspt.mocks.SpyMessagingConnection;
 import io.edr.covidstatspt.model.MaxValuesData;
-import io.edr.covidstatspt.model.ReportMetadata;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -26,90 +24,6 @@ import java.util.GregorianCalendar;
 import static org.junit.Assert.assertEquals;
 
 public class EndToEndTests {
-
-    private static class MockDatabaseConnection implements DatabaseConnection {
-
-        private MaxValuesData maxValuesData;
-
-        MockDatabaseConnection() {
-            maxValuesData = new MaxValuesData(
-                    new MaxValuesData.DatedValue("---", 5000),
-                    new MaxValuesData.DatedValue("---", 50)
-            );
-        }
-
-        @Override
-        public FullReport getLastReport() {
-            return null;
-        }
-
-        @Override
-        public String[] getTelegramRecipients() {
-            return new String[0];
-        }
-
-        @Override
-        public MaxValuesData getMaxValuesData() {
-            if (maxValuesData == null)
-                return null;
-
-            return new MaxValuesData(
-                    new MaxValuesData.DatedValue(maxValuesData.cases.date, maxValuesData.cases.value),
-                    new MaxValuesData.DatedValue(maxValuesData.deaths.date, maxValuesData.deaths.value)
-            );
-        }
-
-        @Override
-        public boolean setLastReport(FullReport report) {
-            return false;
-        }
-
-        @Override
-        public boolean setTelegramRecipients(String[] recipients) {
-            return false;
-        }
-
-        @Override
-        public boolean setMaxValuesData(MaxValuesData data) {
-            maxValuesData = data;
-
-            return true;
-        }
-    }
-
-    private static class SpyMessagingConnection implements MessagingConnection {
-
-        public final ArrayList<String> messages;
-
-        public SpyMessagingConnection() {
-            messages = new ArrayList<>();
-        }
-
-        @Override
-        public void broadcast(String message) {
-            messages.add(message);
-        }
-
-        @Override
-        public void send(String recipient, String message, boolean html, boolean silent) {}
-
-        @Override
-        public void send(String recipient, String message, boolean html) {}
-
-        @Override
-        public void sendToAdmin(String message, boolean html, boolean silent) {}
-    }
-
-    private static class MockReportLocator implements ReportLocator {
-
-        @Override
-        public ReportMetadata getReport() throws IOException {
-            return new ReportMetadata(
-                    "23/12/2020",
-                    new URL("https://covid19.min-saude.pt/wp-content/uploads/2020/12/296_DGS_boletim_20201223.pdf")
-            );
-        }
-    }
 
     private Engine sut;
 
