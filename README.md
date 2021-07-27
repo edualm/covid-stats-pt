@@ -78,7 +78,7 @@ Returns a friendly message about the bot and its programmer(s).
 
 ## Example Message
 
-The message is in Portuguese. <img src="https://i.pinimg.com/564x/a1/96/16/a1961629de94ef8fe2cee1c50015ee5e.jpg" alt="Deal with it." width="18px">
+The message is in Portuguese, as the bot is directed at Portuguese users.
 
 ```
 🇵🇹 [COVID-19] Evolução a 26/07
