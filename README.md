@@ -19,9 +19,12 @@ IntelliJ IDEA handled that for me. Maybe it will do the same for you if you ask 
 
 ## Prerequisites
 
- - Working JDK with Maven (don't ask me how to set that up...)
- - Redis instance _or_ ThisDB account (https://thisdb.com) _or_ KVdb account (https://kvdb.io)
- - Telegram bot (https://core.telegram.org/bots)
+ - Working JDK with Maven (don't ask me how to set that up...);
+ - A key-value store to use as a database. One of:
+   - Redis instance (recommended) _or_ 
+   - ThisDB account (https://thisdb.com) _or_ 
+   - KVdb account (https://kvdb.io)
+ - Telegram bot (https://core.telegram.org/bots);
  - Server exposed to the internet, so you can receive Telegram's webhook messages.
 
 To build, use your favorite IDE or run `mvn -B package --file pom.xml`.
@@ -78,39 +81,44 @@ Returns a friendly message about the bot and its programmer(s).
 The message is in Portuguese. <img src="https://i.pinimg.com/564x/a1/96/16/a1961629de94ef8fe2cee1c50015ee5e.jpg" alt="Deal with it." width="18px">
 
 ```
-🇵🇹 [COVID-19] Evolução a 05/06
+🇵🇹 [COVID-19] Evolução a 26/07
 
- 🏙️ Norte
-Novos: 🦠 15 casos, 💀 2 mortes
-Cumulativo: 🦠 16834 casos, 💀 803 mortes
+🏙️ Norte
+Novos: 🦠 688 casos, 💀 5 mortes
+Total: 🦠 370347 casos, 💀 5408 mortes
 
- 🏙️ Centro
-Novos: 🦠 19 casos, 💀 4 mortes
-Cumulativo: 🦠 3789 casos, 💀 244 mortes
+🏙️ Centro
+Novos: 🦠 74 casos, 💀 0 mortes
+Total: 🦠 128316 casos, 💀 3039 mortes
 
- 🏙️ Lisboa e Vale do Tejo
-Novos: 🦠 336 casos, 💀 4 mortes
-Cumulativo: 🦠 12473 casos, 💀 387 mortes
+🏙️ Lisboa e Vale do Tejo
+Novos: 🦠 519 casos, 💀 3 mortes
+Total: 🦠 373452 casos, 💀 7382 mortes
 
- 🏙️ Alentejo
-Novos: 🦠 1 casos, 💀 0 mortes
-Cumulativo: 🦠 263 casos, 💀 1 mortes
+🏙️ Alentejo
+Novos: 🦠 51 casos, 💀 0 mortes
+Total: 🦠 33194 casos, 💀 980 mortes
 
- 🏙️ Algarve
-Novos: 🦠 4 casos, 💀 0 mortes
-Cumulativo: 🦠 380 casos, 💀 15 mortes
+🏙️ Algarve
+Novos: 🦠 177 casos, 💀 0 mortes
+Total: 🦠 31658 casos, 💀 384 mortes
 
- 🏙️ Madeira
-Novos: 🦠 0 casos, 💀 0 mortes
-Cumulativo: 🦠 90 casos, 💀 0 mortes
+🏙️ Madeira
+Novos: 🦠 43 casos, 💀 0 mortes
+Total: 🦠 10472 casos, 💀 71 mortes
 
- 🏙️ Açores
-Novos: 🦠 2 casos, 💀 0 mortes
-Cumulativo: 🦠 140 casos, 💀 15 mortes
+🏙️ Açores
+Novos: 🦠 58 casos, 💀 1 mortes
+Total: 🦠 7230 casos, 💀 37 mortes
 
- 🇵🇹 Portugal:
-Novos: 🦠 377 casos, 🟢 203 recuperados, 💀 10 mortes
-Cumulativo: 🦠 33969 casos, 🟢 20526 recuperados, 💀 1465 mortes
+🇵🇹 Portugal:
+Novos: 🦠 1610 casos, 🟢 1802 recuperados, 🔴 -201 ativos, 💀 9 mortes
+Total: 🦠 954669 casos, 🟢 883372 recuperados, 🔴 53996 ativos, 💀 17301 mortes
+
+Máximo de 🦠 casos: 16432 (28/01)
+Máximo de 💀 mortes: 303 (28/01)
+
+📝 Report DGS: https://covid19.min-saude.pt/wp-content/uploads/2021/07/511_DGS_boletim_20210726.pdf
 ```
 
 ## ⚠️ Disclaimer
