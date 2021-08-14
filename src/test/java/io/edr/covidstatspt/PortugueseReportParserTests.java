@@ -135,6 +135,16 @@ public class PortugueseReportParserTests {
 
         CountryReport countryReport = parser.getCountryReport();
 
-        assertEquals(countryReport.cumulative.cases, 103736);
+        assertEquals(103736, countryReport.cumulative.cases);
+    }
+
+    @Test
+    public void testMoreThanAMillionCumulativeCases() throws IOException {
+        PDDocument doc = PDDocument.load(new URL("https://covid19.min-saude.pt/wp-content/uploads/2021/08/530_DGS_boletim_20210814.pdf").openStream());
+        PortugueseReportParser parser = new PortugueseReportParser(doc);
+
+        CountryReport countryReport = parser.getCountryReport();
+
+        assertEquals(2571, countryReport.day.cases);
     }
 }

@@ -76,7 +76,7 @@ public class PortugueseReportParser implements ReportParser {
     public static final Rectangle deathsRect =
             makeRect(338.96032917022706, 24.184875297546387, 370.2146295547485, 163.34092700958251);
     public static final Rectangle casesRect =
-            makeRect(463.97753070831294, 19.719975242614744, 494.4876810836792, 160.3643269729614);
+            makeRect(467.698, 0, 501.185, 200);
 
     private final PDDocument document;
 
@@ -242,6 +242,10 @@ public class PortugueseReportParser implements ReportParser {
         String[] recoveriesColumns = splitTableData(rectangleToColumns(recoveriesRect, page)[0]);
         String[] deathsColumns = splitTableData(rectangleToColumns(deathsRect, page)[0]);
         String[] casesColumns = splitTableData(rectangleToColumns(casesRect, page)[0]);
+
+        if (parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[1]) == 0) {
+            casesColumns = rectangleToColumns(casesRect, page);
+        }
 
         int activeCases = parsePossiblyNegativeIntWithoutExtraCharacters(activeColumns[1]);
 

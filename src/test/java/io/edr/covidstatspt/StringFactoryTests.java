@@ -90,9 +90,17 @@ public class StringFactoryTests {
         todayStr = StringFactory.buildTodayDate(calendar);
     }
 
+    private String todayStr() {
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, 13);
+
+        return StringFactory.buildTodayDate(calendar);
+    }
+
     @Test
     public void testNoCovidCases() throws MalformedURLException {
-        String expectedMessage = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a 26/07</b>\n" +
+        String expectedMessage = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr() + "</b>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Norte</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 273 casos, \uD83D\uDC80 3 mortes</code>\n" +
@@ -144,7 +152,7 @@ public class StringFactoryTests {
 
     @Test
     public void testNoCovidRelatedDeaths() throws MalformedURLException {
-        String expectedMessage = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a 26/07</b>\n" +
+        String expectedMessage = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr() + "</b>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Norte</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 273 casos, \uD83D\uDC80 3 mortes</code>\n" +
@@ -196,7 +204,7 @@ public class StringFactoryTests {
 
     @Test
     public void testNoCovidCasesNorCovidRelatedDeaths() throws MalformedURLException {
-        String expectedMessage = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a 26/07</b>\n" +
+        String expectedMessage = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr() + "</b>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Norte</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 273 casos, \uD83D\uDC80 3 mortes</code>\n" +
