@@ -83,6 +83,10 @@ The message is in Portuguese, as the bot is directed at Portuguese users.
 ```
 🇵🇹 [COVID-19] Evolução a 26/07
 
+🇵🇹 Portugal:
+Novos: 🦠 1610 casos, 🟢 1802 recuperados, 🔴 -201 ativos, 💀 9 mortes
+Total: 🦠 954669 casos, 🟢 883372 recuperados, 🔴 53996 ativos, 💀 17301 mortes
+
 🏙️ Norte
 Novos: 🦠 688 casos, 💀 5 mortes
 Total: 🦠 370347 casos, 💀 5408 mortes
@@ -110,10 +114,6 @@ Total: 🦠 10472 casos, 💀 71 mortes
 🏙️ Açores
 Novos: 🦠 58 casos, 💀 1 mortes
 Total: 🦠 7230 casos, 💀 37 mortes
-
-🇵🇹 Portugal:
-Novos: 🦠 1610 casos, 🟢 1802 recuperados, 🔴 -201 ativos, 💀 9 mortes
-Total: 🦠 954669 casos, 🟢 883372 recuperados, 🔴 53996 ativos, 💀 17301 mortes
 
 Máximo de 🦠 casos: 16432 (28/01)
 Máximo de 💀 mortes: 303 (28/01)
