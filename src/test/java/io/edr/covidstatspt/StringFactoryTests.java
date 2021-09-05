@@ -102,6 +102,10 @@ public class StringFactoryTests {
     public void testNoCovidCases() throws MalformedURLException {
         String expectedMessage = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr() + "</b>\n" +
                 "\n" +
+                "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\n" +
+                "Novos: <code>\uD83E\uDDA0 0 casos, \uD83D\uDFE2 192 recuperados, \uD83D\uDD34 347 ativos, \uD83D\uDC80 13 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 68577 casos, \uD83D\uDFE2 45596 recuperados, \uD83D\uDD34 21069 ativos, \uD83D\uDC80 1912 mortes</code>\n" +
+                "\n" +
                 "<b>\uD83C\uDFD9️ Norte</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 273 casos, \uD83D\uDC80 3 mortes</code>\n" +
                 "Total: <code>\uD83E\uDDA0 24795 casos, \uD83D\uDC80 871 mortes</code>\n" +
@@ -129,10 +133,6 @@ public class StringFactoryTests {
                 "<b>\uD83C\uDFD9️ Açores</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 2 casos, \uD83D\uDC80 0 mortes</code>\n" +
                 "Total: <code>\uD83E\uDDA0 243 casos, \uD83D\uDC80 15 mortes</code>\n" +
-                "\n" +
-                "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\n" +
-                "Novos: <code>\uD83E\uDDA0 0 casos, \uD83D\uDFE2 192 recuperados, \uD83D\uDD34 347 ativos, \uD83D\uDC80 13 mortes</code>\n" +
-                "Total: <code>\uD83E\uDDA0 68577 casos, \uD83D\uDFE2 45596 recuperados, \uD83D\uDD34 21069 ativos, \uD83D\uDC80 1912 mortes</code>\n" +
                 "\n" +
                 "\uD83C\uDF89\uD83D\uDE45\uD83E\uDDA0 <b>Sem casos de COVID-19 hoje!</b> \uD83C\uDF89\uD83D\uDE45\uD83E\uDDA0\n" +
                 "\n" +
@@ -154,6 +154,10 @@ public class StringFactoryTests {
     public void testNoCovidRelatedDeaths() throws MalformedURLException {
         String expectedMessage = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr() + "</b>\n" +
                 "\n" +
+                "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\n" +
+                "Novos: <code>\uD83E\uDDA0 552 casos, \uD83D\uDFE2 192 recuperados, \uD83D\uDD34 347 ativos, \uD83D\uDC80 0 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 68577 casos, \uD83D\uDFE2 45596 recuperados, \uD83D\uDD34 21069 ativos, \uD83D\uDC80 1912 mortes</code>\n" +
+                "\n" +
                 "<b>\uD83C\uDFD9️ Norte</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 273 casos, \uD83D\uDC80 3 mortes</code>\n" +
                 "Total: <code>\uD83E\uDDA0 24795 casos, \uD83D\uDC80 871 mortes</code>\n" +
@@ -181,10 +185,6 @@ public class StringFactoryTests {
                 "<b>\uD83C\uDFD9️ Açores</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 2 casos, \uD83D\uDC80 0 mortes</code>\n" +
                 "Total: <code>\uD83E\uDDA0 243 casos, \uD83D\uDC80 15 mortes</code>\n" +
-                "\n" +
-                "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\n" +
-                "Novos: <code>\uD83E\uDDA0 552 casos, \uD83D\uDFE2 192 recuperados, \uD83D\uDD34 347 ativos, \uD83D\uDC80 0 mortes</code>\n" +
-                "Total: <code>\uD83E\uDDA0 68577 casos, \uD83D\uDFE2 45596 recuperados, \uD83D\uDD34 21069 ativos, \uD83D\uDC80 1912 mortes</code>\n" +
                 "\n" +
                 "\uD83C\uDF89\uD83D\uDE45\uD83D\uDC80 <b>Sem mortes devido a COVID-19 hoje!</b> \uD83C\uDF89\uD83D\uDE45\uD83D\uDC80\n" +
                 "\n" +
@@ -206,6 +206,10 @@ public class StringFactoryTests {
     public void testNoCovidCasesNorCovidRelatedDeaths() throws MalformedURLException {
         String expectedMessage = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr() + "</b>\n" +
                 "\n" +
+                "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\n" +
+                "Novos: <code>\uD83E\uDDA0 0 casos, \uD83D\uDFE2 192 recuperados, \uD83D\uDD34 347 ativos, \uD83D\uDC80 0 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 68577 casos, \uD83D\uDFE2 45596 recuperados, \uD83D\uDD34 21069 ativos, \uD83D\uDC80 1912 mortes</code>\n" +
+                "\n" +
                 "<b>\uD83C\uDFD9️ Norte</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 273 casos, \uD83D\uDC80 3 mortes</code>\n" +
                 "Total: <code>\uD83E\uDDA0 24795 casos, \uD83D\uDC80 871 mortes</code>\n" +
@@ -234,12 +238,7 @@ public class StringFactoryTests {
                 "Novos: <code>\uD83E\uDDA0 2 casos, \uD83D\uDC80 0 mortes</code>\n" +
                 "Total: <code>\uD83E\uDDA0 243 casos, \uD83D\uDC80 15 mortes</code>\n" +
                 "\n" +
-                "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\n" +
-                "Novos: <code>\uD83E\uDDA0 0 casos, \uD83D\uDFE2 192 recuperados, \uD83D\uDD34 347 ativos, \uD83D\uDC80 0 mortes</code>\n" +
-                "Total: <code>\uD83E\uDDA0 68577 casos, \uD83D\uDFE2 45596 recuperados, \uD83D\uDD34 21069 ativos, \uD83D\uDC80 1912 mortes</code>\n" +
-                "\n" +
                 "\uD83C\uDF89\uD83D\uDE45\uD83E\uDDA0 <b>Sem casos de COVID-19 hoje!</b> \uD83C\uDF89\uD83D\uDE45\uD83E\uDDA0\n" +
-                "\n" +
                 "\uD83C\uDF89\uD83D\uDE45\uD83D\uDC80 <b>Sem mortes devido a COVID-19 hoje!</b> \uD83C\uDF89\uD83D\uDE45\uD83D\uDC80\n" +
                 "\n" +
                 "\uD83D\uDCDD <b>Report DGS</b>: http://report-url/";

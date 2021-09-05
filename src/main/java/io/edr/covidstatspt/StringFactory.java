@@ -76,7 +76,9 @@ public class StringFactory {
                                String[] orderedRegions) {
 
         StringBuilder messageBuilder =
-                new StringBuilder("\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + date + "</b>\n");
+                new StringBuilder("\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + date + "</b>\n\n");
+
+        messageBuilder.append(StringFactory.buildCountryString(countryReport)).append("\n");
 
         for (String regionName: orderedRegions) {
             RegionReport r = regionReports.get(regionName);
@@ -84,26 +86,29 @@ public class StringFactory {
             messageBuilder.append("\n").append(StringFactory.buildRegionString(regionName, r));
         }
 
-        messageBuilder.append("\n").append(StringFactory.buildCountryString(countryReport));
-
         if (maxValues != null) {
-            messageBuilder.append("\n\n")
+            messageBuilder.append("\n")
                     .append(StringFactory.buildMaxCasesString(date, countryReport.day.cases, maxValues.cases))
                     .append("\n")
-                    .append(StringFactory.buildMaxDeathsString(date, countryReport.day.deaths, maxValues.deaths));
+                    .append(StringFactory.buildMaxDeathsString(date, countryReport.day.deaths, maxValues.deaths))
+                    .append("\n");
         }
 
         if (countryReport.day.cases == 0) {
-            messageBuilder.append("\n\n")
+            messageBuilder.append("\n")
                     .append("\uD83C\uDF89\uD83D\uDE45\uD83E\uDDA0 <b>Sem casos de COVID-19 hoje!</b> \uD83C\uDF89\uD83D\uDE45\uD83E\uDDA0");
         }
 
         if (countryReport.day.deaths == 0) {
-            messageBuilder.append("\n\n")
+            messageBuilder.append("\n")
                     .append("\uD83C\uDF89\uD83D\uDE45\uD83D\uDC80 <b>Sem mortes devido a COVID-19 hoje!</b> \uD83C\uDF89\uD83D\uDE45\uD83D\uDC80");
         }
 
-        messageBuilder.append("\n\n").append("\uD83D\uDCDD <b>Report DGS</b>: ").append(report.getURL().toString());
+        if (countryReport.day.cases == 0 || countryReport.day.deaths == 0) {
+            messageBuilder.append("\n");
+        }
+
+        messageBuilder.append("\n").append("\uD83D\uDCDD <b>Report DGS</b>: ").append(report.getURL().toString());
 
         return messageBuilder.toString();
     }
