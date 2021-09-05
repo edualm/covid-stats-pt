@@ -102,7 +102,7 @@ public class StringFactoryTests {
     public void testNoCovidCases() throws MalformedURLException {
         String expectedMessage = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr() + "</b>\n" +
                 "\n" +
-                "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\n" +
+                "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 0 casos, \uD83D\uDFE2 192 recuperados, \uD83D\uDD34 347 ativos, \uD83D\uDC80 13 mortes</code>\n" +
                 "Total: <code>\uD83E\uDDA0 68577 casos, \uD83D\uDFE2 45596 recuperados, \uD83D\uDD34 21069 ativos, \uD83D\uDC80 1912 mortes</code>\n" +
                 "\n" +
@@ -154,7 +154,7 @@ public class StringFactoryTests {
     public void testNoCovidRelatedDeaths() throws MalformedURLException {
         String expectedMessage = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr() + "</b>\n" +
                 "\n" +
-                "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\n" +
+                "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 552 casos, \uD83D\uDFE2 192 recuperados, \uD83D\uDD34 347 ativos, \uD83D\uDC80 0 mortes</code>\n" +
                 "Total: <code>\uD83E\uDDA0 68577 casos, \uD83D\uDFE2 45596 recuperados, \uD83D\uDD34 21069 ativos, \uD83D\uDC80 1912 mortes</code>\n" +
                 "\n" +
@@ -206,7 +206,7 @@ public class StringFactoryTests {
     public void testNoCovidCasesNorCovidRelatedDeaths() throws MalformedURLException {
         String expectedMessage = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr() + "</b>\n" +
                 "\n" +
-                "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\n" +
+                "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 0 casos, \uD83D\uDFE2 192 recuperados, \uD83D\uDD34 347 ativos, \uD83D\uDC80 0 mortes</code>\n" +
                 "Total: <code>\uD83E\uDDA0 68577 casos, \uD83D\uDFE2 45596 recuperados, \uD83D\uDD34 21069 ativos, \uD83D\uDC80 1912 mortes</code>\n" +
                 "\n" +

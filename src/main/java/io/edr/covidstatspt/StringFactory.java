@@ -27,7 +27,7 @@ public class StringFactory {
     }
 
     static String buildCountryString(CountryReport report) {
-        return "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>:\nNovos: <code>\uD83E\uDDA0 " +
+        return "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>\nNovos: <code>\uD83E\uDDA0 " +
                 report.day.cases +
                 " casos, \uD83D\uDFE2 " +
                 report.day.recoveries +

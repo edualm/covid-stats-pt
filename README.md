@@ -83,7 +83,7 @@ The message is in Portuguese, as the bot is directed at Portuguese users.
 ```
 🇵🇹 [COVID-19] Evolução a 26/07
 
-🇵🇹 Portugal:
+🇵🇹 Portugal
 Novos: 🦠 1610 casos, 🟢 1802 recuperados, 🔴 -201 ativos, 💀 9 mortes
 Total: 🦠 954669 casos, 🟢 883372 recuperados, 🔴 53996 ativos, 💀 17301 mortes
 
