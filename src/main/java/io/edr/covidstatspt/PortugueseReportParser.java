@@ -247,25 +247,35 @@ public class PortugueseReportParser implements ReportParser {
             casesColumns = rectangleToColumns(casesRect, page);
         }
 
-        int activeCases = parsePossiblyNegativeIntWithoutExtraCharacters(activeColumns[1]);
+        int activeDailyCases = parsePossiblyNegativeIntWithoutExtraCharacters(activeColumns[1]);
 
-        if (activeCases == 0) {
-            activeCases =
+        if (activeDailyCases == 0 || activeDailyCases > parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[1])) {
+            activeDailyCases =
                     parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[1]) -
-                    parsePossiblyNegativeIntWithoutExtraCharacters(recoveriesColumns[1]);
+                    parsePossiblyNegativeIntWithoutExtraCharacters(recoveriesColumns[1]) -
+                    parsePossiblyNegativeIntWithoutExtraCharacters(deathsColumns[1]);
         }
 
         CountryReport.Report dayReport = new CountryReport.Report(
                 parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[1]),
                 parsePossiblyNegativeIntWithoutExtraCharacters(deathsColumns[1]),
-                activeCases,
+                activeDailyCases,
                 parsePossiblyNegativeIntWithoutExtraCharacters(recoveriesColumns[1])
         );
+
+        int activeCumulativeCases = parseIntWithoutExtraCharacters(activeColumns[0]);
+
+        if (activeCumulativeCases == 0 || activeCumulativeCases > parseIntWithoutExtraCharacters(activeColumns[0])) {
+            activeCumulativeCases =
+                    parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[0]) -
+                    parsePossiblyNegativeIntWithoutExtraCharacters(recoveriesColumns[0]) -
+                    parsePossiblyNegativeIntWithoutExtraCharacters(deathsColumns[0]);
+        }
 
         CountryReport.Report cumulativeReport = new CountryReport.Report(
                 parseIntWithoutExtraCharacters(casesColumns[0]),
                 parseIntWithoutExtraCharacters(deathsColumns[0]),
-                parseIntWithoutExtraCharacters(activeColumns[0]),
+                activeCumulativeCases,
                 parseIntWithoutExtraCharacters(recoveriesColumns[0])
         );
 
