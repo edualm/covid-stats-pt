@@ -2,11 +2,18 @@
 
 ![Snapshot](https://github.com/edualm/covid-stats-pt/workflows/Snapshot/badge.svg)
 
-Telegram bot that parses the official COVID-19 data for Portugal and sends it daily to you via Telegram.
+Telegram bot and API that parses the official COVID-19 data for Portugal and sends it daily to you via Telegram.
 
 Published under the public domain.
 
 An instance of the bot is live, and you can use it by clicking [here](https://t.me/Covid19PortugalStatsBot)!
+
+The API for the bot is also public, and returns data as JSON. This API does not currently have any rate limits, 
+but please be considerate when using it. A link to this repository is appreciated if you use it in any projects,
+but not required.
+
+   - [Most Recent Report](https://c19tg.claptrap.computer/api/mostRecent)
+   - [Maximum Values](https://c19tg.claptrap.computer/api/maxValues)
 
 If you want to run your own instance, you can compile it or download the latest build from GitHub Actions.
 Make sure to read on though, so you know how to set it up.
