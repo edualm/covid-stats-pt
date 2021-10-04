@@ -57,7 +57,7 @@ public class EndToEndTests {
                 "\n" +
                 "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 4602 casos, \uD83D\uDFE2 3621 recuperados, \uD83D\uDD34 892 ativos, \uD83D\uDC80 89 mortes</code>\n" +
-                "Total: <code>\uD83E\uDDA0 383258 casos, \uD83D\uDFE2 308446 recuperados, \uD83D\uDD34 1668469 ativos, \uD83D\uDC80 6343 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 383258 casos, \uD83D\uDFE2 308446 recuperados, \uD83D\uDD34 68469 ativos, \uD83D\uDC80 6343 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Norte</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 1811 casos, \uD83D\uDC80 32 mortes</code>\n" +
@@ -110,7 +110,7 @@ public class EndToEndTests {
                 "\n" +
                 "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 4602 casos, \uD83D\uDFE2 3621 recuperados, \uD83D\uDD34 892 ativos, \uD83D\uDC80 89 mortes</code>\n" +
-                "Total: <code>\uD83E\uDDA0 383258 casos, \uD83D\uDFE2 308446 recuperados, \uD83D\uDD34 1668469 ativos, \uD83D\uDC80 6343 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 383258 casos, \uD83D\uDFE2 308446 recuperados, \uD83D\uDD34 68469 ativos, \uD83D\uDC80 6343 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Norte</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 1811 casos, \uD83D\uDC80 32 mortes</code>\n" +
@@ -171,7 +171,7 @@ public class EndToEndTests {
                 "\n" +
                 "<b>\uD83C\uDDF5\uD83C\uDDF9 Portugal</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 4602 casos, \uD83D\uDFE2 3621 recuperados, \uD83D\uDD34 892 ativos, \uD83D\uDC80 89 mortes</code>\n" +
-                "Total: <code>\uD83E\uDDA0 383258 casos, \uD83D\uDFE2 308446 recuperados, \uD83D\uDD34 1668469 ativos, \uD83D\uDC80 6343 mortes</code>\n" +
+                "Total: <code>\uD83E\uDDA0 383258 casos, \uD83D\uDFE2 308446 recuperados, \uD83D\uDD34 68469 ativos, \uD83D\uDC80 6343 mortes</code>\n" +
                 "\n" +
                 "<b>\uD83C\uDFD9️ Norte</b>\n" +
                 "Novos: <code>\uD83E\uDDA0 1811 casos, \uD83D\uDC80 32 mortes</code>\n" +

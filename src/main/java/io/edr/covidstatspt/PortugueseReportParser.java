@@ -265,7 +265,7 @@ public class PortugueseReportParser implements ReportParser {
 
         int activeCumulativeCases = parseIntWithoutExtraCharacters(activeColumns[0]);
 
-        if (activeCumulativeCases == 0 || activeCumulativeCases > parseIntWithoutExtraCharacters(activeColumns[0])) {
+        if (activeCumulativeCases == 0 || activeCumulativeCases > parseIntWithoutExtraCharacters(casesColumns[0])) {
             activeCumulativeCases =
                     parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[0]) -
                     parsePossiblyNegativeIntWithoutExtraCharacters(recoveriesColumns[0]) -
