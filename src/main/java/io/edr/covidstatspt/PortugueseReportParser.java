@@ -234,6 +234,13 @@ public class PortugueseReportParser implements ReportParser {
 
     @Override
     public CountryReport getCountryReport() {
+        //
+        //  This function includes some guessing in order to find values that
+        //  may have not been correctly acquired from the PDF document.
+        //
+        //  They may not be 100% correct... but that's what we have. ¯\_(ツ)_/¯
+        //
+
         ObjectExtractor oe = new ObjectExtractor(document);
 
         Page page = oe.extract(1);
@@ -256,11 +263,18 @@ public class PortugueseReportParser implements ReportParser {
                     parsePossiblyNegativeIntWithoutExtraCharacters(deathsColumns[1]);
         }
 
+        int dailyRecoveries = parsePossiblyNegativeIntWithoutExtraCharacters(recoveriesColumns[1]);
+
+        if (dailyRecoveries == 0 && parseIntWithoutExtraCharacters(casesColumns[1]) != 0 && activeDailyCases != 0)
+            dailyRecoveries =
+                    parseIntWithoutExtraCharacters(casesColumns[1]) -
+                    activeDailyCases;
+
         CountryReport.Report dayReport = new CountryReport.Report(
                 parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[1]),
                 parsePossiblyNegativeIntWithoutExtraCharacters(deathsColumns[1]),
                 activeDailyCases,
-                parsePossiblyNegativeIntWithoutExtraCharacters(recoveriesColumns[1])
+                dailyRecoveries
         );
 
         int activeCumulativeCases = parseIntWithoutExtraCharacters(activeColumns[0]);
