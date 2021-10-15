@@ -12,8 +12,8 @@ The API for the bot is also public, and returns data as JSON. This API does not 
 but please be considerate when using it. A link to this repository is appreciated if you use it in any projects,
 but not required.
 
-   - [Most Recent Report](https://c19tg.claptrap.computer/api/mostRecent)
-   - [Maximum Values](https://c19tg.claptrap.computer/api/maxValues)
+   - [Most Recent Report](https://covid19-telegram.robotlike.cloud/api/mostRecent)
+   - [Maximum Values](https://covid19-telegram.robotlike.cloud/api/maxValues)
 
 If you want to run your own instance, you can compile it or download the latest build from GitHub Actions.
 Make sure to read on though, so you know how to set it up.
