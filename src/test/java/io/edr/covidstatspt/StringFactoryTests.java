@@ -87,7 +87,7 @@ public class StringFactoryTests {
         calendar.setTime(new Date());
         calendar.set(Calendar.HOUR_OF_DAY, 13);
 
-        todayStr = StringFactory.buildTodayDate(calendar);
+        todayStr = StringFactory.buildTodayDate(calendar, false);
     }
 
     private String todayStr() {
@@ -95,7 +95,7 @@ public class StringFactoryTests {
         calendar.setTime(new Date());
         calendar.set(Calendar.HOUR_OF_DAY, 13);
 
-        return StringFactory.buildTodayDate(calendar);
+        return StringFactory.buildTodayDate(calendar, false);
     }
 
     @Test

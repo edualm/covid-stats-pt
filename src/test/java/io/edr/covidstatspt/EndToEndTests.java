@@ -49,7 +49,7 @@ public class EndToEndTests {
         calendar.setTime(new Date());
         calendar.set(Calendar.HOUR_OF_DAY, 13);
 
-        String todayStr = StringFactory.buildTodayDate(calendar);
+        String todayStr = StringFactory.buildTodayDate(calendar, false);
 
         databaseConnection.setMaxValuesData(null);
 
@@ -104,7 +104,7 @@ public class EndToEndTests {
         calendar.setTime(new Date());
         calendar.set(Calendar.HOUR_OF_DAY, 13);
 
-        String todayStr = StringFactory.buildTodayDate(calendar);
+        String todayStr = StringFactory.buildTodayDate(calendar, false);
 
         String expectedReport = "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>\n" +
                 "\n" +
@@ -160,7 +160,7 @@ public class EndToEndTests {
         calendar.setTime(new Date());
         calendar.set(Calendar.HOUR_OF_DAY, 13);
 
-        String todayStr = StringFactory.buildTodayDate(calendar);
+        String todayStr = StringFactory.buildTodayDate(calendar, false);
 
         databaseConnection.setMaxValuesData(new MaxValuesData(
                 new MaxValuesData.DatedValue("---", 10000),

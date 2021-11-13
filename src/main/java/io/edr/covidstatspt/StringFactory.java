@@ -7,11 +7,19 @@ import java.util.Map;
 
 public class StringFactory {
 
-    static String buildTodayDate(Calendar calendar) {
+    static String buildTodayDate(Calendar calendar, boolean includeYear) {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
 
-        return "" + (day < 10 ? "0" + day : day) + "/" + (month < 10 ? "0" + month : month);
+        String dateAsString = "" + (day < 10 ? "0" + day : day) + "/" + (month < 10 ? "0" + month : month);
+
+        //  This code will stop working as expected in 2100+, but either this virus will be dead, or I will be.
+
+        if (includeYear)
+            dateAsString += "" + year / 2000;
+
+        return dateAsString;
     }
 
     static String buildRegionString(String regionName, RegionReport report) {

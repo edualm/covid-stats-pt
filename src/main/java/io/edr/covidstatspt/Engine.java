@@ -105,7 +105,8 @@ public class Engine {
 
         ReportParser parser = new PortugueseReportParser(document);
 
-        String todayStr = StringFactory.buildTodayDate(calendar);
+        String todayStr = StringFactory.buildTodayDate(calendar, false);
+        String todayStrWithYear = StringFactory.buildTodayDate(calendar, true);
 
         try {
             Map<String, RegionReport> regionReports = parser.getRegionReports();
@@ -116,7 +117,7 @@ public class Engine {
 
             MaxValuesData maxValues = databaseConnection.getMaxValuesData();
 
-            checkForDailyMaximums(todayStr, countryReport.day.cases, countryReport.day.deaths);
+            checkForDailyMaximums(todayStrWithYear, countryReport.day.cases, countryReport.day.deaths);
 
             String message = StringFactory.buildMessage(
                     todayStr,
