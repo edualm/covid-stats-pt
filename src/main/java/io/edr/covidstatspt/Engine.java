@@ -101,7 +101,7 @@ public class Engine {
         if (lastReport != null && report.getName().equals(lastReport.metadata.getName()))
             return false;
 
-        //  Check if the report is different from the previous days'. If it is, return `false`.
+        //  Check if the report is different from the previous days'. If not, return `false`.
 
         if (lastReport != null && lastReport.metadata.getURL().equals(report.getURL()))
             return false;
