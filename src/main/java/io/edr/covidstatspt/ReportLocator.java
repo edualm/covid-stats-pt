@@ -12,8 +12,11 @@ import io.edr.covidstatspt.exceptions.ParseFailureException;
 import io.edr.covidstatspt.model.ReportMetadata;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public interface ReportLocator {
 
+    String getExpectedTodayReportNameComponent();
     ReportMetadata getReport() throws IOException, ParseFailureException;
+    ArrayList<ReportMetadata> getReports(int count) throws IOException, ParseFailureException;
 }

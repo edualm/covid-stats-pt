@@ -101,6 +101,16 @@ public class Engine {
         if (lastReport != null && report.getName().equals(lastReport.metadata.getName()))
             return false;
 
+        //  Check if the report is different from the previous days'. If it is, return `false`.
+
+        if (lastReport != null && lastReport.metadata.getURL().equals(report.getURL()))
+            return false;
+
+        //  Check if the report URL contains the expected values.
+
+        if (!report.getURL().toString().contains(reportLocator.getExpectedTodayReportNameComponent()))
+            return false;
+
         PDDocument document = PDDocument.load(report.getURL().openStream());
 
         ReportParser parser = new PortugueseReportParser(document);

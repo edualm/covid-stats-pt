@@ -18,7 +18,9 @@ import org.jsoup.nodes.Element;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PortugueseReportLocator implements ReportLocator {
 
@@ -40,6 +42,16 @@ public class PortugueseReportLocator implements ReportLocator {
         URL url = new URL(element.selectFirst("> a:nth-child(1)").absUrl("href"));
 
         return new ReportMetadata(name, url);
+    }
+
+    public String getExpectedTodayReportNameComponent() {
+        return getExpectedTodayReportNameComponent(new Date());
+    }
+
+    public String getExpectedTodayReportNameComponent(Date today) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+
+        return sdf.format(today);
     }
 
     public ReportMetadata getReport() throws IOException, ParseFailureException {
