@@ -1,3 +1,11 @@
+/*
+ *  StringFactory.java
+ *  covid-stats-pt
+ *
+ *  Created by Eduardo Almeida <hello at edr dot io>
+ *  Published under the public domain
+ */
+
 package io.edr.covidstatspt;
 
 import io.edr.covidstatspt.model.*;
@@ -14,10 +22,8 @@ public class StringFactory {
 
         String dateAsString = "" + (day < 10 ? "0" + day : day) + "/" + (month < 10 ? "0" + month : month);
 
-        //  This code will stop working as expected in 2100+, but either this virus will be dead, or I will be.
-
         if (includeYear)
-            dateAsString += "" + year / 2000;
+            dateAsString += "" + (year / 2000 % 100);
 
         return dateAsString;
     }
