@@ -18,12 +18,12 @@ public class StringFactory {
     static String buildTodayDate(Calendar calendar, boolean includeYear) {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH) + 1;
-        int year = calendar.get(Calendar.YEAR);
+        int year = calendar.get(Calendar.YEAR) % 100;
 
         String dateAsString = "" + (day < 10 ? "0" + day : day) + "/" + (month < 10 ? "0" + month : month);
 
         if (includeYear)
-            dateAsString += "" + (year / 2000 % 100);
+            dateAsString += "" + (year < 10 ? "0" + year : year);
 
         return dateAsString;
     }
