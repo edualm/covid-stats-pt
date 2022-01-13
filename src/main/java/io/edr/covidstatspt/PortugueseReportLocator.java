@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class PortugueseReportLocator implements ReportLocator {
@@ -27,19 +26,13 @@ public class PortugueseReportLocator implements ReportLocator {
     private final String reportsURL;
 
     PortugueseReportLocator() {
-        this.reportsURL = "https://covid19.min-saude.pt/relatorio-de-situacao/";
+        this.reportsURL = "https://covid19.min-saude.pt";
     }
 
-    private ReportMetadata reportForElement(Element element) throws MalformedURLException, ParseFailureException {
-        String[] split = element.text().split(" \\| ");
+    private ReportMetadata reportForElement(Element element) throws MalformedURLException {
+        String name = element.text().split("[(]")[1].split("[)]")[0];
 
-        if (split.length != 2) {
-            throw new ParseFailureException();
-        }
-
-        String name = split[split.length - 1];
-
-        URL url = new URL(element.selectFirst("> a:nth-child(1)").absUrl("href"));
+        URL url = new URL(element.absUrl("href"));
 
         return new ReportMetadata(name, url);
     }
@@ -49,28 +42,19 @@ public class PortugueseReportLocator implements ReportLocator {
     }
 
     public String getExpectedTodayReportNameComponent(Date today) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
 
         return sdf.format(today);
     }
 
-    public ReportMetadata getReport() throws IOException, ParseFailureException {
+    public ReportMetadata getReport() throws IOException {
         Document doc = Jsoup.connect(reportsURL).get();
 
-        return reportForElement(doc.selectFirst("#acordeaoc-0 > ul:nth-child(1) > li:nth-child(1)"));
-    }
+        Element el = doc.selectFirst("#submenu-item-68 > a");
 
-    public ArrayList<ReportMetadata> getReports(int count) throws IOException, ParseFailureException {
-        ArrayList<ReportMetadata> list = new ArrayList<>();
+        if (el == null)
+            throw new IOException();
 
-        Document doc = Jsoup.connect(reportsURL).get();
-
-        for (int i = 0; i < count; i++) {
-            list.add(reportForElement(
-                    doc.selectFirst("#acordeaoc-0 > ul:nth-child(1) > li:nth-child(" + (i + 1) + ")")
-            ));
-        }
-
-        return list;
+        return reportForElement(el);
     }
 }

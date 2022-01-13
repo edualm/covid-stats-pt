@@ -1,5 +1,5 @@
 /*
- *  PortugueseReportParserTest.java
+ *  PortugueseReportParserTests.java
  *  covid-stats-pt
  *
  *  Created by Eduardo Almeida <hello at edr dot io>
@@ -19,7 +19,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,48 +26,9 @@ import static org.junit.Assert.*;
 
 public class PortugueseReportParserTests {
 
-    static ArrayList<ReportMetadata> reports;
-
-    @BeforeClass
-    public static void setUp() throws IOException, ParseFailureException {
-        PortugueseReportLocator locator = new PortugueseReportLocator();
-
-        //  Currently set to `1` as the report format changed recently,
-        //  and it would break if this was >1 for now.
-
-        reports = locator.getReports(1);
-    }
-
-    @Test
-    public void testGetCasesAndDeaths() throws IOException {
-        //  We are just asserting that an exception isn't thrown, so this is enough.
-
-        for (ReportMetadata report: reports) {
-            PDDocument doc = PDDocument.load(report.getURL().openStream());
-            PortugueseReportParser parser = new PortugueseReportParser(doc);
-
-            parser.getRegionReports();
-
-            doc.close();
-        }
-    }
-
-    @Test
-    public void testGetTableData() throws IOException {
-        //  We are just asserting that an exception isn't thrown, so this is enough.
-
-        for (ReportMetadata report: reports) {
-            PDDocument doc = PDDocument.load(report.getURL().openStream());
-            PortugueseReportParser parser = new PortugueseReportParser(doc);
-
-            parser.getCountryReport();
-            doc.close();
-        }
-    }
-
     @Test
     public void testCountryDataIsCorrectlyAcquired() throws IOException {
-        PDDocument doc = PDDocument.load(new URL("https://covid19.min-saude.pt/wp-content/uploads/2020/09/202_DGS_boletim_20200920.pdf").openStream());
+        PDDocument doc = PDDocument.load(new URL("http://arm.robotlike.cloud/covid-test-data/202_DGS_boletim_20200920.pdf").openStream());
         PortugueseReportParser parser = new PortugueseReportParser(doc);
 
         CountryReport countryReport = parser.getCountryReport();
@@ -83,7 +43,7 @@ public class PortugueseReportParserTests {
 
     @Test
     public void testRegionDataIsCorrectlyAcquired() throws IOException {
-        PDDocument doc = PDDocument.load(new URL("https://covid19.min-saude.pt/wp-content/uploads/2020/09/202_DGS_boletim_20200920.pdf").openStream());
+        PDDocument doc = PDDocument.load(new URL("http://arm.robotlike.cloud/covid-test-data/202_DGS_boletim_20200920.pdf").openStream());
         PortugueseReportParser parser = new PortugueseReportParser(doc);
 
         Map<String, RegionReport> regionReports = parser.getRegionReports();
@@ -129,22 +89,13 @@ public class PortugueseReportParserTests {
     }
 
     @Test
-    public void testBigNumbersOnCumulativeCases() throws IOException {
-        PDDocument doc = PDDocument.load(new URL("https://covid19.min-saude.pt/wp-content/uploads/2020/10/232_DGS_boletim_20201020.pdf").openStream());
-        PortugueseReportParser parser = new PortugueseReportParser(doc);
-
-        CountryReport countryReport = parser.getCountryReport();
-
-        assertEquals(103736, countryReport.cumulative.cases);
-    }
-
-    @Test
     public void testMoreThanAMillionCumulativeCases() throws IOException {
-        PDDocument doc = PDDocument.load(new URL("https://covid19.min-saude.pt/wp-content/uploads/2021/08/530_DGS_boletim_20210814.pdf").openStream());
+        PDDocument doc = PDDocument.load(new URL("http://arm.robotlike.cloud/covid-test-data/12012022.pdf").openStream());
         PortugueseReportParser parser = new PortugueseReportParser(doc);
 
         CountryReport countryReport = parser.getCountryReport();
 
-        assertEquals(2571, countryReport.day.cases);
+        assertEquals(40945, countryReport.day.cases);
+        assertEquals(1734343, countryReport.cumulative.cases);
     }
 }

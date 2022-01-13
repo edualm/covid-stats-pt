@@ -16,9 +16,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static spark.Spark.*;
 
@@ -159,7 +157,7 @@ public class WebWorker {
                     }
                 }
 
-                telegramConnection.send(chatId, "I have no idea what to do with what you've just sent me.", false);
+                telegramConnection.send(chatId, "An unexpected command was received.", false);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

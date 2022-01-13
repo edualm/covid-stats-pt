@@ -1,5 +1,5 @@
 /*
- *  MaxValuesDataTests.java
+ *  SerializationTests.java
  *  covid-stats-pt
  *
  *  Created by Eduardo Almeida <hello at edr dot io>

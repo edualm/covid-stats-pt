@@ -27,12 +27,7 @@ public class MockReportLocator implements ReportLocator {
     public ReportMetadata getReport() throws IOException {
         return new ReportMetadata(
                 "23/12/2020",
-                new URL("https://covid19.min-saude.pt/wp-content/uploads/2020/12/296_DGS_boletim_20201223.pdf")
+                new URL("http://arm.robotlike.cloud/covid-test-data/296_DGS_boletim_20201223.pdf")
         );
-    }
-
-    @Override
-    public ArrayList<ReportMetadata> getReports(int count) throws IOException, ParseFailureException {
-        return new ArrayList<>();
     }
 }

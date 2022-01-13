@@ -87,7 +87,7 @@ public class EndToEndTests {
                 "Novos: <code>\uD83E\uDDA0 22 casos, \uD83D\uDC80 0 mortes</code>\n" +
                 "Total: <code>\uD83E\uDDA0 1616 casos, \uD83D\uDC80 21 mortes</code>\n" +
                 "\n" +
-                "\uD83D\uDCDD <b>Report DGS</b>: https://covid19.min-saude.pt/wp-content/uploads/2020/12/296_DGS_boletim_20201223.pdf";
+                "\uD83D\uDCDD <b>Report DGS</b>: http://arm.robotlike.cloud/covid-test-data/296_DGS_boletim_20201223.pdf";
 
         //  When
         sut.run(calendar.getTime());
@@ -143,7 +143,7 @@ public class EndToEndTests {
                 "<b>Máximo de \uD83E\uDDA0 casos</b>: <code>5000 (---)</code>\n" +
                 "<b>⚠️ Novo máximo de \uD83D\uDC80 mortes</b>: <code>89 (+39)</code>\n" +
                 "\n" +
-                "\uD83D\uDCDD <b>Report DGS</b>: https://covid19.min-saude.pt/wp-content/uploads/2020/12/296_DGS_boletim_20201223.pdf";
+                "\uD83D\uDCDD <b>Report DGS</b>: http://arm.robotlike.cloud/covid-test-data/296_DGS_boletim_20201223.pdf";
 
         //  When
         sut.run(calendar.getTime());
@@ -204,7 +204,7 @@ public class EndToEndTests {
                 "<b>Máximo de \uD83E\uDDA0 casos</b>: <code>10000 (---)</code>\n" +
                 "<b>Máximo de \uD83D\uDC80 mortes</b>: <code>10000 (---)</code>\n" +
                 "\n" +
-                "\uD83D\uDCDD <b>Report DGS</b>: https://covid19.min-saude.pt/wp-content/uploads/2020/12/296_DGS_boletim_20201223.pdf";
+                "\uD83D\uDCDD <b>Report DGS</b>: http://arm.robotlike.cloud/covid-test-data/296_DGS_boletim_20201223.pdf";
 
         //  When
         sut.run(calendar.getTime());
