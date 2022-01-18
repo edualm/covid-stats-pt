@@ -42,7 +42,7 @@ public class PortugueseReportLocator implements ReportLocator {
     }
 
     public String getExpectedTodayReportNameComponent(Date today) {
-        SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
         return sdf.format(today);
     }
