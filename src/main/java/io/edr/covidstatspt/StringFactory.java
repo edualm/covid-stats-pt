@@ -23,7 +23,7 @@ public class StringFactory {
         String dateAsString = "" + (day < 10 ? "0" + day : day) + "/" + (month < 10 ? "0" + month : month);
 
         if (includeYear)
-            dateAsString += "" + (year < 10 ? "0" + year : year);
+            dateAsString += "/" + (year < 10 ? "0" + year : year);
 
         return dateAsString;
     }
