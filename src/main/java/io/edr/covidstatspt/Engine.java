@@ -15,6 +15,7 @@ import io.edr.covidstatspt.model.*;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.IOException;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -111,7 +112,10 @@ public class Engine {
         if (!report.getURL().toString().contains(reportLocator.getExpectedTodayReportNameComponent()))
             return false;
 
-        PDDocument document = PDDocument.load(report.getURL().openStream());
+        URLConnection c = report.getURL().openConnection();
+        c.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0");
+
+        PDDocument document = PDDocument.load(c.getInputStream());
 
         ReportParser parser = new PortugueseReportParser(document);
 
