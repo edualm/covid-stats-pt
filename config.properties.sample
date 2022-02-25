@@ -12,8 +12,15 @@ database.redis.db=
 database.thisdb.apikey=
 database.thisdb.bucketid=
 
+#   Enable/disable error reporting.
+#   Options are 'message' and 'none.'.
+error.reporting=none
+
 #   Telegram bot key.
 telegram.botkey=
+
+#   User agent used for network requests.
+user.agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0
 
 #   Port that the web server will listen at.
 web.port=4567

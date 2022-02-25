@@ -17,9 +17,15 @@ import io.edr.covidstatspt.exceptions.MisconfigurationException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Properties;
 
 public class Configuration {
+
+    public enum ErrorReporting {
+        MESSAGE,
+        NONE,
+    }
 
     private static String getPropertyValue(String property) throws MisconfigurationException {
         Properties prop = new Properties();
@@ -76,8 +82,25 @@ public class Configuration {
         }
     }
 
+    public static ErrorReporting getErrorReporting() throws MisconfigurationException {
+        switch (getPropertyValue("error.reporting")) {
+            case "message":
+                return ErrorReporting.MESSAGE;
+            case "none":
+                return ErrorReporting.NONE;
+            default:
+                throw new MisconfigurationException("The error reporting configuration isn't sane!");
+        }
+    }
+
     public static String getTelegramBotKey() throws MisconfigurationException {
         return getPropertyValue("telegram.botkey");
+    }
+
+    public static String getUserAgent() throws MisconfigurationException {
+        String userAgent = getPropertyValue("user.agent");
+
+        return (!Objects.equals(userAgent, "")) ? userAgent : null;
     }
 
     public static int getWebPort() throws MisconfigurationException {
@@ -90,7 +113,9 @@ public class Configuration {
 
     public static void checkConfiguration() throws MisconfigurationException {
         getDatabaseConnection();
+        getErrorReporting();
         getTelegramBotKey();
+        getUserAgent();
         getWebPort();
         getWebhookPath();
     }

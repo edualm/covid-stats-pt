@@ -63,6 +63,9 @@ public class Main {
             Configuration.checkConfiguration();
 
             DatabaseConnection dbConnection = Configuration.getDatabaseConnection();
+            Configuration.ErrorReporting errorReporting = Configuration.getErrorReporting();
+            String userAgent = Configuration.getUserAgent();
+
             TelegramConnection tgConnection = new TelegramConnection(dbConnection, Configuration.getTelegramBotKey());
 
             System.out.println("Initializing web routes...");
@@ -78,7 +81,7 @@ public class Main {
 
             ReportLocator reportLocator = new PortugueseReportLocator();
 
-            Engine engine = new Engine(dbConnection, reportLocator, tgConnection);
+            Engine engine = new Engine(dbConnection, errorReporting, reportLocator, tgConnection, userAgent);
 
             System.out.println("\nEntering main loop...\n");
 

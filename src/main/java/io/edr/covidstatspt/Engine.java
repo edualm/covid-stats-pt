@@ -22,15 +22,34 @@ import java.util.*;
 public class Engine {
 
     private final DatabaseConnection databaseConnection;
+    private final Configuration.ErrorReporting errorReporting;
     private final ReportLocator reportLocator;
     private final MessagingConnection messagingConnection;
+    private final String userAgentOverride;
 
     public Engine(DatabaseConnection databaseConnection,
+                  Configuration.ErrorReporting errorReporting,
                   ReportLocator reportLocator,
                   MessagingConnection messagingConnection) {
+        this(
+                databaseConnection,
+                errorReporting,
+                reportLocator,
+                messagingConnection,
+                null
+        );
+    }
+
+    public Engine(DatabaseConnection databaseConnection,
+                  Configuration.ErrorReporting errorReporting,
+                  ReportLocator reportLocator,
+                  MessagingConnection messagingConnection,
+                  String userAgentOverride) {
         this.databaseConnection = databaseConnection;
+        this.errorReporting = errorReporting;
         this.reportLocator = reportLocator;
         this.messagingConnection = messagingConnection;
+        this.userAgentOverride = userAgentOverride;
     }
 
     private void checkForDailyMaximums(String date, int cases, int deaths) {
@@ -85,14 +104,15 @@ public class Engine {
         try {
             report = reportLocator.getReport();
         } catch (Exception e) {
-            messagingConnection.sendToAdmin(
-                    "An error has occurred while acquiring the report for today." +
-                            "\n\n" +
-                            e.getMessage() +
-                            "\n\n" +
-                            Arrays.toString(e.getStackTrace()),
-                    false,
-                    true);
+            if (errorReporting == Configuration.ErrorReporting.MESSAGE)
+                messagingConnection.sendToAdmin(
+                        "An error has occurred while acquiring the report for today." +
+                                "\n\n" +
+                                e.getMessage() +
+                                "\n\n" +
+                                Arrays.toString(e.getStackTrace()),
+                        false,
+                        true);
 
             return false;
         }
@@ -113,7 +133,9 @@ public class Engine {
             return false;
 
         URLConnection c = report.getURL().openConnection();
-        c.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0");
+
+        if (userAgentOverride != null)
+            c.setRequestProperty("User-Agent", userAgentOverride);
 
         PDDocument document = PDDocument.load(c.getInputStream());
 
@@ -148,14 +170,15 @@ public class Engine {
 
             return true;
         } catch (Exception e) {
-            messagingConnection.sendToAdmin(
-                    "An error has occurred while parsing the report for " + report.getName() + "." +
-                            "\n\n" +
-                            e.getMessage() +
-                            "\n\n" +
-                            Arrays.toString(e.getStackTrace()),
-                    false,
-                    true);
+            if (errorReporting == Configuration.ErrorReporting.MESSAGE)
+                messagingConnection.sendToAdmin(
+                        "An error has occurred while parsing the report for " + report.getName() + "." +
+                                "\n\n" +
+                                e.getMessage() +
+                                "\n\n" +
+                                Arrays.toString(e.getStackTrace()),
+                        false,
+                        true);
 
             messagingConnection.broadcast(
                     "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>" +
@@ -163,7 +186,7 @@ public class Engine {
                             "\n" +
                             "Ocorreu um erro na obtenção dos dados do report da DGS. No entanto, o mesmo já " +
                             "está disponível para consulta no seguinte link: " +
-                    report.getURL()
+                            report.getURL()
             );
 
             return true;

@@ -30,6 +30,6 @@ public class PortugueseReportLocatorTests {
     public void testExpectedReportNameComponent() {
         PortugueseReportLocator locator = new PortugueseReportLocator();
 
-        assertEquals("03032025", locator.getExpectedTodayReportNameComponent(Date.from(Instant.parse("2025-03-03T10:00:00Z"))));
+        assertEquals("20250303", locator.getExpectedTodayReportNameComponent(Date.from(Instant.parse("2025-03-03T10:00:00Z"))));
     }
 }

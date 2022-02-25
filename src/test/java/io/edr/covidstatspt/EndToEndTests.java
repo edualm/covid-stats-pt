@@ -37,6 +37,7 @@ public class EndToEndTests {
 
         sut = new Engine(
                 databaseConnection,
+                Configuration.ErrorReporting.MESSAGE,
                 new MockReportLocator(),
                 messagingConnection
         );
