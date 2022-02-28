@@ -144,6 +144,17 @@ public class Engine {
         String todayStr = StringFactory.buildTodayDate(calendar, false);
         String todayStrWithYear = StringFactory.buildTodayDate(calendar, true);
 
+        messagingConnection.broadcast(
+                "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>" +
+                        "\n" +
+                        "\n" +
+                        "O do report da DGS está disponível para consulta no seguinte link: " +
+                        report.getURL()
+        );
+
+        return true;
+
+        /*
         try {
             Map<String, RegionReport> regionReports = parser.getRegionReports();
 
@@ -191,5 +202,6 @@ public class Engine {
 
             return true;
         }
+        */
     }
 }
