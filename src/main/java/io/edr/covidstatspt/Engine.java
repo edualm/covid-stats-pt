@@ -148,7 +148,7 @@ public class Engine {
                 "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>" +
                         "\n" +
                         "\n" +
-                        "O do report da DGS está disponível para consulta no seguinte link: " +
+                        "O mais recente report da DGS está disponível para consulta no seguinte link: " +
                         report.getURL()
         );
 
