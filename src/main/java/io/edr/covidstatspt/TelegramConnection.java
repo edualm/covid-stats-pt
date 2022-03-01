@@ -57,8 +57,15 @@ public class TelegramConnection implements MessagingConnection {
 
         int statusCode = conn.getResponseCode();
 
-        if (statusCode == 403)
-            (new DatabaseUtilities(databaseConnection)).removeTelegramRecipient(recipient);
+        switch (statusCode) {
+            case 200:
+                break;
+            case 403:
+                (new DatabaseUtilities(databaseConnection)).removeTelegramRecipient(recipient);
+                break;
+            default:
+                System.out.println("Unexpected response code while sending message: " + statusCode);
+        }
     }
 
     public void sendToAdmin(String message, boolean html, boolean silent) throws MisconfigurationException, IOException {
