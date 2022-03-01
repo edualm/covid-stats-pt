@@ -24,7 +24,7 @@ jobs:
       - run: mvn --batch-mode --update-snapshots verify
 
   package:
-    runs-on: ${{ matrix.os }}
+    runs-on: 'ubuntu-latest'
 
     name: COVID Stats PT - Release
 
