@@ -260,7 +260,7 @@ public class PortugueseReportParser implements ReportParser {
         String[] deathsColumns = splitTableData(columnsToTableData(rectangleToColumns(deathsRect, page)));
         String[] casesColumns = splitTableData(columnsToTableData(rectangleToColumns(casesRect, page)));
 
-            if (parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[1]) == 0) {
+        if (parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[1]) == 0) {
             casesColumns = rectangleToColumns(casesRect, page);
         }
 
