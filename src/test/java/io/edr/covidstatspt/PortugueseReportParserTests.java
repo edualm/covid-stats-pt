@@ -98,4 +98,14 @@ public class PortugueseReportParserTests {
         assertEquals(40945, countryReport.day.cases);
         assertEquals(1734343, countryReport.cumulative.cases);
     }
+
+    @Test
+    public void testDeathsValueIsNotSane() throws IOException {
+        PDDocument doc = PDDocument.load(new URL("https://covid19.min-saude.pt/wp-content/uploads/2022/03/734_DGS_boletim_20220306.pdf").openStream());
+        PortugueseReportParser parser = new PortugueseReportParser(doc);
+
+        CountryReport countryReport = parser.getCountryReport();
+
+        assertFalse(countryReport.deathsValueIsSane());
+    }
 }

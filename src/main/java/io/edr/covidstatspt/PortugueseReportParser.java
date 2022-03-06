@@ -218,6 +218,16 @@ public class PortugueseReportParser implements ReportParser {
         return regionReports;
     }
 
+    private static String columnsToTableData(String[] columns) {
+        if (columns[0].contains("+") || columns[0].contains("-"))
+            return columns[0];
+
+        if (columns.length < 2)
+            return columns[0];
+
+        return columns[0] + " " + columns[1];
+    }
+
     private static String[] splitTableData(String input) {
         if (input.split("-").length == 2) {
             String[] spl = input.split("-");
@@ -245,10 +255,10 @@ public class PortugueseReportParser implements ReportParser {
 
         Page page = oe.extract(1);
 
-        String[] activeColumns = splitTableData(rectangleToColumns(activeRect, page)[0]);
-        String[] recoveriesColumns = splitTableData(rectangleToColumns(recoveriesRect, page)[0]);
-        String[] deathsColumns = splitTableData(rectangleToColumns(deathsRect, page)[0]);
-        String[] casesColumns = splitTableData(rectangleToColumns(casesRect, page)[0]);
+        String[] activeColumns = splitTableData(columnsToTableData(rectangleToColumns(activeRect, page)));
+        String[] recoveriesColumns = splitTableData(columnsToTableData(rectangleToColumns(recoveriesRect, page)));
+        String[] deathsColumns = splitTableData(columnsToTableData(rectangleToColumns(deathsRect, page)));
+        String[] casesColumns = splitTableData(columnsToTableData(rectangleToColumns(casesRect, page)));
 
         if (parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[1]) == 0) {
             casesColumns = rectangleToColumns(casesRect, page);

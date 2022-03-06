@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class PortugueseReportLocator implements ReportLocator {
@@ -26,11 +27,17 @@ public class PortugueseReportLocator implements ReportLocator {
     private final String reportsURL;
 
     PortugueseReportLocator() {
-        this.reportsURL = "https://covid19.min-saude.pt";
+        this.reportsURL = "https://covid19.min-saude.pt/relatorio-de-situacao/";
     }
 
-    private ReportMetadata reportForElement(Element element) throws MalformedURLException {
-        String name = element.text().split("[(]")[1].split("[)]")[0];
+    private ReportMetadata reportForElement(Element element) throws MalformedURLException, ParseFailureException {
+        String[] split = element.text().split(" \\| ");
+
+        if (split.length != 2) {
+            throw new ParseFailureException();
+        }
+
+        String name = split[split.length - 1];
 
         URL url = new URL(element.absUrl("href"));
 
@@ -47,10 +54,10 @@ public class PortugueseReportLocator implements ReportLocator {
         return sdf.format(today);
     }
 
-    public ReportMetadata getReport() throws IOException {
+    public ReportMetadata getReport() throws IOException, ParseFailureException {
         Document doc = Jsoup.connect(reportsURL).get();
 
-        Element el = doc.selectFirst("#submenu-item-68 > a");
+        Element el = doc.selectFirst("#acordeaoc-0 > p > a");
 
         if (el == null)
             throw new IOException();

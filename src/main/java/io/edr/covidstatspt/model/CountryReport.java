@@ -78,6 +78,10 @@ public class CountryReport {
         return (day.equals(cr.day) && cumulative.equals(cr.cumulative));
     }
 
+    public boolean deathsValueIsSane() {
+        return day.deaths < 1000;
+    }
+
     @Override
     public String toString() {
         return "Day: <" + day.toString() + ">, Cumulative: <" + cumulative.toString() + ">";

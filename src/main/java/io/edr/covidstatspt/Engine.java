@@ -52,7 +52,7 @@ public class Engine {
         this.userAgentOverride = userAgentOverride;
     }
 
-    private void checkForDailyMaximums(String date, int cases, int deaths) {
+    private void checkForDailyMaximums(String date, int cases, int deaths, boolean deathsValueIsSane) {
         MaxValuesData maxValues = databaseConnection.getMaxValuesData();
 
         if (maxValues == null) {
@@ -69,7 +69,7 @@ public class Engine {
         if (cases > maxValues.cases.value)
             maxValues.cases = new MaxValuesData.DatedValue(date, cases);
 
-        if (deaths > maxValues.deaths.value)
+        if (deaths > maxValues.deaths.value && deathsValueIsSane)
             maxValues.deaths = new MaxValuesData.DatedValue(date, deaths);
 
         databaseConnection.setMaxValuesData(maxValues);
@@ -144,17 +144,6 @@ public class Engine {
         String todayStr = StringFactory.buildTodayDate(calendar, false);
         String todayStrWithYear = StringFactory.buildTodayDate(calendar, true);
 
-        messagingConnection.broadcast(
-                "\uD83C\uDDF5\uD83C\uDDF9 <b>[COVID-19] Evolução a " + todayStr + "</b>" +
-                        "\n" +
-                        "\n" +
-                        "O mais recente report da DGS está disponível para consulta no seguinte link: " +
-                        report.getURL()
-        );
-
-        return true;
-
-        /*
         try {
             Map<String, RegionReport> regionReports = parser.getRegionReports();
 
@@ -164,7 +153,12 @@ public class Engine {
 
             MaxValuesData maxValues = databaseConnection.getMaxValuesData();
 
-            checkForDailyMaximums(todayStrWithYear, countryReport.day.cases, countryReport.day.deaths);
+            checkForDailyMaximums(
+                    todayStrWithYear,
+                    countryReport.day.cases,
+                    countryReport.day.deaths,
+                    countryReport.deathsValueIsSane()
+            );
 
             String message = StringFactory.buildMessage(
                     todayStr,
@@ -202,6 +196,5 @@ public class Engine {
 
             return true;
         }
-        */
     }
 }

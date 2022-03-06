@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
 public class PortugueseReportLocatorTests {
 
     @Test
-    public void testLocateReport() throws IOException {
+    public void testLocateReport() throws IOException, ParseFailureException {
         PortugueseReportLocator locator = new PortugueseReportLocator();
 
         locator.getReport();
