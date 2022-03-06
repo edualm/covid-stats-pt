@@ -30,7 +30,7 @@ public class PortugueseReportParser implements ReportParser {
 
     public static final Map<String, Rectangle[]> regionsToRect = new HashMap<String, Rectangle[]>() {{
         put("Norte", new Rectangle[]{
-                makeRect(194.595227394104, 419.32853015899656,214.6872776412964, 214.6872776412964),
+                makeRect(194.595227394104, 400,214.6872776412964, 214.6872776412964),
                 makeRect(217.66387767791747, 420.07268016815186, 234.77932788848875, 234.77932788848875)
         });
 
@@ -260,7 +260,7 @@ public class PortugueseReportParser implements ReportParser {
         String[] deathsColumns = splitTableData(columnsToTableData(rectangleToColumns(deathsRect, page)));
         String[] casesColumns = splitTableData(columnsToTableData(rectangleToColumns(casesRect, page)));
 
-        if (parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[1]) == 0) {
+            if (parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[1]) == 0) {
             casesColumns = rectangleToColumns(casesRect, page);
         }
 
