@@ -157,7 +157,7 @@ public class Engine {
                     todayStrWithYear,
                     countryReport.day.cases,
                     countryReport.day.deaths,
-                    countryReport.deathsValueIsSane()
+                    countryReport.deathsDayValueIsSane()
             );
 
             String message = StringFactory.buildMessage(

@@ -281,9 +281,13 @@ public class PortugueseReportParser implements ReportParser {
                     activeDailyCases -
                     parsePossiblyNegativeIntWithoutExtraCharacters(deathsColumns[1]);
 
+        int dailyDeaths = parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[1]) -
+                activeDailyCases -
+                dailyRecoveries;
+
         CountryReport.Report dayReport = new CountryReport.Report(
                 parsePossiblyNegativeIntWithoutExtraCharacters(casesColumns[1]),
-                parsePossiblyNegativeIntWithoutExtraCharacters(deathsColumns[1]),
+                dailyDeaths,
                 activeDailyCases,
                 dailyRecoveries
         );

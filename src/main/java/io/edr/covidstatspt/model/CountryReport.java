@@ -78,8 +78,16 @@ public class CountryReport {
         return (day.equals(cr.day) && cumulative.equals(cr.cumulative));
     }
 
-    public boolean deathsValueIsSane() {
+    public boolean activeCumulativeValueIsSane() {
+        return cumulative.active > 0;
+    }
+
+    public boolean deathsDayValueIsSane() {
         return day.deaths < 1000;
+    }
+
+    public boolean deathsCumulativeValueIsSane() {
+        return cumulative.deaths < cumulative.cases;
     }
 
     @Override

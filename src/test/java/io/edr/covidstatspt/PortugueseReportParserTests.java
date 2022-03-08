@@ -100,12 +100,13 @@ public class PortugueseReportParserTests {
     }
 
     @Test
-    public void testDeathsValueIsNotSane() throws IOException {
-        PDDocument doc = PDDocument.load(new URL("https://covid19.min-saude.pt/wp-content/uploads/2022/03/734_DGS_boletim_20220306.pdf").openStream());
+    public void testDeathsValueIsCorrectFor20220308() throws IOException {
+        PDDocument doc = PDDocument.load(new URL("https://covid19.min-saude.pt/wp-content/uploads/2022/03/736_DGS_boletim_20220308_pdf-376kb.pdf").openStream());
         PortugueseReportParser parser = new PortugueseReportParser(doc);
 
         CountryReport countryReport = parser.getCountryReport();
 
-        assertFalse(countryReport.deathsValueIsSane());
+        assertTrue(countryReport.deathsDayValueIsSane());
+        assertEquals(32, countryReport.day.deaths);
     }
 }

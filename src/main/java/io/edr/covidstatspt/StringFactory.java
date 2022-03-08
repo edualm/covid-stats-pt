@@ -48,15 +48,15 @@ public class StringFactory {
                 " recuperados, \uD83D\uDD34 " +
                 report.day.active +
                 " ativos, \uD83D\uDC80 " +
-                (report.deathsValueIsSane() ? report.day.deaths : "...") +
+                (report.deathsDayValueIsSane() ? report.day.deaths : "...") +
                 " mortes</code>\nTotal: <code>\uD83E\uDDA0 " +
                 report.cumulative.cases +
                 " casos, \uD83D\uDFE2 " +
                 report.cumulative.recoveries +
                 " recuperados, \uD83D\uDD34 " +
-                report.cumulative.active +
+                (report.activeCumulativeValueIsSane() ? report.cumulative.active : "...") +
                 " ativos, \uD83D\uDC80 " +
-                (report.deathsValueIsSane() ? report.cumulative.deaths : "...") +
+                (report.deathsCumulativeValueIsSane() ? report.cumulative.deaths : "...") +
                 " mortes</code>";
     }
 
@@ -113,12 +113,12 @@ public class StringFactory {
                     .append("\uD83C\uDF89\uD83D\uDE45\uD83E\uDDA0 <b>Sem casos de COVID-19 hoje!</b> \uD83C\uDF89\uD83D\uDE45\uD83E\uDDA0");
         }
 
-        if (countryReport.day.deaths == 0 && countryReport.deathsValueIsSane()) {
+        if (countryReport.day.deaths == 0 && countryReport.deathsDayValueIsSane()) {
             messageBuilder.append("\n")
                     .append("\uD83C\uDF89\uD83D\uDE45\uD83D\uDC80 <b>Sem mortes devido a COVID-19 hoje!</b> \uD83C\uDF89\uD83D\uDE45\uD83D\uDC80");
         }
 
-        if (countryReport.day.cases == 0 || (countryReport.day.deaths == 0 && countryReport.deathsValueIsSane())) {
+        if (countryReport.day.cases == 0 || (countryReport.day.deaths == 0 && countryReport.deathsDayValueIsSane())) {
             messageBuilder.append("\n");
         }
 
