@@ -1,3 +1,7 @@
+# ⚠️ Archived
+
+Due to a change in DGS' reports, this bot is now offline and will not be maintained anymore.
+
 # COVID Stats 🇵🇹
 
 ![Snapshot](https://github.com/edualm/covid-stats-pt/workflows/Snapshot/badge.svg)
